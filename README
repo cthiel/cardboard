@@ -2,3 +2,11 @@ SQLite database backed Simple Kanban card wall based on http://www.simple-kanban
 
 https://github.com/cthiel/simplekanban forked from
 https://github.com/0s30s1s/simplekanban
+
+
+How to install?
+===============
+
+  bundle install
+  rake db:migrate
+  rails s
