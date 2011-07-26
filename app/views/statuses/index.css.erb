@@ -1,4 +1,7 @@
 <% @statuses.each do |status| %>
-  #<%= status.code %> .box { background-color: <%= status.color %>; color: #000000;}
-  #<%= status.code %>_Q .box { background-color: #F0F0F0; color: #606060;}
+  <% unless status.code.include?("_Q") %>
+    #<%= status.code %> .box { background-color: <%= status.color %>; color: #000000;}
+  <% else %>
+    #<%= status.code %> .box { background-color: <%= status.color %>; color: #606060;}
+  <% end %>
 <% end %>
