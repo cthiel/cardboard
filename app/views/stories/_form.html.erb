@@ -11,6 +11,10 @@
     </div>
   <% end %>
 
-  <%= form.inputs :number, :name, :status_code %>
+  <%= form.inputs do %>
+    <%= form.input :number %>
+    <%= form.input :name %>
+    <%= form.input :status, :include_blank => false %>
+  <% end %>
   <%= form.buttons %>
 <% end %>
