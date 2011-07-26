@@ -7,6 +7,7 @@ class StatusesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json  { render :json => @statuses }
+      format.css
     end
   end
 
