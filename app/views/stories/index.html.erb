@@ -1,12 +1,8 @@
-<h1>Listing stories</h1>
-
 <table>
   <tr>
     <th>Number</th>
     <th>Name</th>
-    <th>Status code</th>
-    <th></th>
-    <th></th>
+    <th>Status</th>
     <th></th>
   </tr>
 
@@ -14,10 +10,8 @@
   <tr>
     <td><%= story.number %></td>
     <td><%= story.name %></td>
-    <td><%= story.status_code %></td>
-    <td><%= link_to 'Show', story %></td>
-    <td><%= link_to 'Edit', edit_story_path(story) %></td>
-    <td><%= link_to 'Destroy', story, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= story.status.name %></td>
+    <td><%= link_to 'Show', story %> | <%= link_to 'Edit', edit_story_path(story) %> | <%= link_to 'Destroy', story, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
