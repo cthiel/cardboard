@@ -6,6 +6,7 @@ This project is based on http://www.simple-kanban.com/ and https://github.com/0s
 How to install?
 ===============
 
+  sudo gem install bundler
   bundle install
   rake db:migrate
   rails s
