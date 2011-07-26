@@ -1,7 +1,6 @@
-SQLite database backed Simple Kanban card wall based on http://www.simple-kanban.com/
+A Kanban Board Application based on Rails 3
 
-https://github.com/cthiel/simplekanban forked from
-https://github.com/0s30s1s/simplekanban
+This project is based on http://www.simple-kanban.com/ and https://github.com/0s30s1s/simplekanban
 
 
 How to install?
