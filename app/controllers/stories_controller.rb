@@ -6,7 +6,7 @@ class StoriesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json  { render :json => @stories }
+      format.json  { render :json => @stories.to_json(:methods => :status_code) }
     end
   end
 
