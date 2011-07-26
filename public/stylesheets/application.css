@@ -1,0 +1,12 @@
+/* http://www.vcarrer.com/2009/06/1-line-css-grid-framework.html */
+
+.button { background-color: #e0e0e0; color: #a0a0a0; padding: 0.2em; text-decoration: none;}
+.placeholder { border: 1px solid black; }
+ul { list-style: none; margin: 0 0 0 0; padding: 0 0 0 0;}
+body { font-family: Helvetica; }
+.box { font-size: 80%; padding: 0.2em; border: 1px solid black; margin-bottom: 1em; margin-right: 5px;}
+.dp10 {width:9%;  float:left;  display: inline;  *margin-right:-1px; }
+.clear {clear:both;}
+.headline { font-weight: bold; height: 3em; color: #000000;}
+.queue_column .headline { font-weight: bold; height: 3em; color: #d0d0d0;}
+.footer { font-size: 80%; color: #808080; padding-top: 5em;}
