@@ -27,7 +27,7 @@
 
 				init: function() {
 					$(this.container).attr("data-listIdx", i).mousedown(this.grabItem).find(opts.dragSelector).css("cursor", "pointer");
-					$(this.container).children(opts.itemSelector).each(function(j) { $(this).attr("data-itemIdx", j); });
+					$(this.container).children(opts.itemSelector).each(function(j) { $(this).attr("data-itemidx", j); });
 				},
 
 				grabItem: function(e) {
@@ -180,7 +180,13 @@
 					$(list.container).find(opts.dragSelector).css("cursor", "pointer");
 					list.placeHolderItem.before(list.draggedItem);
 
-					list.draggedItem.attr("style", list.draggedItem.attr("data-origStyle")).removeAttr("data-origStyle");
+					//list.draggedItem.attr("style", "") doesn't work on IE8 and jQuery 1.5 or lower
+					//list.draggedItem.removeAttr("style") doesn't work on chrome and jQuery 1.6 (works jQuery 1.5 or lower)
+					var orig = list.draggedItem.attr("data-origStyle");
+					list.draggedItem.attr("style", orig);
+					if (orig == "")
+						list.draggedItem.removeAttr("style");
+					list.draggedItem.removeAttr("data-origStyle");
 					list.placeHolderItem.remove();
 
 					$("[data-dropTarget]").remove();
@@ -188,17 +194,7 @@
 					window.clearInterval(list.scroll.scrollY);
 					window.clearInterval(list.scroll.scrollX);
 
-					var changed = false;
-					$(lists).each(function() {
-						$(this.container).children(opts.itemSelector).each(function(j) {
-							if (parseInt($(this).attr("data-itemIdx")) != j) {
-								changed = true;
-								$(this).attr("data-itemIdx", j);
-							}
-						});
-					});
-					if (changed)
-						opts.dragEnd.apply(list.draggedItem);
+					opts.dragEnd.apply(list.draggedItem);
 					list.draggedItem = null;
 					$(document).unbind("selectstart", list.stopBubble);
 					$(document).unbind("mousemove", list.swapItems);
@@ -253,8 +249,11 @@
 						var dt = $(this.container).find("[data-dropTarget]");
 						if (ph.size() > 0 && dt.size() > 0)
 							dt.remove();
-						else if (ph.size() == 0 && dt.size() == 0)
-							$(this.container).append(list.placeHolderItem.clone().removeAttr("data-placeHolder").attr("data-dropTarget", true));
+						else if (ph.size() == 0 && dt.size() == 0) {
+							//list.placeHolderItem.clone().removeAttr("data-placeHolder") crashes in IE7 and jquery 1.5.1 (doesn't in jquery 1.4.2 or IE8)
+							$(this.container).append(list.placeHolderItem.removeAttr("data-placeHolder").clone().attr("data-dropTarget", true));
+							list.placeHolderItem.attr("data-placeHolder", true);
+						}
 					});
 				}
 			};
