@@ -1,3 +1,4 @@
-simplekanbanwall is an extension of http://www.simple-kanban.com/download/Simple_Kanban_App_1.0RC1.html, which is a single page html card wall like TiddlyWiki without any data storage.
+SQLite database backed Simple Kanban card wall based on http://www.simple-kanban.com/
 
-This project extends it with Rails 3 backend and SQLite storage.
+https://github.com/cthiel/simplekanban forked from
+https://github.com/0s30s1s/simplekanban
