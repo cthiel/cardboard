@@ -5,11 +5,18 @@
 </head>
 <body>
 	<div class='container'>
-		<%= render 'layouts/header' %>
+        <header>
+	<h1>Kanban Board</h1>
+	<nav>
+		<%= link_to 'Wall', root_path %> | 
+		<%= link_to 'Stories', stories_path %> |
+		<%= link_to 'Status', statuses_path %>
+	</nav>
+	<p></p>
+        </header>
 		<section>
 			<%= yield %>
 		</section>
-		<%= render 'layouts/footer' %>
 	</div>
 </body>
 </html>
