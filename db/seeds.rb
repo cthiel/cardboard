@@ -7,7 +7,7 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 Status.create([
   {:code => 'P', :name => 'ProductMgmt'},
-  {:code => 'A', :name => 'Analysis'},
+  {:code => 'C', :name => 'Design'},
   {:code => 'D', :name => 'Development'},
   {:code => 'T', :name => 'Test'},
   {:code => 'R', :name => 'Release'},
