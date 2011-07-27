@@ -10,6 +10,7 @@ This project is based on http://www.simple-kanban.com/ and https://github.com/0s
     sudo gem install bundler
     bundle install
     rake db:migrate
+    rake db:seed # to load sample data
     rails s
 
 Visit http://localhost:3000/ and you should see your Kanban site!
