@@ -9,13 +9,11 @@ $ ->
     $.getJSON "/statuses.json", (status_data) ->
       states = {}
       states_order = []
-      i = 0
 
-      while i < status_data.length
-        state = status_data[i].status
+      for datum in status_data
+        state = datum.status
         states[state.code] = state.name
         states_order.push state.code
-        i++
 
       app_data.states = states
       app_data.states_order = states_order
@@ -24,14 +22,12 @@ $ ->
   init_stories = (stories) ->
     board = {}
     $.getJSON "/stories.json", (stories_data) ->
-      i = 0
 
-      while i < stories_data.length
-        story = stories_data[i].story
+      for datum in stories_data
+        story = datum.story
         state = story.status_code
         board[state] = [] unless board[state]
         board[state].push story
-        i++
 
       app_data.board = board
       create_board app_data
@@ -40,15 +36,10 @@ $ ->
     list = $("<ul class=\"state\" id=\"" + state + "\"></ul>")
 
     if board[state]
-      i = 0
-      len = board[state].length
-
-      while i < len
-        story = board[state][i]
+      for story in board[state]
         story_element = $("<li><div class=\"box box_" + state + "\">" + story.number + " " + story.name + "</div></li>")
         story_element.data "story", story
         list.append story_element
-        i++
 
     list
 
@@ -62,10 +53,8 @@ $ ->
   create_board = (app_data) ->
     table = $("<div id=\"board\"></div>")
     ids = ""
-    j = 0
 
-    while j < app_data.states_order.length
-      state = app_data.states_order[j]
+    for state in app_data.states_order
       unless /_Q$/.test(state)
         queue_state = state + "_Q"
         ids += "#" + queue_state + ","
@@ -74,7 +63,6 @@ $ ->
         ids += "#" + state + ","
         state_column = create_column(app_data.board, state, app_data.states[state])
         table.append state_column
-      j++
 
     $(ids, table).dragsort
       dragBetween: true
