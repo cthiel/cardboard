@@ -22,6 +22,7 @@ end
 gem 'haml'
 gem 'jquery-rails'
 gem 'formtastic'
+gem 'acts-as-taggable-on'
 
 # Use unicorn as the web server
 # gem 'unicorn'
