@@ -1,4 +1,5 @@
-
+$(document).ready(function(){
+  
 var app_data = {};
 
 var init_app = function(){
@@ -96,3 +97,6 @@ var update_story_status = function(){
 }
 
 init_app();
+
+});
+  
