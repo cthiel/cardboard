@@ -33,3 +33,8 @@ gem 'acts-as-taggable-on'
 # To use debugger
 # gem 'ruby-debug'
 
+gem "rspec-rails", :group => [:test, :development]
+group :test do
+  gem "factory_girl_rails"
+  gem "capybara"
+end
