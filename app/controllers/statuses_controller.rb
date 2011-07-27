@@ -1,13 +1,14 @@
 class StatusesController < ApplicationController
   # GET /statuses
   # GET /statuses.json
+  # GET /statuses.css
   def index
     @statuses = Status.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html # index.html.haml
       format.json  { render :json => @statuses }
-      format.css
+      format.css  # index.css.erb
     end
   end
 
@@ -16,7 +17,7 @@ class StatusesController < ApplicationController
     @status = Status.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html # show.html.haml
     end
   end
 
@@ -25,7 +26,7 @@ class StatusesController < ApplicationController
     @status = Status.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html # new.html.haml
     end
   end
 

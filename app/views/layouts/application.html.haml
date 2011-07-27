@@ -1,0 +1,23 @@
+!!!
+%html
+  %head
+    %title Simple Kanban
+    %link{:href => "http://fonts.googleapis.com/css?family=Yellowtail&v2", :rel => "stylesheet", :type => "text/css"}/
+    %link{:href => "http://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700&v2", :rel => "stylesheet", :type => "text/css"}/
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+    = yield :head
+  %body
+    .container
+      %header
+      %h1= link_to 'Simple Kanban', root_path
+      %nav
+        = link_to 'Wall', root_path
+        |
+        \#{link_to 'Stories', stories_path}
+        |
+        \#{link_to 'Statuses', statuses_path}
+      %p
+      %section
+      = yield

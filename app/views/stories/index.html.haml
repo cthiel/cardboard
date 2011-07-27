@@ -1,0 +1,16 @@
+%table
+  %tr
+    %th Number
+    %th Name
+    %th Status
+    %th
+  - @stories.each do |story|
+    %tr
+      %td= story.number
+      %td= story.name
+      %td= story.status.name
+      %td
+        = link_to 'Show', story
+        | #{link_to 'Edit', edit_story_path(story)} | #{link_to 'Destroy', story, :confirm => 'Are you sure?', :method => :delete}
+.actions
+  = link_to 'New Story', new_story_path

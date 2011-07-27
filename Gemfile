@@ -19,6 +19,7 @@ group :assets do
   gem 'uglifier'
 end
 
+gem 'haml'
 gem 'jquery-rails'
 gem 'formtastic'
 gem 'acts-as-taggable-on'

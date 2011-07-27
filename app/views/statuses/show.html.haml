@@ -1,0 +1,13 @@
+%p#notice= notice
+%p
+  %b Code:
+  = @status.code
+%p
+  %b Name:
+  = @status.name
+%p
+  %b Color:
+  = @status.color
+= link_to 'Edit', edit_status_path(@status)
+|
+\#{link_to 'Back', statuses_path}
