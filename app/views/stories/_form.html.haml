@@ -1,0 +1,14 @@
+= semantic_form_for(@story) do |form|
+  - if @story.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@story.errors.count, "error")
+        prohibited this story from being saved:
+      %ul
+        - @story.errors.full_messages.each do |msg|
+          %li= msg
+  = form.inputs do
+    = form.input :number
+    = form.input :name
+    = form.input :status, :include_blank => false
+  = form.buttons

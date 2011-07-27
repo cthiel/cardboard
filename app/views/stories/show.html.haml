@@ -1,0 +1,13 @@
+%p#notice= notice
+%p
+  %b Number:
+  = @story.number
+%p
+  %b Name:
+  = @story.name
+%p
+  %b Status code:
+  = @story.status_code
+= link_to 'Edit', edit_story_path(@story)
+|
+\#{link_to 'Back', stories_path}
