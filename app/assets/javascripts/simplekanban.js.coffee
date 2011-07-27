@@ -55,8 +55,8 @@ $ ->
   create_column = (board, state, headline) ->
     queueClass = if /_Q$/.test(state) then " queue_column" else ""
 
-    state_column = $("<div class='dp10 #{queueClass}'></div>")
-      .append("<div class='headline'>#{headline}</div>")
+    state_column = $("<div class='column #{queueClass}'></div>")
+      .append("<h2>#{headline}</h2>")
       .append(create_list board, state)
       .data("state", state)
 
