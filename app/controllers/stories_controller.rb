@@ -69,4 +69,12 @@ class StoriesController < ApplicationController
       format.html { redirect_to(stories_url) }
     end
   end
+
+  # GET /stories/last_changed
+  def last_changed
+    @story = Story.first(:order => :updated_at)
+    respond_to do |format|
+      format.json { render :json => {:last_changed => @story.updated_at.to_i} }
+    end
+  end
 end

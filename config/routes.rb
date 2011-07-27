@@ -1,5 +1,9 @@
 Simplekanban::Application.routes.draw do
-  resources :stories
+  resources :stories do
+    collection do
+      get 'last_changed'
+    end
+  end
 
   resources :statuses
   
