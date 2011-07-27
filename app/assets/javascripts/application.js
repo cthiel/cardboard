@@ -6,4 +6,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require 'jquery.dragsort'
+//= require 'ui/jquery.ui.core'
+//= require 'ui/jquery.ui.widget'
+//= require 'ui/jquery.ui.mouse'
+//= require 'ui/jquery.ui.sortable'

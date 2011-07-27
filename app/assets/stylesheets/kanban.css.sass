@@ -48,19 +48,22 @@ nav
       color: orange
       text-decoration: underline
 
-/*
-  .placeholder
-    border: 1px solid black
-
-.box
+.box,
+.box-placeholder
   +box-sizing
-  background-color: #eee
-  border: 1px solid rgba(0,0,0,0.2)
-  padding: 0.2em
+  padding: 3px 6px
   margin: 3px
   border-radius: 3px
+
+.box
+  +box-shadow(inset 0 0 0 1px rgba(255,255,255,0.3), 1px 1px 2px 0 rgba(0,0,0,0.1))
   background-color: #eee
-  +box-shadow(inset 0 0 0 1px rgba(255,255,255,0.3), 1px 1px 3px 0 rgba(0,0,0,0.2))
+  border: 1px solid rgba(0,0,0,0.2)
+  background-color: #eee
+
+.box-placeholder
+  background-color: #ff9
+  height: 2em
 
 .clear
   clear: both
@@ -68,6 +71,10 @@ nav
 #board
   display: table
   width: 100%
+
+  &.drag
+    ul:hover
+      background-color: #ffc
 
 .column
   +box-sizing
@@ -94,14 +101,13 @@ nav
     min-height: 25%
     height: 100%
 
+    li
+      cursor: move
+
   & + .column
     border-width: 1px 0 0 1px
 
   &:hover
-
-
-  .box
-    padding: 3px 6px
 
 .queue_column
   h2

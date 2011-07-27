@@ -63,14 +63,10 @@ $ ->
 
   create_board = (app_data) ->
     table = $("<div id='board'></div>")
-    ids = []
 
     for state in app_data.states_order
       unless /_Q$/.test(state)
         queue_state = "#{state}_Q"
-
-        ids.push "##{queue_state}"
-        ids.push "##{state}"
 
         queue_state_column = create_column(app_data.board, queue_state, app_data.states[state] + " Ready")
         state_column = create_column(app_data.board, state, app_data.states[state])
@@ -79,9 +75,12 @@ $ ->
           .append(queue_state_column)
           .append(state_column)
 
-    $(ids.join(), table).dragsort
-      dragBetween: true
-      dragEnd: update_story_status
+    $(".column>ul", table).sortable
+      connectWith: "ul"
+      scroll: false
+      placeholder: "box-placeholder"
+      stop: update_story_status
+    .disableSelection()
 
     display_board table
 
@@ -90,9 +89,10 @@ $ ->
     $("#output").html board_table
 
 
-  update_story_status = ->
-    story_id = $(this).data("story").id
-    story_status = $(this).parent()[0].id
+  update_story_status = (e, drag) ->
+    $item = drag.item
+    story_id = $item.data("story").id
+    story_status = $item.parent()[0].id
 
     $.ajax
       type: "PUT"
