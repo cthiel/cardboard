@@ -8,7 +8,7 @@
     %tr
       %td= status.code
       %td= status.name
-      %td= status.color
+      %td{:style => "background-color:#{status.color}"}= status.color
       %td
         = link_to 'Show', status
         | #{link_to 'Edit', edit_status_path(status)} | #{link_to 'Destroy', status, :confirm => 'Are you sure?', :method => :delete}
