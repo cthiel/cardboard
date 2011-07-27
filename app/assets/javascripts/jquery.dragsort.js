@@ -47,8 +47,8 @@
 
           list = lists[$(this).attr("data-listIdx")];
           list.draggedItem = $(elm).closest(opts.itemSelector);
-          var mt = parseInt(list.draggedItem.css("marginTop"));
-          var ml = parseInt(list.draggedItem.css("marginLeft"));
+          var mt = parseInt(list.draggedItem.css("marginTop"), 10);
+          var ml = parseInt(list.draggedItem.css("marginLeft"), 10);
           list.offset = list.draggedItem.offset();
           list.offset.top = e.pageY - list.offset.top + (isNaN(mt) ? 0 : mt) - 1;
           list.offset.left = e.pageX - list.offset.left + (isNaN(ml) ? 0 : ml) - 1;
