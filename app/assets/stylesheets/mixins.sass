@@ -1,5 +1,38 @@
-=transition($vals)
-  -moz-transition: $vals
-  -webkit-transition: $vals
-  -o-transition: $vals
-  transition: $vals
+=transition($trans1, $trans2:false, $trans3:false, $trans4:false, $trans5:false)
+  $params: $trans1
+  @if $trans2 != false
+    $params: $trans1, $trans2
+    @if $trans3 != false
+      $params: $trans1, $trans2, $trans3
+      @if $trans4 != false
+        $params: $trans1, $trans2, $trans3, $trans4
+        @if $trans5 != false
+          $params: $trans1, $trans2, $trans3, $trans4, $trans5
+  -moz-transition: $params
+  -webkit-transition: $params
+  -o-transition: $params
+  transition: $params
+
+=box-shadow($vals)
+  -moz-box-shadow: $vals
+  -webkit-box-shadow: $vals
+  -o-box-shadow: $vals
+  box-shadow: $vals
+
+=box-sizing
+  box-sizing: border-box
+  -moz-box-sizing: border-box
+
+=box-shadow($shadow1, $shadow2:false, $shadow3:false, $shadow4:false, $shadow5:false)
+  $params: $shadow1
+  @if $shadow2 != false
+    $params: $shadow1, $shadow2
+    @if $shadow3 != false
+      $params: $shadow1, $shadow2, $shadow3
+      @if $shadow4 != false
+        $params: $shadow1, $shadow2, $shadow3, $shadow4
+        @if $shadow5 != false
+          $params: $shadow1, $shadow2, $shadow3, $shadow4, $shadow5
+  -webkit-box-shadow: $params
+  -moz-box-shadow: $params
+  box-shadow: $params
