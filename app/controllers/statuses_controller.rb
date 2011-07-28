@@ -3,7 +3,7 @@ class StatusesController < ApplicationController
   # GET /statuses.json
   # GET /statuses.css
   def index
-    @last_modified_status = Story.find(:first, :order => 'updated_at DESC')
+    @last_modified_status = Status.find(:first, :order => 'updated_at DESC')
     
     if stale?(:last_modified => @last_modified_status.updated_at.utc, :etag => @last_modified_status)
       @statuses = Status.all
