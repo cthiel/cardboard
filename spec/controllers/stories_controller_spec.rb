@@ -10,8 +10,7 @@ describe StoriesController do
   # Story. As you add validations to Story, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {:number => '42',
-     :name   => 'Test it!', 
+    {:name   => 'Test it!', 
      :status_id => 1}
   end
 
