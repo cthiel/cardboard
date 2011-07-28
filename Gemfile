@@ -34,8 +34,7 @@ gem 'acts-as-taggable-on'
 # gem 'ruby-debug'
 
 gem "rspec-rails", :group => [:test, :development]
-gem "factory_girl_generator", :group => [:development, :test]
-group :test do
-  gem "factory_girl_rails"
-  gem "capybara"
-end
+#group :test do
+#  gem "factory_girl_rails"
+#  gem "capybara"
+#end
