@@ -77,7 +77,7 @@ $ ->
       e.preventDefault() # Don't do the default submit action
 
     # The actual dialog object, stored in a var for reference
-    $dialog = $("<div/>").dialog
+    $dialog = $("<div><div class='loading'>Loading...</div></div>").dialog
       title: "Editing item #{story.id}"
       width: "50%"
       position: [$(window).width() / 4, $(window).height() / 5]
