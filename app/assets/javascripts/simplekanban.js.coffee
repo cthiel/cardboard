@@ -123,6 +123,8 @@ $ ->
       scroll: false
       placeholder: "box-placeholder"
       stop: update_story_status
+      distance: 6
+      opacity: 0.7
     .disableSelection()
 
     display_board table
