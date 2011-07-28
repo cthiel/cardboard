@@ -44,7 +44,7 @@ $ ->
 
 
   create_list = (board, state) ->
-    list = $("<ul class='state' id='#{app_data.states_ids[state]}'></ul>")
+    list = $("<ul class='state' id='status#{app_data.states_ids[state]}'></ul>")
 
     if board[state]
       for story in board[state]
