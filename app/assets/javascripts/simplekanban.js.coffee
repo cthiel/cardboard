@@ -52,7 +52,7 @@ $ ->
 
   start_polling = ->
     app_data.poll = setInterval ->
-      check_state() if !app_data.dialog
+      check_status() if !app_data.dialog
       return
     , 5000
 
@@ -68,7 +68,7 @@ $ ->
     return
 
 
-  check_state = ->
+  check_status = ->
     _head = (state) ->
       $.ajax "/#{state.url}.json",
         type: "HEAD"
@@ -81,6 +81,10 @@ $ ->
     _head {} = url: "stories",  obj: "story_mod",  func: init_stories
 
     return
+
+
+  clear_status = ->
+    app_data.story_mod = app_data.status_mod = undefined
 
 
   create_list = (board, state) ->
@@ -188,6 +192,7 @@ $ ->
       type: "PUT"
       url: "stories/#{story_id}"
       data: "story[status_id]=#{status_id}"
+      complete: clear_status
 
 
   init_app()
