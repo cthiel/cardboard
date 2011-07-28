@@ -48,7 +48,7 @@ $ ->
 
     if board[state]
       for story in board[state]
-        tags = story.tag_list.join(', ')
+        tags = story.tag_list.sort().join(', ')
         story_element = $("<li><div class='box box_#{state}'><b>#{story.name}</b><br/>#{tags}</div></li>")
         story_element.data "story", story
         list.append story_element
