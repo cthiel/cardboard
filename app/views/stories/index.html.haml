@@ -1,11 +1,13 @@
 %table
   %tr
     %th Name
+    %th Tags
     %th Status
     %th
   - @stories.each do |story|
     %tr
       %td= story.name
+      %td= story.tag_list
       %td= story.status.name
       %td
         = link_to 'Show', story

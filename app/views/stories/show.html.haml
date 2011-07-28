@@ -3,6 +3,9 @@
   %b Name:
   = @story.name
 %p
+  %b Tags:
+  = @story.tag_list
+%p
   %b Status code:
   = @story.status_code
 = link_to 'Edit', edit_story_path(@story)
