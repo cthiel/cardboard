@@ -69,15 +69,10 @@ $ ->
     table = $("<div id='board'></div>")
 
     for state in app_data.states_order
-      unless /_Q$/.test(state)
-        queue_state = "#{state}_Q"
+      state_column = create_column(app_data.board, state, app_data.states[state])
 
-        queue_state_column = create_column(app_data.board, queue_state, app_data.states[state] + " Ready")
-        state_column = create_column(app_data.board, state, app_data.states[state])
-
-        table
-          .append(queue_state_column)
-          .append(state_column)
+      table
+        .append(state_column)
 
     $(".column>ul", table).sortable
       connectWith: "ul"
