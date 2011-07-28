@@ -14,8 +14,6 @@ describe StatusesController do
   describe "GET index" do
     it "assigns all statuses as @statuses" do
       status = Status.create! valid_attributes
-      # remove Status.last, since Status automatically creates a "Ready" status
-      Status.last.destroy
       get :index
       assigns(:statuses).should eq([status])
     end
@@ -49,7 +47,7 @@ describe StatusesController do
       it "creates a new Status" do
         expect {
           post :create, :status => valid_attributes
-        }.to change(Status, :count).by(2)
+        }.to change(Status, :count).by(1)
       end
 
       it "assigns a newly created status as @status" do
@@ -60,7 +58,7 @@ describe StatusesController do
 
       it "redirects to the created status" do
         post :create, :status => valid_attributes
-        response.should redirect_to(Status.first)
+        response.should redirect_to(Status.last)
       end
     end
 
