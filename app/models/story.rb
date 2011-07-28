@@ -10,8 +10,4 @@ class Story < ActiveRecord::Base
   def status_code
     status.code
   end
-
-  def status_code=(value)
-    self.status = Status.find_by_code(value)
-  end
 end

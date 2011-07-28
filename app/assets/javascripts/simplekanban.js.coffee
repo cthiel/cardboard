@@ -11,14 +11,17 @@ $ ->
   init_states = ->
     $.getJSON "/statuses.json", (status_data) ->
       states = {}
+      states_ids = {}
       states_order = []
 
       for datum in status_data
         state = datum.status
         states[state.code] = state.name
+        states_ids[state.code] = state.id
         states_order.push state.code
 
       app_data.states = states
+      app_data.states_ids = states_ids
       app_data.states_order = states_order
 
       init_stories()
@@ -41,7 +44,7 @@ $ ->
 
 
   create_list = (board, state) ->
-    list = $("<ul class='state' id='#{state}'></ul>")
+    list = $("<ul class='state' id='#{app_data.states_ids[state]}'></ul>")
 
     if board[state]
       for story in board[state]
@@ -92,12 +95,12 @@ $ ->
   update_story_status = (e, drag) ->
     $item = drag.item
     story_id = $item.data("story").id
-    story_status = $item.parent()[0].id
+    status_id = $item.parent()[0].id
 
     $.ajax
       type: "PUT"
       url: "stories/#{story_id}"
-      data: "story[status_code]=#{story_status}"
+      data: "story[status_id]=#{status_id}"
 
 
   init_app()
