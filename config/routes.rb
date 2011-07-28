@@ -1,12 +1,7 @@
 Simplekanban::Application.routes.draw do
-  resources :stories do
-    collection do
-      get 'last_changed'
-    end
-  end
-
+  resources :stories
   resources :statuses
-  
+
   resources :projects, :only => [:show], :requirement => {:id => 'default'}
   
   root :to => 'projects#show', :id => 'default'

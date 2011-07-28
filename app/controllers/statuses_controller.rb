@@ -3,12 +3,16 @@ class StatusesController < ApplicationController
   # GET /statuses.json
   # GET /statuses.css
   def index
-    @statuses = Status.all
+    @last_modified_status = Story.find(:first, :order => 'updated_at DESC')
+    
+    if stale?(:last_modified => @last_modified_status.updated_at.utc, :etag => @last_modified_status)
+      @statuses = Status.all
 
-    respond_to do |format|
-      format.html # index.html.haml
-      format.json  { render :json => @statuses }
-      format.css  # index.css.erb
+      respond_to do |format|
+        format.html # index.html.haml
+        format.json  { render :json => @statuses }
+        format.css  # index.css.erb
+      end
     end
   end
 

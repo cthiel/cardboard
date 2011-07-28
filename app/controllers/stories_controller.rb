@@ -2,11 +2,14 @@ class StoriesController < ApplicationController
   # GET /stories
   # GET /stories.json
   def index
-    @stories = Story.all(:include => :status)
+    @last_modified_story = Story.find(:first, :order => 'updated_at DESC')
 
-    respond_to do |format|
-      format.html # index.html.haml
-      format.json  { render :json => @stories.to_json(:methods => [:status_code, :tag_list]) }
+    if stale?(:last_modified => @last_modified_story.updated_at.utc, :etag => @last_modified_story)
+      @stories = Story.all(:include => :status)
+      respond_to do |format|
+        format.html # index.html.haml
+        format.json  { render :json => @stories.to_json(:methods => [:status_code, :tag_list]) }
+      end
     end
   end
 
@@ -72,14 +75,6 @@ class StoriesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to(stories_url) }
-    end
-  end
-
-  # GET /stories/last_changed
-  def last_changed
-    @story = Story.first(:order => :updated_at)
-    respond_to do |format|
-      format.json { render :json => {:last_changed => @story.updated_at.to_i} }
     end
   end
 end
