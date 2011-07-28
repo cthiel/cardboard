@@ -34,11 +34,6 @@ class StoriesController < ApplicationController
   # GET /stories/1/edit
   def edit
     @story = Story.find(params[:id], :include => :status)
-
-    respond_to do |format|
-      format.html # edit.html.haml
-      format.js   # edit.js.haml
-    end
   end
 
   # POST /stories
