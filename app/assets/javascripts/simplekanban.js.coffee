@@ -49,8 +49,9 @@ $ ->
     if board[state]
       for story in board[state]
         tags = story.tag_list.sort().join(', ')
-        story_element = $("<li><div class='box box_#{state}'><b>#{story.name}</b><br/>#{tags}</div></li>")
+        story_element = $("<li><div class='box box_#{state}' data-story_id='#{story.id}'><b>#{story.name}</b><br/>#{tags}</div></li>")
         story_element.data "story", story
+        story_element.delegate('div', 'dblclick', -> window.location.replace('/stories/' + $(this).data('story_id') + '/edit'))
         list.append story_element
 
     list
