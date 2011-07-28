@@ -4,7 +4,7 @@ class StoriesController < ApplicationController
   def index
     @last_modified_story = Story.find(:first, :order => 'updated_at DESC')
 
-    if stale?(:last_modified => @last_modified_story.updated_at.utc, :etag => @last_modified_story)
+    if stale?(:last_modified => @last_modified_story.try(:updated_at).try(:utc), :etag => @last_modified_story)
       @stories = Story.all(:include => :status, :order => 'updated_at ASC')
       respond_to do |format|
         format.html # index.html.haml

@@ -5,7 +5,7 @@ class StatusesController < ApplicationController
   def index
     @last_modified_status = Status.find(:first, :order => 'updated_at DESC')
     
-    if stale?(:last_modified => @last_modified_status.updated_at.utc, :etag => @last_modified_status)
+    if stale?(:last_modified => @last_modified_status.try(:updated_at).try(:utc), :etag => @last_modified_status)
       @statuses = Status.all
 
       respond_to do |format|
