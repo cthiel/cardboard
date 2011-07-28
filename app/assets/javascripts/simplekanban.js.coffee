@@ -6,6 +6,8 @@ $ ->
 
   init_app = ->
     init_states()
+    watch_mouse()
+    start_polling()
 
 
   init_states = ->
@@ -43,6 +45,44 @@ $ ->
       create_board app_data
 
 
+  watch_mouse = ->
+    $(document).mousemove ->
+      reset_polling()
+
+
+  start_polling = ->
+    app_data.poll = setInterval ->
+      check_state() if !app_data.dialog
+      return
+    , 5000
+
+
+  stop_polling = ->
+    clearInterval(app_data.poll)
+    return
+
+
+  reset_polling = ->
+    stop_polling()
+    start_polling()
+    return
+
+
+  check_state = ->
+    _head = (state) ->
+      $.ajax "/#{state.url}.json",
+        type: "HEAD"
+        complete: (xhr, status) ->
+          mod = xhr.getAllResponseHeaders().match(/Last-Modified: (.*)/)[1]
+          state.func() if app_data[state.obj]? and app_data[state.obj] != mod
+          app_data[state.obj] = mod
+
+    _head {} = url: "statuses", obj: "status_mod", func: init_states
+    _head {} = url: "stories",  obj: "story_mod",  func: init_stories
+
+    return
+
+
   create_list = (board, state) ->
     list = $("<ul class='state' id='status#{app_data.states_ids[state]}'></ul>")
 
@@ -65,16 +105,21 @@ $ ->
   # Create a functional edit dialog
   show_edit_dialog = (story) ->
     $form = null
+    app_data.dialog = true
 
     # Our lovely submit handler
     _submit = (e) ->
       # Handle the submit via ajax
       $.post($form.attr('action'), $form.serialize())
         .complete ->
-          $dialog.remove()
+          _close_dialog()
           init_stories() # Refresh the stories!
 
       e.preventDefault() # Don't do the default submit action
+
+    _close_dialog = ->
+      app_data.dialog = false
+      $dialog.remove()
 
     # The actual dialog object, stored in a var for reference
     $dialog = $("<div><div class='loading'>Loading...</div></div>").dialog
@@ -84,10 +129,10 @@ $ ->
       modal: true
 
       buttons:
-        "Cancel"        : -> $dialog.remove()
+        "Cancel"        : _close_dialog
         "Update Story"  : _submit
 
-      close: -> $dialog.remove()
+      close: _close_dialog
 
       create: ->
         # Add content from the edit page
