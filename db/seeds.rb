@@ -7,14 +7,14 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
 Status.create([
-  {:code => 'P_Q', :name => 'ProductMgmt Ready'},
-  {:code => 'P', :name => 'ProductMgmt'},
-  {:code => 'C_Q', :name => 'Design Ready'},
-  {:code => 'C', :name => 'Design'},
-  {:code => 'D_Q', :name => 'Development Ready'},
-  {:code => 'D', :name => 'Development'},
-  {:code => 'T_Q', :name => 'Test Ready'},
-  {:code => 'T', :name => 'Test'},
-  {:code => 'R_Q', :name => 'Release Ready'},
-  {:code => 'R', :name => 'Release'},
+  {:code => 'P_Q', :name => 'ProductMgmt Ready', :color => 'lightgrey'},
+  {:code => 'P', :name => 'ProductMgmt', :color => 'red'},
+  {:code => 'C_Q', :name => 'Design Ready', :color => 'lightgrey'},
+  {:code => 'C', :name => 'Design', :color => 'yellow'},
+  {:code => 'D_Q', :name => 'Development Ready', :color => 'lightgrey'},
+  {:code => 'D', :name => 'Development', :color => 'skyblue'},
+  {:code => 'T_Q', :name => 'Test Ready', :color => 'lightgrey'},
+  {:code => 'T', :name => 'Test', :color => 'orange'},
+  {:code => 'R_Q', :name => 'Release Ready', :color => 'lightgrey'},
+  {:code => 'R', :name => 'Release', :color => 'green'},
 ])
