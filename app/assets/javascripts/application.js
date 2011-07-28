@@ -9,4 +9,7 @@
 //= require 'ui/jquery.ui.core'
 //= require 'ui/jquery.ui.widget'
 //= require 'ui/jquery.ui.mouse'
+//= require 'ui/jquery.ui.position'
+//= require 'ui/jquery.ui.draggable'
 //= require 'ui/jquery.ui.sortable'
+//= require 'ui/jquery.ui.dialog'

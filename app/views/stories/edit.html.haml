@@ -1,6 +1,7 @@
 %h2 Editing story
-= render 'form'
-.actions
-  = link_to 'Show', @story
-  |
-  \#{link_to 'Back', stories_path}
+#edit-form
+  = render 'form'
+  .actions
+    = link_to 'Show', @story
+    |
+    \#{link_to 'Back', stories_path}

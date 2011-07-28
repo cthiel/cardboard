@@ -55,11 +55,49 @@ $ ->
         story_element
           .data("story", story)
           .delegate 'div', 'dblclick', ->
-            window.location.assign "/stories/#{story.id}/edit"
+            show_edit_dialog(story)
 
         list.append story_element
 
     list
+
+
+  # Create a functional edit dialog
+  show_edit_dialog = (story) ->
+    $form = null
+
+    # Our lovely submit handler
+    _submit = (e) ->
+      # Handle the submit via ajax
+      $.post($form.attr('action'), $form.serialize())
+        .complete ->
+          $dialog.remove()
+          init_stories() # Refresh the stories!
+
+      e.preventDefault() # Don't do the default submit action
+
+    # The actual dialog object, stored in a var for reference
+    $dialog = $("<div/>").dialog
+      title: "Editing item #{story.id}"
+      width: "50%"
+      position: [$(window).width() / 4, $(window).height() / 5]
+      modal: true
+
+      buttons:
+        "Cancel"        : -> $dialog.remove()
+        "Update Story"  : _submit
+
+      close: -> $dialog.remove()
+
+      create: ->
+        # Add content from the edit page
+        $('.ui-dialog-content', $dialog)
+          .load "/stories/#{story.id}/edit #edit-form", ->
+            $('#edit-form').hide().slideDown 200, ->
+              # Preselect the name field
+              $("#story_name", $dialog).select()
+              # Capture the $form object & set the submit handler
+              $form = $('form', $dialog).submit _submit
 
 
   create_column = (board, state, headline) ->
