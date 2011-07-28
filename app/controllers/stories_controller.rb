@@ -2,7 +2,7 @@ class StoriesController < ApplicationController
   # GET /stories
   # GET /stories.json
   def index
-    @stories = Story.all
+    @stories = Story.all(:include => :status)
 
     respond_to do |format|
       format.html # index.html.haml
@@ -12,7 +12,7 @@ class StoriesController < ApplicationController
 
   # GET /stories/1
   def show
-    @story = Story.find(params[:id])
+    @story = Story.find(params[:id], :include => :status)
 
     respond_to do |format|
       format.html # show.html.haml
@@ -30,7 +30,7 @@ class StoriesController < ApplicationController
 
   # GET /stories/1/edit
   def edit
-    @story = Story.find(params[:id])
+    @story = Story.find(params[:id], :include => :status)
 
     respond_to do |format|
       format.html # edit.html.haml
