@@ -95,7 +95,7 @@ $ ->
   update_story_status = (e, drag) ->
     $item = drag.item
     story_id = $item.data("story").id
-    status_id = $item.parent()[0].id
+    status_id = $item.parent()[0].id.replace('status','')
 
     $.ajax
       type: "PUT"
