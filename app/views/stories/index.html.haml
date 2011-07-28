@@ -1,12 +1,10 @@
 %table
   %tr
-    %th Number
     %th Name
     %th Status
     %th
   - @stories.each do |story|
     %tr
-      %td= story.number
       %td= story.name
       %td= story.status.name
       %td

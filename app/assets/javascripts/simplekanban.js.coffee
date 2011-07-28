@@ -48,7 +48,7 @@ $ ->
 
     if board[state]
       for story in board[state]
-        story_element = $("<li><div class='box box_#{state}'>#{story.number} #{story.name}</div></li>")
+        story_element = $("<li><div class='box box_#{state}'>#{story.name}</div></li>")
         story_element.data "story", story
         list.append story_element
 
