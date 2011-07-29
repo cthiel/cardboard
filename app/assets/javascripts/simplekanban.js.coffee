@@ -127,7 +127,7 @@ $ ->
 
     # The actual dialog object, stored in a var for reference
     $dialog = $("<div><div class='loading'>Loading...</div></div>").dialog
-      title: "Editing item #{story.id}"
+      title: "Editing story: #{story.name}"
       width: "50%"
       position: [$(window).width() / 4, $(window).height() / 5]
       modal: true
