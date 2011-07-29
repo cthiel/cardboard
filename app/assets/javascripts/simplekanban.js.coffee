@@ -1,13 +1,5 @@
-$ = jQuery
-
-$ ->
+@kanban = (($)->
   app_data = {}
-
-
-  init_app = ->
-    init_states()
-    watch_mouse()
-    start_polling()
 
 
   init_states = ->
@@ -196,4 +188,14 @@ $ ->
       complete: clear_status
 
 
-  init_app()
+  init: ->
+    init_states()
+    watch_mouse()
+    start_polling()
+
+
+)(jQuery)
+
+
+jQuery ->
+  kanban.init()
