@@ -225,6 +225,8 @@
       complete: clearStatus
 
 
+  ### Public functions ###
+
   init: ->
     initStates()
     watchMouse()
