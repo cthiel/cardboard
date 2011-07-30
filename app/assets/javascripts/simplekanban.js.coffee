@@ -80,19 +80,26 @@
 
 
   createList = (board, state) ->
-    list = $("<ul class='state' id='status#{appData.statesIds[state]}'></ul>")
+    $list = $ "<ul class='state' id='status#{appData.statesIds[state]}'></ul>"
 
     if board[state]
       for story in board[state]
         tags = story.tag_list.sort().join(', ')
 
-        storyElement = $("<li><div class='box box_#{state}' data-story-id='#{story.id}'><b>#{story.name}</b><br/>#{tags}</div></li>")
+        $storyElement = $ """
+          <li>
+            <div class='box box_#{state}' data-story-id='#{story.id}'>
+              <b>#{story.name}</b>
+              <br>#{tags}
+            </div>
+          </li>
+          """
 
-        storyElement.data("story", story)
+        $storyElement.data "story", story
 
-        list.append storyElement
+        $list.append $storyElement
 
-    list
+    $list
 
 
   showEditDialog = (story) ->
@@ -121,7 +128,7 @@
 
     Submit = (e) ->
       # Handle the submit via ajax
-      $.post($form.attr('action'), $form.serialize())
+      $.post $form.attr('action'), $form.serialize()
         .complete ->
           CloseDialog()
           initStories() # Refresh the stories!
@@ -175,7 +182,7 @@
   createColumn = (board, state, headline) ->
     queueClass = if /Q$/.test(state) then " queue_column" else ""
 
-    stateColumn = $("<div class='column #{queueClass}'></div>")
+    $("<div class='column #{queueClass}'></div>")
       .append("<h2>#{headline}</h2>")
       .append(createList board, state)
       .data("state", state)
@@ -188,15 +195,15 @@
 
 
   createBoard = (appData) ->
-    table = $("<div id='board'></div>")
+    $table = $ "<div id='board'></div>"
 
     for state in appData.statesOrder
       stateColumn = createColumn(appData.board, state, appData.states[state])
 
-      table
+      $table
         .append(stateColumn)
 
-    $(".column>ul", table).sortable
+    $(".column>ul", $table).sortable
       connectWith: "ul"
       scroll: false
       placeholder: "box-placeholder"
@@ -204,9 +211,9 @@
       distance: 6
       opacity: 0.7
 
-    $(".column", table).disableSelection()
+    $(".column", $table).disableSelection()
 
-    displayBoard table
+    displayBoard $table
 
 
   displayBoard = (boardTable) ->
