@@ -128,7 +128,7 @@
 
     _submit = (e) ->
       # Handle the submit via ajax
-      $.post $form.attr('action'), $form.serialize()
+      $.post($form.attr('action'), $form.serialize())
         .complete ->
           _closeDialog()
           initStories() # Refresh the stories!
