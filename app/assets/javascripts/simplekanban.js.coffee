@@ -88,22 +88,38 @@
 
         story_element = $("<li><div class='box box_#{state}' data-story_id='#{story.id}'><b>#{story.name}</b><br/>#{tags}</div></li>")
 
-        story_element
-          .data("story", story)
-          .delegate 'div', 'dblclick', ->
-            show_edit_dialog(story)
+        story_element.data("story", story)
 
         list.append story_element
 
     list
 
 
-  # Create a functional edit dialog
   show_edit_dialog = (story) ->
+    create_dialog
+      title: "Editing story: #{story.name}"
+      url:   "/stories/#{story.id}/edit"
+      id:    "#edit-form"
+
+
+  show_new_dialog = (state) ->
+    console.log state
+    create_dialog
+      title: "Add a new story"
+      url:   "/stories/new"
+      id:    "#new-form"
+      state: state
+
+
+  # Create a dialog
+  create_dialog = (opt) ->
     $form = null
     app_data.dialog = true
 
-    # Our lovely submit handler
+    _close_dialog = ->
+      app_data.dialog = false
+      $dialog.remove()
+
     _submit = (e) ->
       # Handle the submit via ajax
       $.post($form.attr('action'), $form.serialize())
@@ -111,34 +127,51 @@
           _close_dialog()
           init_stories() # Refresh the stories!
 
-      e.preventDefault() # Don't do the default submit action
-
-    _close_dialog = ->
-      app_data.dialog = false
-      $dialog.remove()
+      console.log "Nifty"
+      e.preventDefault() # Don't do the default HTML submit action
 
     # The actual dialog object, stored in a var for reference
     $dialog = $("<div><div class='loading'>Loading...</div></div>").dialog
-      title: "Editing story: #{story.name}"
+      title: opt.title
       width: "50%"
       position: [$(window).width() / 4, $(window).height() / 5]
       modal: true
 
       buttons:
-        "Cancel"        : _close_dialog
-        "Update Story"  : _submit
+        "Cancel" : _close_dialog
+        "Save"   : _submit # this text is replaced later
 
       close: _close_dialog
 
       create: ->
+        $buttons = $('.ui-dialog-buttonpane', $dialog).hide()
+
         # Add content from the edit page
         $('.ui-dialog-content', $dialog)
-          .load "/stories/#{story.id}/edit #edit-form", ->
-            $('#edit-form').hide().slideDown 200, ->
+          .load "#{opt.url} #{opt.id}", (data, foo) ->
+            $form = $('form', $dialog)
+
+            # Sync button with page's default submit button
+            buttonText = $('input[type="submit"]:last',this).val()
+            $('button:last', $buttons).text(buttonText) if buttonText
+
+            # If the state is passed in (new story), select it
+            if opt.state
+              options = $('option', $form).map -> $(this).text()
+              $('select', $form).val $.inArray(opt.state, options) + 1
+
+            $buttons.slideDown 200
+
+            $(opt.id).hide().slideDown 200, ->
               # Preselect the name field
-              $("#story_name", $dialog).select()
-              # Capture the $form object & set the submit handler
-              $form = $('form', $dialog).submit _submit
+              $('input[type="text"]:first', $dialog).select()
+
+              $form
+                # Set the submit handler
+                .submit(_submit)
+                # Handle enter
+                .delegate 'input', 'keydown', (e) ->
+                  _submit(e) if e.keyCode == 13
 
 
   create_column = (board, state, headline) ->
@@ -148,6 +181,12 @@
       .append("<h2>#{headline}</h2>")
       .append(create_list board, state)
       .data("state", state)
+      .delegate 'li', 'dblclick', (e) ->
+        show_edit_dialog $(this).data 'story'
+      .delegate 'ul', 'dblclick', (e) ->
+        # Delegation isn't working right for the UL, oddly, so check it
+        show_new_dialog headline if $(e.target).is('ul')
+
 
 
   create_board = (app_data) ->
