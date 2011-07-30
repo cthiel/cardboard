@@ -103,7 +103,6 @@
 
 
   show_new_dialog = (state) ->
-    console.log state
     create_dialog
       title: "Add a new story"
       url:   "/stories/new"
@@ -127,7 +126,6 @@
           _close_dialog()
           init_stories() # Refresh the stories!
 
-      console.log "Nifty"
       e.preventDefault() # Don't do the default HTML submit action
 
     # The actual dialog object, stored in a var for reference
