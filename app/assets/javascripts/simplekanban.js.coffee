@@ -122,15 +122,15 @@
     $form = null
     appData.dialog = true
 
-    CloseDialog = ->
+    _closeDialog = ->
       appData.dialog = false
       $dialog.remove()
 
-    Submit = (e) ->
+    _submit = (e) ->
       # Handle the submit via ajax
       $.post $form.attr('action'), $form.serialize()
         .complete ->
-          CloseDialog()
+          _closeDialog()
           initStories() # Refresh the stories!
 
       e.preventDefault() # Don't do the default HTML submit action
@@ -143,10 +143,10 @@
       modal: true
 
       buttons:
-        "Cancel" : CloseDialog
-        "Save"   : Submit # this text is replaced later
+        "Cancel" : _closeDialog
+        "Save"   : _submit # this text is replaced later
 
-      close: CloseDialog
+      close: _closeDialog
 
       create: ->
         $buttons = $('.ui-dialog-buttonpane', $dialog).hide()
@@ -173,10 +173,10 @@
 
               $form
                 # Set the submit handler
-                .submit(Submit)
+                .submit(_submit)
                 # Handle enter
                 .delegate 'input', 'keydown', (e) ->
-                  Submit(e) if e.keyCode == 13
+                  _submit(e) if e.keyCode == 13
 
 
   createColumn = (board, state, headline) ->
