@@ -222,14 +222,19 @@
 
   updateStoryStatus = (e, drag) ->
     $item = drag.item
+    $box = $item.find '.box'
     storyId = $item.data("story").id
     statusId = $item.parent()[0].id.replace('status','')
+
+    $box.addClass "unsaved"
 
     $.ajax
       type: "PUT"
       url: "stories/#{storyId}"
       data: "story[status_id]=#{statusId}"
-      complete: clearStatus
+      complete: ->
+        $box.removeClass "unsaved"
+        clearStatus()
 
 
   ### Public functions ###
