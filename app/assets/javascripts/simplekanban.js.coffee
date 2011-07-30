@@ -1,109 +1,109 @@
 @kanban = (($)->
-  app_data = {}
+  appData = {}
 
 
-  init_states = ->
-    $.getJSON "/statuses.json", (status_data) ->
+  initStates = ->
+    $.getJSON "/statuses.json", (statusData) ->
       states = {}
-      states_ids = {}
-      states_order = []
+      statesIds = {}
+      statesOrder = []
 
-      for datum in status_data
+      for datum in statusData
         state = datum.status
         states[state.code] = state.name
-        states_ids[state.code] = state.id
-        states_order.push state.code
+        statesIds[state.code] = state.id
+        statesOrder.push state.code
 
-      app_data.states = states
-      app_data.states_ids = states_ids
-      app_data.states_order = states_order
+      appData.states = states
+      appData.statesIds = statesIds
+      appData.statesOrder = statesOrder
 
-      init_stories()
+      initStories()
 
 
-  init_stories = (stories) ->
+  initStories = (stories) ->
     board = {}
 
-    $.getJSON "/stories.json", (stories_data) ->
+    $.getJSON "/stories.json", (storiesData) ->
 
-      for datum in stories_data
+      for datum in storiesData
         story = datum.story
         state = story.status_code
         board[state] = [] unless board[state]
         board[state].push story
 
-      app_data.board = board
+      appData.board = board
 
-      create_board app_data
+      createBoard appData
 
 
-  watch_mouse = ->
+  watchMouse = ->
     $(document).mousemove ->
-      reset_polling()
+      resetPolling()
 
 
-  start_polling = ->
-    app_data.poll = setInterval ->
-      check_status() if !app_data.dialog
+  startPolling = ->
+    appData.poll = setInterval ->
+      checkStatus() if !appData.dialog
       return
     , 5000
 
 
-  stop_polling = ->
-    clearInterval(app_data.poll)
+  stopPolling = ->
+    clearInterval(appData.poll)
     return
 
 
-  reset_polling = ->
-    stop_polling()
-    start_polling()
+  resetPolling = ->
+    stopPolling()
+    startPolling()
     return
 
 
-  check_status = ->
+  checkStatus = ->
     _head = (state) ->
       $.ajax "/#{state.url}.json",
         type: "HEAD"
         complete: (xhr, status) ->
           mod = xhr.getAllResponseHeaders().match(/Last-Modified: (.*)/)[1]
-          state.func() if app_data[state.obj]? and app_data[state.obj] != mod
-          app_data[state.obj] = mod
+          state.func() if appData[state.obj]? and appData[state.obj] != mod
+          appData[state.obj] = mod
 
-    _head {} = url: "statuses", obj: "status_mod", func: init_states
-    _head {} = url: "stories",  obj: "story_mod",  func: init_stories
+    _head {} = url: "statuses", obj: "statusMod", func: initStates
+    _head {} = url: "stories",  obj: "storyMod",  func: initStories
 
     return
 
 
-  clear_status = ->
-    app_data.story_mod = app_data.status_mod = undefined
+  clearStatus = ->
+    appData.storyMod = appData.statusMod = undefined
 
 
-  create_list = (board, state) ->
-    list = $("<ul class='state' id='status#{app_data.states_ids[state]}'></ul>")
+  createList = (board, state) ->
+    list = $("<ul class='state' id='status#{appData.statesIds[state]}'></ul>")
 
     if board[state]
       for story in board[state]
         tags = story.tag_list.sort().join(', ')
 
-        story_element = $("<li><div class='box box_#{state}' data-story_id='#{story.id}'><b>#{story.name}</b><br/>#{tags}</div></li>")
+        storyElement = $("<li><div class='box box_#{state}' data-story-id='#{story.id}'><b>#{story.name}</b><br/>#{tags}</div></li>")
 
-        story_element.data("story", story)
+        storyElement.data("story", story)
 
-        list.append story_element
+        list.append storyElement
 
     list
 
 
-  show_edit_dialog = (story) ->
-    create_dialog
+  showEditDialog = (story) ->
+    createDialog
       title: "Editing story: #{story.name}"
       url:   "/stories/#{story.id}/edit"
       id:    "#edit-form"
 
 
-  show_new_dialog = (state) ->
-    create_dialog
+  showNewDialog = (state) ->
+    createDialog
       title: "Add a new story"
       url:   "/stories/new"
       id:    "#new-form"
@@ -111,20 +111,20 @@
 
 
   # Create a dialog
-  create_dialog = (opt) ->
+  createDialog = (opt) ->
     $form = null
-    app_data.dialog = true
+    appData.dialog = true
 
-    _close_dialog = ->
-      app_data.dialog = false
+    CloseDialog = ->
+      appData.dialog = false
       $dialog.remove()
 
-    _submit = (e) ->
+    Submit = (e) ->
       # Handle the submit via ajax
       $.post($form.attr('action'), $form.serialize())
         .complete ->
-          _close_dialog()
-          init_stories() # Refresh the stories!
+          CloseDialog()
+          initStories() # Refresh the stories!
 
       e.preventDefault() # Don't do the default HTML submit action
 
@@ -136,10 +136,10 @@
       modal: true
 
       buttons:
-        "Cancel" : _close_dialog
-        "Save"   : _submit # this text is replaced later
+        "Cancel" : CloseDialog
+        "Save"   : Submit # this text is replaced later
 
-      close: _close_dialog
+      close: CloseDialog
 
       create: ->
         $buttons = $('.ui-dialog-buttonpane', $dialog).hide()
@@ -166,69 +166,69 @@
 
               $form
                 # Set the submit handler
-                .submit(_submit)
+                .submit(Submit)
                 # Handle enter
                 .delegate 'input', 'keydown', (e) ->
-                  _submit(e) if e.keyCode == 13
+                  Submit(e) if e.keyCode == 13
 
 
-  create_column = (board, state, headline) ->
-    queueClass = if /_Q$/.test(state) then " queue_column" else ""
+  createColumn = (board, state, headline) ->
+    queueClass = if /Q$/.test(state) then " queue_column" else ""
 
-    state_column = $("<div class='column #{queueClass}'></div>")
+    stateColumn = $("<div class='column #{queueClass}'></div>")
       .append("<h2>#{headline}</h2>")
-      .append(create_list board, state)
+      .append(createList board, state)
       .data("state", state)
       .delegate 'li', 'dblclick', (e) ->
-        show_edit_dialog $(this).data 'story'
+        showEditDialog $(this).data 'story'
       .delegate 'ul', 'dblclick', (e) ->
         # Delegation isn't working right for the UL, oddly, so check it
-        show_new_dialog headline if $(e.target).is('ul')
+        showNewDialog headline if $(e.target).is('ul')
 
 
 
-  create_board = (app_data) ->
+  createBoard = (appData) ->
     table = $("<div id='board'></div>")
 
-    for state in app_data.states_order
-      state_column = create_column(app_data.board, state, app_data.states[state])
+    for state in appData.statesOrder
+      stateColumn = createColumn(appData.board, state, appData.states[state])
 
       table
-        .append(state_column)
+        .append(stateColumn)
 
     $(".column>ul", table).sortable
       connectWith: "ul"
       scroll: false
       placeholder: "box-placeholder"
-      stop: update_story_status
+      stop: updateStoryStatus
       distance: 6
       opacity: 0.7
 
     $(".column", table).disableSelection()
 
-    display_board table
+    displayBoard table
 
 
-  display_board = (board_table) ->
-    $("#output").html board_table
+  displayBoard = (boardTable) ->
+    $("#output").html boardTable
 
 
-  update_story_status = (e, drag) ->
+  updateStoryStatus = (e, drag) ->
     $item = drag.item
-    story_id = $item.data("story").id
-    status_id = $item.parent()[0].id.replace('status','')
+    storyId = $item.data("story").id
+    statusId = $item.parent()[0].id.replace('status','')
 
     $.ajax
       type: "PUT"
-      url: "stories/#{story_id}"
-      data: "story[status_id]=#{status_id}"
-      complete: clear_status
+      url: "stories/#{storyId}"
+      data: "story[status_id]=#{statusId}"
+      complete: clearStatus
 
 
   init: ->
-    init_states()
-    watch_mouse()
-    start_polling()
+    initStates()
+    watchMouse()
+    startPolling()
 
 
 )(jQuery)
