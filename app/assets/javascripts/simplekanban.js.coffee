@@ -161,8 +161,7 @@
 
             # If the state is passed in (new story), select it
             if opt.state
-              options = $('option', $form).map -> $(this).text()
-              $('select', $form).val $.inArray(opt.state, options) + 1
+              $("option:contains(#{opt.state})", $form).attr "selected", true
 
             $buttons.slideDown 200
 
