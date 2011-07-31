@@ -3,36 +3,31 @@
 
 
   initStates = ->
+    appData =
+      states     : {}
+      statesIds  : {}
+      statesOrder: []
+
     $.getJSON "/statuses.json", (statusData) ->
-      states = {}
-      statesIds = {}
-      statesOrder = []
 
       for datum in statusData
         state = datum.status
-        states[state.code] = state.name
-        statesIds[state.code] = state.id
-        statesOrder.push state.code
-
-      appData.states = states
-      appData.statesIds = statesIds
-      appData.statesOrder = statesOrder
+        appData.states[state.code] = state.name
+        appData.statesIds[state.code] = state.id
+        appData.statesOrder.push state.code
 
       initStories()
 
 
   initStories = (stories) ->
-    board = {}
+    board = appData.board = {}
 
     $.getJSON "/stories.json", (storiesData) ->
 
       for datum in storiesData
-        story = datum.story
-        state = story.status_code
-        board[state] = [] unless board[state]
-        board[state].push story
-
-      appData.board = board
+        state = datum.story.status_code
+        board[state] ?= []
+        board[state].push datum.story
 
       createBoard appData
 
@@ -61,14 +56,18 @@
 
 
   checkStatus = ->
+    # jQuery doesn't have $.head(), but we can use $.ajax()
     _head = (state) ->
       $.ajax "/#{state.url}.json",
         type: "HEAD"
         complete: (xhr, status) ->
           mod = xhr.getAllResponseHeaders().match(/Last-Modified: (.*)/)[1]
+          # run the callback if data has been modified since last check
           state.func() if appData[state.obj]? and appData[state.obj] != mod
+          # save the last modified date
           appData[state.obj] = mod
 
+    # check both statuses & stories for updates
     _head {} = url: "statuses", obj: "statusMod", func: initStates
     _head {} = url: "stories",  obj: "storyMod",  func: initStories
 
@@ -200,8 +199,7 @@
     for state in appData.statesOrder
       stateColumn = createColumn(appData.board, state, appData.states[state])
 
-      $table
-        .append(stateColumn)
+      $table.append(stateColumn)
 
     $(".column>ul", $table).sortable
       connectWith: "ul"
