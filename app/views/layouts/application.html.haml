@@ -10,13 +10,5 @@
     = yield :head
   %body
     .container
-      %header
-      %h1= link_to 'Simple Kanban', root_path
-      %nav
-        = link_to 'Wall', root_path
-        |
-        \#{link_to 'Stories', stories_path}
-        |
-        \#{link_to 'Statuses', statuses_path}
       %p
       = yield
