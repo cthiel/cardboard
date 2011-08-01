@@ -161,7 +161,9 @@
 
             # If the state is passed in (new story), select it
             if opt.state
-              $("option:contains(#{opt.state})", $form).attr "selected", true
+              $("option", $form).map (i, el) ->
+                el if el.text.match "^#{opt.state}$"
+              .attr "selected", true
 
             $buttons.slideDown 200
 
