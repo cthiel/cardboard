@@ -7,14 +7,10 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
 Status.create([
-  {:code => 'P_Q', :name => 'ProductMgmt Ready', :color => 'lightgrey'},
-  {:code => 'P', :name => 'ProductMgmt', :color => 'red'},
-  {:code => 'C_Q', :name => 'Design Ready', :color => 'lightgrey'},
-  {:code => 'C', :name => 'Design', :color => 'yellow'},
-  {:code => 'D_Q', :name => 'Development Ready', :color => 'lightgrey'},
-  {:code => 'D', :name => 'Development', :color => 'skyblue'},
-  {:code => 'T_Q', :name => 'Test Ready', :color => 'lightgrey'},
-  {:code => 'T', :name => 'Test', :color => 'orange'},
-  {:code => 'R_Q', :name => 'Release Ready', :color => 'lightgrey'},
-  {:code => 'R', :name => 'Release', :color => 'green'},
+  {:code => 'A', :name => 'Backlog', :color => 'lightgrey'},
+  {:code => 'B', :name => 'Work in progress', :color => 'yellow'},
+  {:code => 'C', :name => 'Completed', :color => 'lightgreen'},
 ])
+Story.create(
+ {:name => "Your first card.", :status_id => Status.first.id}
+)
