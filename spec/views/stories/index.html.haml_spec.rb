@@ -5,11 +5,11 @@ describe "stories/index.html.haml" do
     assign(:stories, [
       stub_model(Story,
         :name => "Name 1",
-        :status =>  stub_model(Status, :code => 'D', :name => 'Development', :color => '#000000')
+        :status =>  stub_model(Status, :name => 'Development', :color => '#000000')
       ),
       stub_model(Story,
         :name => "Name 2",
-        :status => stub_model(Status, :code => 'D', :name => 'Development', :color => '#000000')
+        :status => stub_model(Status, :name => 'Development', :color => '#000000')
       )
     ])
   end

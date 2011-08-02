@@ -4,7 +4,7 @@ describe "stories/edit.html.haml" do
   before(:each) do
     @story = assign(:story, stub_model(Story,
       :name => "MyString",
-      :status => stub_model(Status, :code => 'D', :name => 'Development', :color => '#000000')
+      :status => stub_model(Status, :name => 'Development', :color => '#000000')
     ))
   end
 

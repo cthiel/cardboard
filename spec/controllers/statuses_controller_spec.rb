@@ -6,8 +6,7 @@ describe StatusesController do
   # Status. As you add validations to Status, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    { :code  => 'D',
-      :name  => 'Development',
+    { :name  => 'Development',
       :color => '#000000' }
   end
 

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe StoriesController do
 
   before do
-    Status.create!({:code => 'D', :name => 'Development', :color => '#000000'})
+    Status.create!({:name => 'Development', :color => '#000000'})
   end
 
   # This should return the minimal set of attributes required to create a valid
