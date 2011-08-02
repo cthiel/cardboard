@@ -6,7 +6,7 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
-Status.create([
+Deck.create([
   {:name => 'Backlog', :color => 'lightgrey'},
   {:name => 'Work in progress', :color => 'yellow'},
   {:name => 'Completed', :color => 'lightgreen'},
@@ -24,6 +24,6 @@ We're using it for kanban.  Feel free to use it to get those silly notes off you
 For more info about how cardboard works, check out the [project](http://https://github.com/cthiel/cardboard).
 EOS
 
-Story.create(
- {:name => welcome, :status_id => Status.first.id}
+Card.create(
+ {:name => welcome, :deck_id => Deck.first.id}
 )
