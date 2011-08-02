@@ -1,4 +1,4 @@
-class DeckesController < ApplicationController
+class DecksController < ApplicationController
   # GET /decks
   # GET /decks.json
   # GET /decks.css
