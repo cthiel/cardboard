@@ -3,30 +3,30 @@
 
   converter = new Attacklab.showdown.converter()
 
-  initStates = ->
+  initDecks = ->
     appData =
-      states     : {}
-      statesOrder: []
+      decks     : {}
+      decksOrder: []
 
-    $.getJSON "/statuses.json", (statusData) ->
+    $.getJSON "/decks.json", (deckData) ->
 
-      for datum in statusData
-        state = datum.status
-        appData.states[state.id] = state.name
-        appData.statesOrder.push state.id
+      for datum in deckData
+        deck = datum.deck
+        appData.decks[deck.id] = deck.name
+        appData.decksOrder.push deck.id
 
-      initStories()
+      initCards()
 
 
-  initStories = (stories) ->
+  initCards = (cards) ->
     board = appData.board = {}
 
-    $.getJSON "/stories.json", (storiesData) ->
+    $.getJSON "/cards.json", (cardsData) ->
 
-      for datum in storiesData
-        state = datum.story.status_id
-        board[state] ?= []
-        board[state].push datum.story
+      for datum in cardsData
+        deck = datum.card.deck_id
+        board[deck] ?= []
+        board[deck].push datum.card
 
       createBoard appData
 
@@ -56,66 +56,66 @@
 
   checkStatus = ->
     # jQuery doesn't have $.head(), but we can use $.ajax()
-    _head = (state) ->
-      $.ajax "/#{state.url}.json",
+    _head = (deck) ->
+      $.ajax "/#{deck.url}.json",
         type: "HEAD"
-        complete: (xhr, status) ->
+        complete: (xhr, deck) ->
           mod = xhr.getAllResponseHeaders().match(/Last-Modified: (.*)/)[1]
           # run the callback if data has been modified since last check
-          state.func() if appData[state.obj]? and appData[state.obj] != mod
+          deck.func() if appData[deck.obj]? and appData[deck.obj] != mod
           # save the last modified date
-          appData[state.obj] = mod
+          appData[deck.obj] = mod
 
-    # check both statuses & stories for updates
-    _head {} = url: "statuses", obj: "statusMod", func: initStates
-    _head {} = url: "stories",  obj: "storyMod",  func: initStories
+    # check both decks & cards for updates
+    _head {} = url: "decks", obj: "statusMod", func: initDecks
+    _head {} = url: "cards",  obj: "cardMod",  func: initCards
 
     return
 
 
   clearStatus = ->
-    appData.storyMod = appData.statusMod = undefined
+    appData.cardMod = appData.statusMod = undefined
 
 
-  createList = (board, state) ->
+  createList = (board, deck) ->
     
-    $list = $ "<ul class='state' id='status_#{state}_stories'></ul>"
+    $list = $ "<ul class='deck' id='deck_#{deck}_cards'></ul>"
 
-    if board[state]
-      for story in board[state]
-        tags = story.tag_list.sort().join(', ')
-        story.markdown = converter.makeHtml(story.name)
-        story.title = story.name.split("\n", 1)
+    if board[deck]
+      for card in board[deck]
+        tags = card.tag_list.sort().join(', ')
+        card.markdown = converter.makeHtml(card.name)
+        card.title = card.name.split("\n", 1)
 
-        $storyElement = $ """
+        $cardElement = $ """
           <li>
-            <div class='box box_#{state}' data-story-id='#{story.id}'>
-              #{story.markdown}
+            <div class='box box_#{deck}' data-card-id='#{card.id}'>
+              #{card.markdown}
               <br>#{tags}
             </div>
           </li>
           """
 
-        $storyElement.data "story", story
+        $cardElement.data "card", card
 
-        $list.append $storyElement
+        $list.append $cardElement
 
     $list
 
 
-  showEditDialog = (story) ->
+  showEditDialog = (card) ->
     createDialog
-      title: "Editing story: #{story.title}"
-      url:   "/stories/#{story.id}/edit"
+      title: "Editing card: #{card.title}"
+      url:   "/cards/#{card.id}/edit"
       id:    "#edit-form"
 
 
-  showNewDialog = (state) ->
+  showNewDialog = (deck) ->
     createDialog
-      title: "Add a new story"
-      url:   "/stories/new"
+      title: "Add a new card"
+      url:   "/cards/new"
       id:    "#new-form"
-      state: state
+      deck: deck
 
 
   # Create a dialog
@@ -132,7 +132,7 @@
       $.post($form.attr('action'), $form.serialize())
         .complete ->
           _closeDialog()
-          initStories() # Refresh the stories!
+          initCards() # Refresh the cards!
 
       e.preventDefault() # Don't do the default HTML submit action
 
@@ -161,10 +161,10 @@
             buttonText = $('input[type="submit"]:last',this).val()
             $('button:last', $buttons).text(buttonText) if buttonText
 
-            # If the state is passed in (new story), select it
-            if opt.state
+            # If the deck is passed in (new card), select it
+            if opt.deck
               $("option", $form).map (i, el) ->
-                el if el.text.match "^#{opt.state}$"
+                el if el.text.match "^#{opt.deck}$"
               .attr "selected", true
 
             $buttons.slideDown 200
@@ -181,15 +181,13 @@
                   _submit(e) if e.keyCode == 13
 
 
-  createColumn = (board, state, headline) ->
-    queueClass = if /Q$/.test(state) then " queue_column" else ""
-
-    $("<div class='column #{queueClass}' id='status_#{state}'></div>")
+  createColumn = (board, deck, headline) ->
+    $("<div class='column' id='deck_#{deck}'></div>")
       .append("<h2 class='name'>#{headline}</h2>")
-      .append(createList board, state)
-      .data("state", state)
+      .append(createList board, deck)
+      .data("deck", deck)
       .delegate 'li', 'dblclick', (e) ->
-        showEditDialog $(this).data 'story'
+        showEditDialog $(this).data 'card'
       .delegate 'ul', 'dblclick', (e) ->
         # Delegation isn't working right for the UL, oddly, so check it
         showNewDialog headline if $(e.target).is('ul')
@@ -199,16 +197,16 @@
   createBoard = (appData) ->
     $table = $ "<div id='board'></div>"
 
-    for state in appData.statesOrder
-      stateColumn = createColumn(appData.board, state, appData.states[state])
+    for deck in appData.decksOrder
+      deckColumn = createColumn(appData.board, deck, appData.decks[deck])
 
-      $table.append(stateColumn)
+      $table.append(deckColumn)
 
     $(".column>ul", $table).sortable
       connectWith: "ul"
       scroll: false
       placeholder: "box-placeholder"
-      stop: updateStoryStatus
+      stop: updateCardDeck
       distance: 6
       opacity: 0.7
 
@@ -221,18 +219,18 @@
     $("#output").html boardTable
 
 
-  updateStoryStatus = (e, drag) ->
+  updateCardDeck = (e, drag) ->
     $item = drag.item
     $box = $item.find '.box'
-    storyId = $item.data("story").id
-    statusId = $item.parent()[0].id.replace('status_','')
+    cardId = $item.data("card").id
+    deckId = $item.parent()[0].id.replace('deck_','')
 
     $box.addClass "unsaved"
 
     $.ajax
       type: "PUT"
-      url: "stories/#{storyId}"
-      data: "story[status_id]=#{statusId}"
+      url: "cards/#{cardId}"
+      data: "card[deck_id]=#{deckId}"
       complete: ->
         $box.removeClass "unsaved"
         clearStatus()
@@ -241,7 +239,7 @@
   # Public functions:
 
   init: ->
-    initStates()
+    initDecks()
     watchMouse()
     startPolling()
 
