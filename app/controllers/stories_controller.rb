@@ -1,75 +1,75 @@
 class StoriesController < ApplicationController
-  # GET /stories
-  # GET /stories.json
+  # GET /cards
+  # GET /cards.json
   def index
-    @last_modified_story = Story.find(:first, :order => 'updated_at DESC')
+    @last_modified_card = Card.find(:first, :order => 'updated_at DESC')
 
-    if stale?(:last_modified => @last_modified_story.try(:updated_at).try(:utc), :etag => @last_modified_story)
-      @stories = Story.all(:include => :status, :order => 'updated_at ASC')
+    if stale?(:last_modified => @last_modified_card.try(:updated_at).try(:utc), :etag => @last_modified_story)
+      @cards = Card.all(:include => :deck, :order => 'updated_at ASC')
       respond_to do |format|
         format.html # index.html.haml
-        format.json  { render :json => @stories.to_json(:methods => [:tag_list]) }
+        format.json  { render :json => @cards.to_json(:methods => [:tag_list]) }
       end
     end
   end
 
-  # GET /stories/1
+  # GET /cards/1
   def show
-    @story = Story.find(params[:id], :include => :status)
+    @card = Card.find(params[:id], :include => :deck)
 
     respond_to do |format|
       format.html # show.html.haml
     end
   end
 
-  # GET /stories/new
+  # GET /cards/new
   def new
-    @story = Story.new
+    @card = Card.new
 
     respond_to do |format|
       format.html # new.html.haml
     end
   end
 
-  # GET /stories/1/edit
+  # GET /cards/1/edit
   def edit
-    @story = Story.find(params[:id], :include => :status)
+    @card = Card.find(params[:id], :include => :deck)
   end
 
-  # POST /stories
+  # POST /cards
   def create
-    @story = Story.new(params[:story])
+    @card = Card.new(params[:story])
 
     respond_to do |format|
-      if @story.save
-        format.html { redirect_to(@story, :notice => 'Story was successfully created.') }
+      if @card.save
+        format.html { redirect_to(@card, :notice => 'Card was successfully created.') }
       else
         format.html { render :action => "new" }
       end
     end
   end
 
-  # PUT /stories/1
+  # PUT /cards/1
   def update
-    @story = Story.find(params[:id])
+    @card = Card.find(params[:id])
     respond_to do |format|
-      if @story.update_attributes(params[:story])
-        format.html { redirect_to(@story, :notice => 'Story was successfully updated.') }
+      if @card.update_attributes(params[:story])
+        format.html { redirect_to(@card, :notice => 'Card was successfully updated.') }
         format.json  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.json  { render :json => @story.errors, :status => :unprocessable_entity }
+        format.json  { render :json => @card.errors, :deck => :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /stories/1
+  # DELETE /cards/1
   def destroy
-    @story = Story.find(params[:id])
-    @story.destroy
+    @card = Card.find(params[:id])
+    @card.destroy
 
     respond_to do |format|
-      format.html { redirect_to(stories_url) }
+      format.html { redirect_to(cards_url) }
     end
   end
 end

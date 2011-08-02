@@ -1,77 +1,77 @@
-class StatusesController < ApplicationController
-  # GET /statuses
-  # GET /statuses.json
-  # GET /statuses.css
+class DeckesController < ApplicationController
+  # GET /decks
+  # GET /decks.json
+  # GET /decks.css
   def index
-    @last_modified_status = Status.find(:first, :order => 'updated_at DESC')
+    @last_modified_deck = Deck.find(:first, :order => 'updated_at DESC')
     
-    if stale?(:last_modified => @last_modified_status.try(:updated_at).try(:utc), :etag => @last_modified_status)
-      @statuses = Status.all
+    if stale?(:last_modified => @last_modified_deck.try(:updated_at).try(:utc), :etag => @last_modified_status)
+      @decks = Deck.all
 
       respond_to do |format|
         format.html # index.html.haml
-        format.json  { render :json => @statuses }
+        format.json  { render :json => @decks }
         format.css  # index.css.erb
       end
     end
   end
 
-  # GET /statuses/1
+  # GET /decks/1
   def show
-    @status = Status.find(params[:id])
+    @deck = Deck.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.haml
     end
   end
 
-  # GET /statuses/new
+  # GET /decks/new
   def new
-    @status = Status.new
+    @deck = Deck.new
 
     respond_to do |format|
       format.html # new.html.haml
     end
   end
 
-  # GET /statuses/1/edit
+  # GET /decks/1/edit
   def edit
-    @status = Status.find(params[:id])
+    @deck = Deck.find(params[:id])
   end
 
-  # POST /statuses
+  # POST /decks
   def create
-    @status = Status.new(params[:status])
+    @deck = Deck.new(params[:status])
 
     respond_to do |format|
-      if @status.save
-        format.html { redirect_to(@status, :notice => 'Status was successfully created.') }
+      if @deck.save
+        format.html { redirect_to(@deck, :notice => 'Deck was successfully created.') }
       else
         format.html { render :action => "new" }
       end
     end
   end
 
-  # PUT /statuses/1
+  # PUT /decks/1
   def update
-    @status = Status.find(params[:id])
+    @deck = Deck.find(params[:id])
 
     respond_to do |format|
-      if @status.update_attributes(params[:status])
-        format.html { redirect_to(@status, :notice => 'Status was successfully updated.') }
+      if @deck.update_attributes(params[:status])
+        format.html { redirect_to(@deck, :notice => 'Deck was successfully updated.') }
       else
         format.html { render :action => "edit" }
       end
     end
   end
 
-  # DELETE /statuses/1
+  # DELETE /decks/1
   def destroy
-    @status = Status.find(params[:id])
-    @status.destroy
+    @deck = Deck.find(params[:id])
+    @deck.destroy
 
     respond_to do |format|
-      format.html { redirect_to(statuses_url) }
+      format.html { redirect_to(decks_url) }
     end
   end
 end
