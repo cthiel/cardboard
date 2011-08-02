@@ -177,8 +177,9 @@
                 # Set the submit handler
                 .submit(_submit)
                 # Handle enter
-                .delegate 'input', 'keydown', (e) ->
-                  _submit(e) if e.keyCode == 13
+                .delegate 'textarea,input', 'keydown', (e) ->
+                  if e.keyCode == 13 and (e.shiftKey or e.ctrlKey)
+                    _submit(e)
 
 
   createColumn = (board, deck, headline) ->
