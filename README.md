@@ -2,6 +2,9 @@
 
 A Kanban Board Application based on Rails 3.1.0.rc5
 
+It's designed to be flexible! Use it for card sorting, and tracking
+anything.
+
 ## Demo
 
 Visit http://card-board.herokuapp.com/ to try it out right away!
@@ -10,8 +13,7 @@ Visit http://card-board.herokuapp.com/ to try it out right away!
 
     sudo gem install bundler
     bundle install --without production
-    rake db:migrate
-    rake db:seed     # to seed database with sample status columns
+    rake db:setup
     rails server
 
 Visit http://localhost:3000/ and you should see your cardboard!
@@ -19,7 +21,6 @@ Visit http://localhost:3000/ and you should see your cardboard!
 ## Thanks
 
 This project was inspired by http://www.simple-kanban.com/ and https://github.com/0s30s1s/simplekanban
-
 
 ## Team
 
