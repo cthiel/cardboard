@@ -58,7 +58,7 @@
     # jQuery doesn't have $.head(), but we can use $.ajax()
     _head = (deck) ->
       $.ajax "/#{deck.url}.json",
-        type: "HEAD"
+        type: "HEAD",
         complete: (xhr, deck) ->
           mod = xhr.getAllResponseHeaders().match(/Last-Modified: (.*)/)[1]
           # run the callback if data has been modified since last check
@@ -67,7 +67,7 @@
           appData[deck.obj] = mod
 
     # check both decks & cards for updates
-    _head {} = url: "decks", obj: "statusMod", func: initDecks
+    _head {} = url: "decks", obj: "deckMod", func: initDecks
     _head {} = url: "cards",  obj: "cardMod",  func: initCards
 
     return
