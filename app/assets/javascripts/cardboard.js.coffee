@@ -85,6 +85,7 @@
       for story in board[state]
         tags = story.tag_list.sort().join(', ')
         story.markdown = converter.makeHtml(story.name)
+        story.title = story.name.split("\n", 1)
 
         $storyElement = $ """
           <li>
@@ -104,7 +105,7 @@
 
   showEditDialog = (story) ->
     createDialog
-      title: "Editing story: #{story.name}"
+      title: "Editing story: #{story.title}"
       url:   "/stories/#{story.id}/edit"
       id:    "#edit-form"
 
