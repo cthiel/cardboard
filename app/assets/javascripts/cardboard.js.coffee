@@ -103,14 +103,14 @@
     $list
 
 
-  showEditDialog = (card) ->
+  showEditCardDialog = (card) ->
     createDialog
       title: "Editing card: #{card.title}"
       url:   "/cards/#{card.id}/edit"
       id:    "#edit-form"
 
 
-  showNewDialog = (deck) ->
+  showNewCardDialog = (deck) ->
     createDialog
       title: "Add a new card"
       url:   "/cards/new"
@@ -187,10 +187,10 @@
       .append(createList board, deck)
       .data("deck", deck)
       .delegate 'li', 'dblclick', (e) ->
-        showEditDialog $(this).data 'card'
+        showEditCardDialog $(this).data 'card'
       .delegate 'ul', 'dblclick', (e) ->
         # Delegation isn't working right for the UL, oddly, so check it
-        showNewDialog headline if $(e.target).is('ul')
+        showNewCardDialog headline if $(e.target).is('ul')
 
 
 
