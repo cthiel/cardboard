@@ -59,7 +59,7 @@
     _head = (deck) ->
       $.ajax "/#{deck.url}.json",
         type: "HEAD",
-        complete: (xhr, deck) ->
+        complete: (xhr) ->
           mod = xhr.getAllResponseHeaders().match(/Last-Modified: (.*)/)[1]
           # run the callback if data has been modified since last check
           deck.func() if appData[deck.obj]? and appData[deck.obj] != mod
