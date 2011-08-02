@@ -21,7 +21,7 @@ Double-click on this card to edit it, or drag it into a different column.  Doubl
 
 We're using it for kanban.  Feel free to use it to get those silly notes off your monitor. Or whatever :)
 
-For more info about how cardboard works, check out the [project](http://https://github.com/cthiel/cardboard).
+For more info about how cardboard works, check out the [project](https://github.com/cthiel/cardboard).
 EOS
 
 Card.create(
