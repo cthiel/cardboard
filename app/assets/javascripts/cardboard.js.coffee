@@ -84,12 +84,12 @@
     if board[state]
       for story in board[state]
         tags = story.tag_list.sort().join(', ')
-        story.name = converter.makeHtml(story.name)
+        story.markdown = converter.makeHtml(story.name)
 
         $storyElement = $ """
           <li>
             <div class='box box_#{state}' data-story-id='#{story.id}'>
-              #{story.name}
+              #{story.markdown}
               <br>#{tags}
             </div>
           </li>
