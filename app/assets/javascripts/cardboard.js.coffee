@@ -215,9 +215,13 @@
       connectWith: "ul"
       scroll: false
       placeholder: "box-placeholder"
-      stop: updateCardDeck
       distance: 6
       opacity: 0.7
+      revert: 100
+      tolerance: "pointer"
+      start: (e, drag) ->
+        drag.placeholder.height drag.item.height()
+      stop: updateCardDeck
 
     $(".column", $table).disableSelection()
 
