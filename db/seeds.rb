@@ -11,6 +11,19 @@ Status.create([
   {:name => 'Work in progress', :color => 'yellow'},
   {:name => 'Completed', :color => 'lightgreen'},
 ])
+
+welcome = <<EOS
+Welcome to Cardboard!
+
+Cardboard is a simple way to keep simple information in simple categories, and share it, simply. (We like simplicity).
+
+Double-click on this card to edit it, or drag it into a different column.  The text uses [Markdown](http://daringfireball.net/projects/markdown/syntax), a dead-simple way to add some **basic** _decoration_.  The first line is your title.  No fancy fields... just your notes on cards.  
+
+We're using it for kanban.  Feel free to use it to get those silly notes off your monitor. Or whatever :)
+
+For more info about how cardboard works, check out the [project](http://https://github.com/cthiel/cardboard).
+EOS
+
 Story.create(
- {:name => "Welcome to cardboard.\n\nDouble-click on this card to edit it, or just drag it around to the different decks.", :status_id => Status.first.id}
+ {:name => welcome, :status_id => Status.first.id}
 )
