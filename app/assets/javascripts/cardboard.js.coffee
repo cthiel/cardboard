@@ -78,7 +78,7 @@
 
 
   createList = (board, deck) ->
-    
+
     $list = $ "<ul class='deck' id='deck_#{deck}_cards'></ul>"
 
     if board[deck]
@@ -91,7 +91,7 @@
           <li>
             <div class='box box_#{deck}' data-card-id='#{card.id}'>
               #{card.markdown}
-              <br>#{tags}
+              #{if tags then '<br>' else ''}#{tags}
             </div>
           </li>
           """
@@ -213,7 +213,7 @@
     $(".column", $table).disableSelection()
 
     displayBoard $table
-      
+
 
   displayBoard = (boardTable) ->
     $("#output").html boardTable
