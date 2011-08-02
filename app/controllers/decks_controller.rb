@@ -41,7 +41,7 @@ class DeckesController < ApplicationController
 
   # POST /decks
   def create
-    @deck = Deck.new(params[:deck)
+    @deck = Deck.new(params[:deck])
 
     respond_to do |format|
       if @deck.save
