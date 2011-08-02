@@ -7,7 +7,7 @@ require 'rails/all'
 # or test environments.
 Bundler.require *Rails.groups(:assets) if defined?(Bundler)
 
-module Simplekanban
+module CardBoard
   class Application < Rails::Application
   
     config.generators do |g|

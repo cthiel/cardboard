@@ -1,4 +1,4 @@
-Simplekanban::Application.routes.draw do
+CardBoard::Application.routes.draw do
   resources :stories
   resources :statuses
 

@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Simplekanban::Application.load_tasks
+CardBoard::Application.load_tasks
