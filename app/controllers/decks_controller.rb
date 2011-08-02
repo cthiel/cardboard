@@ -5,7 +5,7 @@ class DeckesController < ApplicationController
   def index
     @last_modified_deck = Deck.find(:first, :order => 'updated_at DESC')
     
-    if stale?(:last_modified => @last_modified_deck.try(:updated_at).try(:utc), :etag => @last_modified_status)
+    if stale?(:last_modified => @last_modified_deck.try(:updated_at).try(:utc), :etag => @last_modified_deck)
       @decks = Deck.all
 
       respond_to do |format|
@@ -41,7 +41,7 @@ class DeckesController < ApplicationController
 
   # POST /decks
   def create
-    @deck = Deck.new(params[:status])
+    @deck = Deck.new(params[:deck)
 
     respond_to do |format|
       if @deck.save
@@ -57,7 +57,7 @@ class DeckesController < ApplicationController
     @deck = Deck.find(params[:id])
 
     respond_to do |format|
-      if @deck.update_attributes(params[:status])
+      if @deck.update_attributes(params[:deck])
         format.html { redirect_to(@deck, :notice => 'Deck was successfully updated.') }
       else
         format.html { render :action => "edit" }

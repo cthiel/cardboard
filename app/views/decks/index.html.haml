@@ -3,12 +3,12 @@
     %th Name
     %th Color
     %th
-  - @decks.each do |status|
+  - @decks.each do |deck|
     %tr
       %td= deck.name
-      %td{:style => "background-color:#{deck.color}"}= status.color
+      %td{:style => "background-color:#{deck.color}"}= deck.color
       %td
         = link_to 'Show', deck
-        | #{link_to 'Edit', edit_deck_path(status)} | #{link_to 'Destroy', status, :confirm => 'Are you sure?', :method => :delete}
+        | #{link_to 'Edit', edit_deck_path(deck)} | #{link_to 'Destroy', deck, :confirm => 'Are you sure?', :method => :delete}
 .actions
   = link_to 'New Deck', new_deck_path

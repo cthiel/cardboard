@@ -11,6 +11,6 @@
       %td= card.deck.name
       %td
         = link_to 'Show', card
-        | #{link_to 'Edit', edit_card_path(story)} | #{link_to 'Destroy', story, :confirm => 'Are you sure?', :method => :delete}
+        | #{link_to 'Edit', edit_card_path(card)} | #{link_to 'Destroy', card, :confirm => 'Are you sure?', :method => :delete}
 .actions
   = link_to 'New Card', new_card_path

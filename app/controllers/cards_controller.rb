@@ -4,7 +4,7 @@ class StoriesController < ApplicationController
   def index
     @last_modified_card = Card.find(:first, :order => 'updated_at DESC')
 
-    if stale?(:last_modified => @last_modified_card.try(:updated_at).try(:utc), :etag => @last_modified_story)
+    if stale?(:last_modified => @last_modified_card.try(:updated_at).try(:utc), :etag => @last_modified_card)
       @cards = Card.all(:include => :deck, :order => 'updated_at ASC')
       respond_to do |format|
         format.html # index.html.haml
@@ -38,7 +38,7 @@ class StoriesController < ApplicationController
 
   # POST /cards
   def create
-    @card = Card.new(params[:story])
+    @card = Card.new(params[:card])
 
     respond_to do |format|
       if @card.save
@@ -53,7 +53,7 @@ class StoriesController < ApplicationController
   def update
     @card = Card.find(params[:id])
     respond_to do |format|
-      if @card.update_attributes(params[:story])
+      if @card.update_attributes(params[:card])
         format.html { redirect_to(@card, :notice => 'Card was successfully updated.') }
         format.json  { head :ok }
       else
