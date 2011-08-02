@@ -1,4 +1,4 @@
-@kanban = (($)->
+@cardboard = (($)->
   appData = {}
 
 
@@ -248,4 +248,4 @@
 
 
 jQuery ->
-  kanban.init()
+  cardboard.init()
