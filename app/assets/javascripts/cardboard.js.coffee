@@ -14,7 +14,14 @@
         deck = datum.deck
         appData.decks[deck.id] = deck.name
         appData.decksOrder.push deck.id
-
+        
+      href = $('#decks_css').attr('href')
+      if href.indexOf('?')>=0
+        href += '&'
+      else
+        href += '?'
+      href += 'forceReload=' + (new Date().valueOf())
+      $('#decks_css').attr('href', href)
       initCards()
 
 
@@ -117,13 +124,25 @@
       url:   "/cards/#{card.id}/edit"
       id:    "#edit-form"
 
-
   showNewCardDialog = (deck) ->
     createDialog
       title: "Add a new card"
       url:   "/cards/new"
       id:    "#new-form"
       deck: deck
+
+
+  showEditDeckDialog = (deck_id, deck_name) ->
+    createDialog
+      title: "Editing deck: #{deck_name}"
+      url:   "/decks/#{deck_id}/edit"
+      id:    "#edit-form"
+
+  showNewDeckDialog = () ->
+    createDialog
+      title: "Add a new deck"
+      url:   "/decks/new"
+      id:    "#new-form"
 
 
   # Create a dialog
@@ -200,7 +219,8 @@
       .delegate 'ul', 'dblclick', (e) ->
         # Delegation isn't working right for the UL, oddly, so check it
         showNewCardDialog headline if $(e.target).is('ul')
-
+      .delegate 'h2.name', 'dblclick', (e) ->
+        showEditDeckDialog $(this).parent().data('deck'), $(this).text()
 
 
   createBoard = (appData) ->

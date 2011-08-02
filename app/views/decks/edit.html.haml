@@ -1,6 +1,7 @@
 %h2 Editing deck
-= render 'form'
-.actions
-  = link_to 'Show', @deck
-  |
-  \#{link_to 'Back', decks_path}
+#edit-form
+  = render 'form'
+  .actions
+    = link_to 'Show', @deck
+    |
+    \#{link_to 'Back', decks_path}
