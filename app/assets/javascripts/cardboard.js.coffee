@@ -70,13 +70,13 @@
         complete: (xhr) ->
           mod = xhr.getAllResponseHeaders().match(/Last-Modified: (.*)/)[1]
           # run the callback if data has been modified since last check
-          deck.func() if appData[deck.obj]? and appData[deck.obj] != mod
+          deck.func?() if appData[deck.obj]? and appData[deck.obj] != mod
           # save the last modified date
           appData[deck.obj] = mod
 
     # check both decks & cards for updates
     _head {} = url: "decks", obj: "deckMod", func: initDecks
-    _head {} = url: "cards",  obj: "cardMod",  func: initCards
+    _head {} = url: "cards", obj: "cardMod", func: initCards
 
     return
 
