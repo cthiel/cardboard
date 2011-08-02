@@ -219,7 +219,6 @@
 
   displayBoard = (boardTable) ->
     $("#output").html boardTable
-    $("h2.name").editable()
 
 
   updateStoryStatus = (e, drag) ->
