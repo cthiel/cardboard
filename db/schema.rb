@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110802212343) do
+ActiveRecord::Schema.define(:version => 20110802232307) do
 
   create_table "cards", :force => true do |t|
     t.text     "name"
@@ -24,7 +24,10 @@ ActiveRecord::Schema.define(:version => 20110802212343) do
     t.string   "color"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "position"
   end
+
+  add_index "decks", ["position"], :name => "index_decks_on_position"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"

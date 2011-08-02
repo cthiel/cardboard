@@ -3,4 +3,7 @@ class Deck < ActiveRecord::Base
 
   has_many :cards
   has_paper_trail
+  acts_as_list
+  
+  default_scope order("position")
 end
