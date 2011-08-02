@@ -8,7 +8,7 @@
         - @story.errors.full_messages.each do |msg|
           %li= msg
   = form.inputs do
-    = form.input :name
+    = form.input :name, :as => :text
     = form.input :tag_list
     = form.input :status, :include_blank => false
   = form.buttons

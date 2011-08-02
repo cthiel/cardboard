@@ -13,3 +13,4 @@
 //= require 'ui/jquery.ui.draggable'
 //= require 'ui/jquery.ui.sortable'
 //= require 'ui/jquery.ui.dialog'
+//= require 'showdown'

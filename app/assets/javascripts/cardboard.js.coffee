@@ -1,6 +1,7 @@
 @cardboard = (($)->
   appData = {}
 
+  converter = new Attacklab.showdown.converter()
 
   initStates = ->
     appData =
@@ -77,16 +78,18 @@
 
 
   createList = (board, state) ->
+    
     $list = $ "<ul class='state' id='status_#{state}'></ul>"
 
     if board[state]
       for story in board[state]
         tags = story.tag_list.sort().join(', ')
+        story.name = converter.makeHtml(story.name)
 
         $storyElement = $ """
           <li>
             <div class='box box_#{state}' data-story-id='#{story.id}'>
-              <b>#{story.name}</b>
+              #{story.name}
               <br>#{tags}
             </div>
           </li>
