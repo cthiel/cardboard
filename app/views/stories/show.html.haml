@@ -1,13 +1,13 @@
 %p#notice= notice
 %p
   %b Name:
-  = @story.name
+  = @card.name
 %p
   %b Tags:
-  = @story.tag_list
+  = @card.tag_list
 %p
-  %b Status:
-  = @story.status.name
-= link_to 'Edit', edit_story_path(@story)
+  %b Deck:
+  = @card.deck.name
+= link_to 'Edit', edit_card_path(@story)
 |
-\#{link_to 'Back', stories_path}
+\#{link_to 'Back', cards_path}

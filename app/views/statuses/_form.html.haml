@@ -1,11 +1,11 @@
-= semantic_form_for(@status) do |form|
-  - if @status.errors.any?
+= semantic_form_for(@deck) do |form|
+  - if @deck.errors.any?
     #error_explanation
       %h2
-        = pluralize(@status.errors.count, "error")
-        prohibited this status from being saved:
+        = pluralize(@deck.errors.count, "error")
+        prohibited this deck from being saved:
       %ul
-        - @status.errors.full_messages.each do |msg|
+        - @deck.errors.full_messages.each do |msg|
           %li= msg
   = form.inputs :name, :color
   = form.buttons

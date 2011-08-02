@@ -2,15 +2,15 @@
   %tr
     %th Name
     %th Tags
-    %th Status
+    %th Deck
     %th
-  - @stories.each do |story|
+  - @cards.each do |card|
     %tr
-      %td= story.name
-      %td= story.tag_list
-      %td= story.status.name
+      %td= card.name
+      %td= card.tag_list
+      %td= card.deck.name
       %td
-        = link_to 'Show', story
-        | #{link_to 'Edit', edit_story_path(story)} | #{link_to 'Destroy', story, :confirm => 'Are you sure?', :method => :delete}
+        = link_to 'Show', card
+        | #{link_to 'Edit', edit_card_path(story)} | #{link_to 'Destroy', story, :confirm => 'Are you sure?', :method => :delete}
 .actions
-  = link_to 'New Story', new_story_path
+  = link_to 'New Card', new_card_path

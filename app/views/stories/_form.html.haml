@@ -1,14 +1,14 @@
-= semantic_form_for(@story) do |form|
-  - if @story.errors.any?
+= semantic_form_for(@card) do |form|
+  - if @card.errors.any?
     #error_explanation
       %h2
-        = pluralize(@story.errors.count, "error")
-        prohibited this story from being saved:
+        = pluralize(@card.errors.count, "error")
+        prohibited this card from being saved:
       %ul
-        - @story.errors.full_messages.each do |msg|
+        - @card.errors.full_messages.each do |msg|
           %li= msg
   = form.inputs do
     = form.input :name, :as => :text
     = form.input :tag_list
-    = form.input :status, :include_blank => false
+    = form.input :deck, :include_blank => false
   = form.buttons

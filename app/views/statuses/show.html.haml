@@ -1,10 +1,10 @@
 %p#notice= notice
 %p
   %b Name:
-  = @status.name
+  = @deck.name
 %p
   %b Color:
-  = @status.color
-= link_to 'Edit', edit_status_path(@status)
+  = @deck.color
+= link_to 'Edit', edit_deck_path(@status)
 |
-\#{link_to 'Back', statuses_path}
+\#{link_to 'Back', decks_path}
