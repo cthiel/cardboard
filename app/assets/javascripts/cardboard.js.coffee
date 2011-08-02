@@ -31,6 +31,14 @@
       createBoard appData
 
 
+  fixLinks = ->
+    $('#output').delegate 'a', 'click', (e) ->
+      if @href
+        e.preventDefault()
+        e.stopPropagation()
+        window.open(@href)
+
+
   watchMouse = ->
     $(document).mousemove ->
       resetPolling()
@@ -242,6 +250,7 @@
   init: ->
     initDecks()
     watchMouse()
+    fixLinks()
     startPolling()
 
 
