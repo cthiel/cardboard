@@ -171,7 +171,7 @@
 
             $(opt.id).hide().slideDown 200, ->
               # Preselect the name field
-              $('input[type="text"]:first', $dialog).select()
+              $('textarea,input[type="text"]', $dialog).first().focus()
 
               $form
                 # Set the submit handler
