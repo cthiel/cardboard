@@ -28,7 +28,7 @@ end
 gem 'haml'
 gem 'jquery-rails'
 gem 'formtastic'
-gem 'acts-as-taggable-on'
+gem 'acts-as-taggable-on', :git => 'git://github.com/mbleigh/acts-as-taggable-on.git'
 
 # Use unicorn as the web server
 # gem 'unicorn'
