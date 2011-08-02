@@ -1,13 +1,30 @@
 @import mixins
 
-$fontHeading: sans-serif
+$fontHeading: pt sans caption, droid sans, arial, sans-serif
 $fontBody: pt sans caption, droid sans, arial, sans-serif
 
 body
-  margin: 12px 24px
+  background-color: #fff
+  color: #333
   font-family: $fontBody
   font-size: 13px
+  margin: 0
   overflow-x: hidden
+
+nav[role="banner"]
+  background-color: #eee
+  color: #bbb
+  overflow: hidden
+  padding: 6px 9px
+
+  h1.title
+    font-size: inherit
+    font-weight: inherit
+  /*
+    float: left
+
+  .actions
+    float: right
 
 h1
   font-family: $fontHeading

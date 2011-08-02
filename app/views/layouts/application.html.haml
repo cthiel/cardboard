@@ -8,6 +8,11 @@
     = csrf_meta_tags
     = yield :head
   %body
+    %nav{:role => "banner"}
+      %h1.title
+        / FIXME: Make this user-customizable later
+        CardBoard
+      .actions
+        / Add management (place for cusomization, import/export, etc.)
     .container
-      %p
       = yield
