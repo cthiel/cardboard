@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/airblade/paper_trail.git
+  revision: 64e5fa2946f4d9bd0cd3c43eebcfb6f39560c22f
+  specs:
+    paper_trail (2.2.9)
+      rails (~> 3)
+
+GIT
   remote: git://github.com/mbleigh/acts-as-taggable-on.git
   revision: c67784a761c4a632d438c3a32aca19bdb811ddf7
   specs:
@@ -146,6 +153,7 @@ DEPENDENCIES
   haml
   jquery-rails
   json
+  paper_trail!
   pg
   rails (= 3.1.0.rc5)
   rspec-rails

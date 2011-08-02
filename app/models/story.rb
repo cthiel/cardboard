@@ -5,4 +5,5 @@ class Story < ActiveRecord::Base
   acts_as_taggable_on :tags
 
   belongs_to :status
+  has_paper_trail
 end
