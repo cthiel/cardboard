@@ -1,4 +1,4 @@
-class StoriesController < ApplicationController
+class CardsController < ApplicationController
   # GET /cards
   # GET /cards.json
   def index
