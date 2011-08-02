@@ -10,20 +10,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110802162231) do
+ActiveRecord::Schema.define(:version => 20110802194601) do
 
-  create_table "statuses", :force => true do |t|
-    t.string   "name"
-    t.string   "color"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "stories", :force => true do |t|
+  create_table "cards", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "status_id"
+  end
+
+  create_table "decks", :force => true do |t|
+    t.string   "name"
+    t.string   "color"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "taggings", :force => true do |t|
