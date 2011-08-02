@@ -247,7 +247,9 @@
         drag.placeholder.height drag.item.height()
       stop: updateCardDeck
 
-    $(".column", $table).disableSelection()
+    $(".column", $table)
+      .disableSelection()
+      .width(100 / appData.decksOrder.length + "%")
 
     displayBoard $table
 
