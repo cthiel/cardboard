@@ -10,10 +10,9 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110728120203) do
+ActiveRecord::Schema.define(:version => 20110802124643) do
 
   create_table "statuses", :force => true do |t|
-    t.string   "code"
     t.string   "name"
     t.string   "color"
     t.datetime "created_at"

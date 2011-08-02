@@ -6,8 +6,8 @@
   %b Tags:
   = @story.tag_list
 %p
-  %b Status code:
-  = @story.status_code
+  %b Status:
+  = @story.status.name
 = link_to 'Edit', edit_story_path(@story)
 |
 \#{link_to 'Back', stories_path}

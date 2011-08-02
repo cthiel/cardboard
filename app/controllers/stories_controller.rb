@@ -8,7 +8,7 @@ class StoriesController < ApplicationController
       @stories = Story.all(:include => :status, :order => 'updated_at ASC')
       respond_to do |format|
         format.html # index.html.haml
-        format.json  { render :json => @stories.to_json(:methods => [:status_code, :tag_list]) }
+        format.json  { render :json => @stories.to_json(:methods => [:tag_list]) }
       end
     end
   end

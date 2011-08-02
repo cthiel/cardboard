@@ -5,16 +5,14 @@
   initStates = ->
     appData =
       states     : {}
-      statesIds  : {}
       statesOrder: []
 
     $.getJSON "/statuses.json", (statusData) ->
 
       for datum in statusData
         state = datum.status
-        appData.states[state.code] = state.name
-        appData.statesIds[state.code] = state.id
-        appData.statesOrder.push state.code
+        appData.states[state.id] = state.name
+        appData.statesOrder.push state.id
 
       initStories()
 
@@ -25,7 +23,7 @@
     $.getJSON "/stories.json", (storiesData) ->
 
       for datum in storiesData
-        state = datum.story.status_code
+        state = datum.story.status_id
         board[state] ?= []
         board[state].push datum.story
 
@@ -79,7 +77,7 @@
 
 
   createList = (board, state) ->
-    $list = $ "<ul class='state' id='status#{appData.statesIds[state]}'></ul>"
+    $list = $ "<ul class='state' id='status_#{state}'></ul>"
 
     if board[state]
       for story in board[state]
@@ -223,7 +221,7 @@
     $item = drag.item
     $box = $item.find '.box'
     storyId = $item.data("story").id
-    statusId = $item.parent()[0].id.replace('status','')
+    statusId = $item.parent()[0].id.replace('status_','')
 
     $box.addClass "unsaved"
 

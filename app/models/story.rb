@@ -5,8 +5,4 @@ class Story < ActiveRecord::Base
   acts_as_taggable_on :tags
 
   belongs_to :status
-
-  def status_code
-    status.code
-  end
 end

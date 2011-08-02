@@ -1,12 +1,10 @@
 %table
   %tr
-    %th Code
     %th Name
     %th Color
     %th
   - @statuses.each do |status|
     %tr
-      %td= status.code
       %td= status.name
       %td{:style => "background-color:#{status.color}"}= status.color
       %td

@@ -7,9 +7,9 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
 Status.create([
-  {:code => 'A', :name => 'Backlog', :color => 'lightgrey'},
-  {:code => 'B', :name => 'Work in progress', :color => 'yellow'},
-  {:code => 'C', :name => 'Completed', :color => 'lightgreen'},
+  {:name => 'Backlog', :color => 'lightgrey'},
+  {:name => 'Work in progress', :color => 'yellow'},
+  {:name => 'Completed', :color => 'lightgreen'},
 ])
 Story.create(
  {:name => "Your first card.", :status_id => Status.first.id}
