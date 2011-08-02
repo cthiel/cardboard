@@ -15,13 +15,7 @@
         appData.decks[deck.id] = deck.name
         appData.decksOrder.push deck.id
         
-      href = $('#decks_css').attr('href')
-      if href.indexOf('?')>=0
-        href += '&'
-      else
-        href += '?'
-      href += 'forceReload=' + (new Date().valueOf())
-      $('#decks_css').attr('href', href)
+      reloadDecksCSS()
       initCards()
 
 
@@ -36,6 +30,15 @@
         board[deck].push datum.card
 
       createBoard appData
+
+  reloadDecksCSS = ->
+    href = $('#decks_css').attr('href')
+    if href.indexOf('?')>=0
+      href += '&'
+    else
+      href += '?'
+    href += 'forceReload=' + (new Date().valueOf())
+    $('#decks_css').attr('href', href)
 
 
   fixLinks = ->
@@ -159,6 +162,7 @@
       $.post($form.attr('action'), $form.serialize())
         .complete ->
           _closeDialog()
+          initDecks()
           initCards() # Refresh the cards!
 
       e.preventDefault() # Don't do the default HTML submit action
