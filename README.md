@@ -4,7 +4,7 @@ A Kanban Board Application based on Rails 3.1.0.rc5
 
 ## Demo
 
-Visit http://cardboard.herokuapp.com/ to try it out right away!
+Visit http://card-board.herokuapp.com/ to try it out right away!
 
 ## Installation instructions
 
