@@ -79,7 +79,7 @@
 
   createList = (board, state) ->
     
-    $list = $ "<ul class='state' id='status_#{state}'></ul>"
+    $list = $ "<ul class='state' id='status_#{state}_stories'></ul>"
 
     if board[state]
       for story in board[state]
@@ -184,8 +184,8 @@
   createColumn = (board, state, headline) ->
     queueClass = if /Q$/.test(state) then " queue_column" else ""
 
-    $("<div class='column #{queueClass}'></div>")
-      .append("<h2>#{headline}</h2>")
+    $("<div class='column #{queueClass}' id='status_#{state}'></div>")
+      .append("<h2 class='name'>#{headline}</h2>")
       .append(createList board, state)
       .data("state", state)
       .delegate 'li', 'dblclick', (e) ->
@@ -215,10 +215,11 @@
     $(".column", $table).disableSelection()
 
     displayBoard $table
-
+      
 
   displayBoard = (boardTable) ->
     $("#output").html boardTable
+    $("h2.name").editable()
 
 
   updateStoryStatus = (e, drag) ->
@@ -238,7 +239,7 @@
         clearStatus()
 
 
-  ### Public functions ###
+  # Public functions:
 
   init: ->
     initStates()
@@ -251,3 +252,4 @@
 
 jQuery ->
   cardboard.init()
+

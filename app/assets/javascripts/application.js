@@ -14,3 +14,4 @@
 //= require 'ui/jquery.ui.sortable'
 //= require 'ui/jquery.ui.dialog'
 //= require 'showdown'
+//= require 'jquery.editable'

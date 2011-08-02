@@ -12,5 +12,5 @@ Status.create([
   {:name => 'Completed', :color => 'lightgreen'},
 ])
 Story.create(
- {:name => "Your first card.", :status_id => Status.first.id}
+ {:name => "Welcome to cardboard.\n\nDouble-click on this card to edit it, or just drag it around to the different decks.", :status_id => Status.first.id}
 )
