@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe "stories/show.html.haml" do
+describe "cards/show.html.haml" do
   before(:each) do
-    @story = assign(:story, stub_model(Story,
+    @card = assign(:card, stub_model(Card,
       :name => "Name",
-      :status => stub_model(Status, :name => 'Development', :color => '#000000')
+      :deck => stub_model(Deck, :name => 'Development', :color => '#000000')
     ))
   end
 

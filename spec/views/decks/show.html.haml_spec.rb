@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe "statuses/show.html.haml" do
+describe "decks/show.html.haml" do
   before(:each) do
-    @status = assign(:status, stub_model(Status,
+    @deck = assign(:deck, stub_model(Deck,
       :name => "Name",
       :color => "Color"
     ))

@@ -1,20 +1,20 @@
 require 'spec_helper'
 
-describe "stories/edit.html.haml" do
+describe "cards/edit.html.haml" do
   before(:each) do
-    @story = assign(:story, stub_model(Story,
+    @card = assign(:card, stub_model(Card,
       :name => "MyString",
-      :status => stub_model(Status, :name => 'Development', :color => '#000000')
+      :deck => stub_model(Deck, :name => 'Development', :color => '#000000')
     ))
   end
 
-  it "renders the edit story form" do
+  it "renders the edit card form" do
     render
 
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    assert_select "form", :action => stories_path(@story), :method => "post" do
-      assert_select "input#story_name", :name => "story[name]"
-      assert_select "select#story_status_id", :name => "story[status_id]"
+    assert_select "form", :action => cards_path(@card), :method => "post" do
+      assert_select "textarea#card_name", :name => "card[name]"
+      assert_select "select#card_deck_id", :name => "card[deck_id]"
     end
   end
 end

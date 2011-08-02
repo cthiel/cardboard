@@ -1,82 +1,82 @@
 require 'spec_helper'
 
-describe StoriesController do
+describe CardsController do
 
   before do
-    Status.create!({:name => 'Development', :color => '#000000'})
+    Deck.create!({:name => 'Development', :color => '#000000'})
   end
 
   # This should return the minimal set of attributes required to create a valid
-  # Story. As you add validations to Story, be sure to
+  # Card. As you add validations to Story, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
     {:name   => 'Test it!', 
-     :status_id => 1}
+     :deck_id => 1}
   end
 
   describe "GET index" do
-    it "assigns all stories as @stories" do
-      story = Story.create! valid_attributes
+    it "assigns all cards as @cards" do
+      card = Card.create! valid_attributes
       get :index
-      assigns(:stories).should eq([story])
+      assigns(:cards).should eq([card])
     end
   end
 
   describe "GET show" do
-    it "assigns the requested story as @story" do
-      story = Story.create! valid_attributes
-      get :show, :id => story.id.to_s
-      assigns(:story).should eq(story)
+    it "assigns the requested card as @card" do
+      card = Card.create! valid_attributes
+      get :show, :id => card.id.to_s
+      assigns(:card).should eq(card)
     end
   end
 
   describe "GET new" do
-    it "assigns a new story as @story" do
+    it "assigns a new card as @card" do
       get :new
-      assigns(:story).should be_a_new(Story)
+      assigns(:card).should be_a_new(Card)
     end
   end
 
   describe "GET edit" do
-    it "assigns the requested story as @story" do
-      story = Story.create! valid_attributes
-      get :edit, :id => story.id.to_s
-      assigns(:story).should eq(story)
+    it "assigns the requested card as @card" do
+      card = Card.create! valid_attributes
+      get :edit, :id => card.id.to_s
+      assigns(:card).should eq(card)
     end
   end
 
   describe "POST create" do
     describe "with valid params" do
-      it "creates a new Story" do
+      it "creates a new Card" do
         expect {
-          post :create, :story => valid_attributes
-        }.to change(Story, :count).by(1)
+          post :create, :card => valid_attributes
+        }.to change(Card, :count).by(1)
       end
 
-      it "assigns a newly created story as @story" do
-        post :create, :story => valid_attributes
-        assigns(:story).should be_a(Story)
-        assigns(:story).should be_persisted
+      it "assigns a newly created card as @card" do
+        post :create, :card => valid_attributes
+        assigns(:card).should be_a(Card)
+        assigns(:card).should be_persisted
       end
 
-      it "redirects to the created story" do
-        post :create, :story => valid_attributes
-        response.should redirect_to(Story.last)
+      it "redirects to the created card" do
+        post :create, :card => valid_attributes
+        response.should redirect_to(Card.last)
       end
     end
 
     describe "with invalid params" do
-      it "assigns a newly created but unsaved story as @story" do
+      it "assigns a newly created but unsaved card as @card" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Story.any_instance.stub(:save).and_return(false)
-        post :create, :story => {}
-        assigns(:story).should be_a_new(Story)
+        Card.any_instance.stub(:save).and_return(false)
+        post :create, :card => {}
+        assigns(:card).should be_a_new(Card)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Story.any_instance.stub(:save).and_return(false)
-        post :create, :story => {}
+        Card.any_instance.stub(:save).and_return(false)
+        post :create, :card => {}
         response.should render_template("new")
       end
     end
@@ -84,60 +84,60 @@ describe StoriesController do
 
   describe "PUT update" do
     describe "with valid params" do
-      it "updates the requested story" do
-        story = Story.create! valid_attributes
-        # Assuming there are no other stories in the database, this
-        # specifies that the Story created on the previous line
+      it "updates the requested card" do
+        card = Card.create! valid_attributes
+        # Assuming there are no other cards in the database, this
+        # specifies that the Card created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Story.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => story.id, :story => {'these' => 'params'}
+        Card.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+        put :update, :id => card.id, :card => {'these' => 'params'}
       end
 
-      it "assigns the requested story as @story" do
-        story = Story.create! valid_attributes
-        put :update, :id => story.id, :story => valid_attributes
-        assigns(:story).should eq(story)
+      it "assigns the requested card as @card" do
+        card = Card.create! valid_attributes
+        put :update, :id => card.id, :card => valid_attributes
+        assigns(:card).should eq(card)
       end
 
-      it "redirects to the story" do
-        story = Story.create! valid_attributes
-        put :update, :id => story.id, :story => valid_attributes
-        response.should redirect_to(story)
+      it "redirects to the card" do
+        card = Card.create! valid_attributes
+        put :update, :id => card.id, :card => valid_attributes
+        response.should redirect_to(card)
       end
     end
 
     describe "with invalid params" do
-      it "assigns the story as @story" do
-        story = Story.create! valid_attributes
+      it "assigns the card as @card" do
+        card = Card.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        Story.any_instance.stub(:save).and_return(false)
-        put :update, :id => story.id.to_s, :story => {}
-        assigns(:story).should eq(story)
+        Card.any_instance.stub(:save).and_return(false)
+        put :update, :id => card.id.to_s, :card => {}
+        assigns(:card).should eq(card)
       end
 
       it "re-renders the 'edit' template" do
-        story = Story.create! valid_attributes
+        card = Card.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        Story.any_instance.stub(:save).and_return(false)
-        put :update, :id => story.id.to_s, :story => {}
+        Card.any_instance.stub(:save).and_return(false)
+        put :update, :id => card.id.to_s, :card => {}
         response.should render_template("edit")
       end
     end
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested story" do
-      story = Story.create! valid_attributes
+    it "destroys the requested card" do
+      card = Card.create! valid_attributes
       expect {
-        delete :destroy, :id => story.id.to_s
-      }.to change(Story, :count).by(-1)
+        delete :destroy, :id => card.id.to_s
+      }.to change(Card, :count).by(-1)
     end
 
-    it "redirects to the stories list" do
-      story = Story.create! valid_attributes
-      delete :destroy, :id => story.id.to_s
-      response.should redirect_to(stories_url)
+    it "redirects to the cards list" do
+      card = Card.create! valid_attributes
+      delete :destroy, :id => card.id.to_s
+      response.should redirect_to(cards_url)
     end
   end
 

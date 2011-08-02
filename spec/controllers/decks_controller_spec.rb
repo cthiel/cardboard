@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe StatusesController do
+describe DecksController do
 
   # This should return the minimal set of attributes required to create a valid
-  # Status. As you add validations to Status, be sure to
+  # Deck. As you add validations to Deck, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
     { :name  => 'Development',
@@ -11,68 +11,68 @@ describe StatusesController do
   end
 
   describe "GET index" do
-    it "assigns all statuses as @statuses" do
-      status = Status.create! valid_attributes
+    it "assigns all decks as @decks" do
+      deck = Deck.create! valid_attributes
       get :index
-      assigns(:statuses).should eq([status])
+      assigns(:decks).should eq([deck])
     end
   end
 
   describe "GET show" do
-    it "assigns the requested status as @status" do
-      status = Status.create! valid_attributes
-      get :show, :id => status.id.to_s
-      assigns(:status).should eq(status)
+    it "assigns the requested deck as @deck" do
+      deck = Deck.create! valid_attributes
+      get :show, :id => deck.id.to_s
+      assigns(:deck).should eq(deck)
     end
   end
 
   describe "GET new" do
-    it "assigns a new status as @status" do
+    it "assigns a new deck as @deck" do
       get :new
-      assigns(:status).should be_a_new(Status)
+      assigns(:deck).should be_a_new(Deck)
     end
   end
 
   describe "GET edit" do
-    it "assigns the requested status as @status" do
-      status = Status.create! valid_attributes
-      get :edit, :id => status.id.to_s
-      assigns(:status).should eq(status)
+    it "assigns the requested deck as @deck" do
+      deck = Deck.create! valid_attributes
+      get :edit, :id => deck.id.to_s
+      assigns(:deck).should eq(deck)
     end
   end
 
   describe "POST create" do
     describe "with valid params" do
-      it "creates a new Status" do
+      it "creates a new Deck" do
         expect {
-          post :create, :status => valid_attributes
-        }.to change(Status, :count).by(1)
+          post :create, :deck => valid_attributes
+        }.to change(Deck, :count).by(1)
       end
 
-      it "assigns a newly created status as @status" do
-        post :create, :status => valid_attributes
-        assigns(:status).should be_a(Status)
-        assigns(:status).should be_persisted
+      it "assigns a newly created deck as @deck" do
+        post :create, :deck => valid_attributes
+        assigns(:deck).should be_a(Deck)
+        assigns(:deck).should be_persisted
       end
 
-      it "redirects to the created status" do
-        post :create, :status => valid_attributes
-        response.should redirect_to(Status.last)
+      it "redirects to the created deck" do
+        post :create, :deck => valid_attributes
+        response.should redirect_to(Deck.last)
       end
     end
 
     describe "with invalid params" do
-      it "assigns a newly created but unsaved status as @status" do
+      it "assigns a newly created but unsaved deck as @deck" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Status.any_instance.stub(:save).and_return(false)
-        post :create, :status => {}
-        assigns(:status).should be_a_new(Status)
+        Deck.any_instance.stub(:save).and_return(false)
+        post :create, :deck => {}
+        assigns(:deck).should be_a_new(Deck)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Status.any_instance.stub(:save).and_return(false)
-        post :create, :status => {}
+        Deck.any_instance.stub(:save).and_return(false)
+        post :create, :deck => {}
         response.should render_template("new")
       end
     end
@@ -80,60 +80,60 @@ describe StatusesController do
 
   describe "PUT update" do
     describe "with valid params" do
-      it "updates the requested status" do
-        status = Status.create! valid_attributes
-        # Assuming there are no other statuses in the database, this
-        # specifies that the Status created on the previous line
+      it "updates the requested deck" do
+        deck = Deck.create! valid_attributes
+        # Assuming there are no other decks in the database, this
+        # specifies that the Deck created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Status.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => status.id, :status => {'these' => 'params'}
+        Deck.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+        put :update, :id => deck.id, :deck => {'these' => 'params'}
       end
 
-      it "assigns the requested status as @status" do
-        status = Status.create! valid_attributes
-        put :update, :id => status.id, :status => valid_attributes
-        assigns(:status).should eq(status)
+      it "assigns the requested deck as @deck" do
+        deck = Deck.create! valid_attributes
+        put :update, :id => deck.id, :deck => valid_attributes
+        assigns(:deck).should eq(deck)
       end
 
-      it "redirects to the status" do
-        status = Status.create! valid_attributes
-        put :update, :id => status.id, :status => valid_attributes
-        response.should redirect_to(status)
+      it "redirects to the deck" do
+        deck = Deck.create! valid_attributes
+        put :update, :id => deck.id, :deck => valid_attributes
+        response.should redirect_to(deck)
       end
     end
 
     describe "with invalid params" do
-      it "assigns the status as @status" do
-        status = Status.create! valid_attributes
+      it "assigns the deck as @deck" do
+        deck = Deck.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        Status.any_instance.stub(:save).and_return(false)
-        put :update, :id => status.id.to_s, :status => {}
-        assigns(:status).should eq(status)
+        Deck.any_instance.stub(:save).and_return(false)
+        put :update, :id => deck.id.to_s, :deck => {}
+        assigns(:deck).should eq(deck)
       end
 
       it "re-renders the 'edit' template" do
-        status = Status.create! valid_attributes
+        deck = Deck.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        Status.any_instance.stub(:save).and_return(false)
-        put :update, :id => status.id.to_s, :status => {}
+        Deck.any_instance.stub(:save).and_return(false)
+        put :update, :id => deck.id.to_s, :deck => {}
         response.should render_template("edit")
       end
     end
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested status" do
-      status = Status.create! valid_attributes
+    it "destroys the requested deck" do
+      deck = Deck.create! valid_attributes
       expect {
-        delete :destroy, :id => status.id.to_s
-      }.to change(Status, :count).by(-1)
+        delete :destroy, :id => deck.id.to_s
+      }.to change(Deck, :count).by(-1)
     end
 
-    it "redirects to the statuses list" do
-      status = Status.create! valid_attributes
-      delete :destroy, :id => status.id.to_s
-      response.should redirect_to(statuses_url)
+    it "redirects to the decks list" do
+      deck = Deck.create! valid_attributes
+      delete :destroy, :id => deck.id.to_s
+      response.should redirect_to(decks_url)
     end
   end
 

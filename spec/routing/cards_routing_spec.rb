@@ -1,34 +1,34 @@
 require "spec_helper"
 
-describe StoriesController do
+describe CardsController do
   describe "routing" do
 
     it "routes to #index" do
-      get("/stories").should route_to("stories#index")
+      get("/cards").should route_to("cards#index")
     end
 
     it "routes to #new" do
-      get("/stories/new").should route_to("stories#new")
+      get("/cards/new").should route_to("cards#new")
     end
 
     it "routes to #show" do
-      get("/stories/1").should route_to("stories#show", :id => "1")
+      get("/cards/1").should route_to("cards#show", :id => "1")
     end
 
     it "routes to #edit" do
-      get("/stories/1/edit").should route_to("stories#edit", :id => "1")
+      get("/cards/1/edit").should route_to("cards#edit", :id => "1")
     end
 
     it "routes to #create" do
-      post("/stories").should route_to("stories#create")
+      post("/cards").should route_to("cards#create")
     end
 
     it "routes to #update" do
-      put("/stories/1").should route_to("stories#update", :id => "1")
+      put("/cards/1").should route_to("cards#update", :id => "1")
     end
 
     it "routes to #destroy" do
-      delete("/stories/1").should route_to("stories#destroy", :id => "1")
+      delete("/cards/1").should route_to("cards#destroy", :id => "1")
     end
 
   end
