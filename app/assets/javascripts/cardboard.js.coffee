@@ -14,7 +14,7 @@
         deck = datum.deck
         appData.decks[deck.id] = deck.name
         appData.decksOrder.push deck.id
-        
+
       reloadDecksCSS()
       initCards()
 
@@ -218,12 +218,14 @@
       .append("<h2 class='name'>#{headline}</h2>")
       .append(createList board, deck)
       .data("deck", deck)
-      .delegate 'li', 'dblclick', (e) ->
-        showEditCardDialog $(this).data 'card'
-      .delegate 'ul', 'dblclick', (e) ->
-        # Delegation isn't working right for the UL, oddly, so check it
-        showNewCardDialog headline if $(e.target).is('ul')
+      .delegate '.box', 'dblclick', (e) ->
+        e.stopPropagation()
+        showEditCardDialog $(this).parent().data 'card'
+      .delegate '.deck', 'dblclick', (e) ->
+        e.stopPropagation()
+        showNewCardDialog headline if $(e.target)
       .delegate 'h2.name', 'dblclick', (e) ->
+        e.stopPropagation()
         showEditDeckDialog $(this).parent().data('deck'), $(this).text()
 
 
