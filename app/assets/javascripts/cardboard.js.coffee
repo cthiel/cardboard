@@ -126,13 +126,15 @@
       title: "Editing card: #{card.title}"
       url:   "/cards/#{card.id}/edit"
       id:    "#edit-form"
+      func:  initCards
 
   showNewCardDialog = (deck) ->
     createDialog
       title: "Add a new card"
       url:   "/cards/new"
       id:    "#new-form"
-      deck: deck
+      deck:  deck
+      func:  initCards
 
 
   showEditDeckDialog = (deck_id, deck_name) ->
@@ -140,12 +142,14 @@
       title: "Editing deck: #{deck_name}"
       url:   "/decks/#{deck_id}/edit"
       id:    "#edit-form"
+      func:  initDecks
 
   showNewDeckDialog = () ->
     createDialog
       title: "Add a new deck"
       url:   "/decks/new"
       id:    "#new-form"
+      func:  initDecks
 
 
   # Create a dialog
@@ -162,8 +166,7 @@
       $.post($form.attr('action'), $form.serialize())
         .complete ->
           _closeDialog()
-          initDecks()
-          initCards() # Refresh the cards!
+          opt.func?()
 
       e.preventDefault() # Don't do the default HTML submit action
 
