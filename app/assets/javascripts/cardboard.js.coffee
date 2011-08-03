@@ -31,14 +31,15 @@
 
       createBoard appData
 
+
   reloadDecksCSS = ->
-    href = $('#decks_css').attr('href')
-    if href.indexOf('?')>=0
-      href += '&'
-    else
-      href += '?'
-    href += 'forceReload=' + (new Date().valueOf())
-    $('#decks_css').attr('href', href)
+    # Grab and cache original href
+    href = @href ?= $('#decks_css').attr 'href'
+
+    href += if href.match /\?/ then '&' else '?'
+    href += 'forceReload=' + new Date().valueOf()
+
+    $('#decks_css').attr 'href', href
 
 
   fixLinks = ->
