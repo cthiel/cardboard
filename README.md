@@ -1,6 +1,6 @@
 # CardBoard
 
-A simple card grouping application with a little bit of
+A simple web-based card grouping application with a bit of 
 collaboration, based on Rails 3.1.0.rc5
 
 It's designed to be flexible! Use it for organizing tasks,
@@ -21,7 +21,8 @@ Visit http://localhost:3000/ and you should see your cardboard!
 
 ## Thanks
 
-This project was inspired by http://www.simple-kanban.com/ and https://github.com/0s30s1s/simplekanban
+This project was inspired by http://www.simple-kanban.com/ 
+and https://github.com/0s30s1s/simplekanban
 
 ## Team
 
