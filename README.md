@@ -12,12 +12,27 @@ Visit http://card-board.herokuapp.com/ to try it out right away!
 
 ## Installation instructions
 
+    git clone https://github.com/cthiel/cardboard.git
+    cd cardboard
     sudo gem install bundler
     bundle install --without production
     rake db:setup
     rails server
 
 Visit http://localhost:3000/ and you should see your cardboard!
+
+## Updating
+
+Updating is similar to installation. If `rake db:migrate`
+triggers changes, you'll have to restart your Rails server!
+
+    git pull
+    bundle install --without production
+    rake db:migrate
+    rails server  # if there were DB migrations, restart
+
+(Most of the time you won't have to do much more than 
+`git pull`, unless the required gems or DB schema changes.)
 
 ## Thanks
 
