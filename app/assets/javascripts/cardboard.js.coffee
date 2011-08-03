@@ -234,6 +234,7 @@
               $form
                 # Set the submit handler
                 .submit(_submit)
+
                 # Handle enter
                 .delegate 'textarea,input', 'keydown', (e) ->
                   if e.keyCode == 13 and (e.shiftKey or e.ctrlKey)
@@ -247,13 +248,17 @@
     $("<div class='column' id='deck_#{deck}'></div>")
       .append("<h2 class='name'>#{headline}</h2>")
       .append(createList board, deck)
+
       .data("deck", deck)
+
       .delegate '.box', 'dblclick', (e) ->
         e.stopPropagation()
         showEditCardDialog $(this).parent().data 'card'
+
       .delegate '.deck', 'dblclick', (e) ->
         e.stopPropagation()
         showNewCardDialog headline if $(e.target)
+
       .delegate 'h2.name', 'dblclick', (e) ->
         e.stopPropagation()
         showEditDeckDialog $(this).parent().data('deck'), $(this).text()
