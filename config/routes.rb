@@ -1,7 +1,7 @@
 CardBoard::Application.routes.draw do
   resources :cards
   resources :decks
-  resources :boards, :only => [:show], :requirement => {:id => 'default'}
+  resources :boards
 
-  root :to => 'boards#show', :id => 'default'
+  root :to => 'boards#index'
 end

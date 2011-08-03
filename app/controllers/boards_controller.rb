@@ -1,9 +1,12 @@
 class BoardsController < ApplicationController
-  # GET /projects/default
+  # GET /projects
+  def index
+    render :show
+  end
+  
+  # GET /projects/id
   def show
-    redirect_to project_url('default') and return unless params[:id] == 'default'
-
-    @project = "Default"
+    @board = Board.find(params[:id], :include => :decks) || Board.first
 
     respond_to do |format|
       format.html # show.html.haml
