@@ -174,7 +174,7 @@
     $dialog = $("<div><div class='loading'>Loading...</div></div>").dialog
       title: opt.title
       width: "50%"
-      position: [$(window).width() / 4, $(window).height() / 5]
+      position: [$(document).width() / 4, $(document).height() / 8]
       modal: true
 
       buttons:
