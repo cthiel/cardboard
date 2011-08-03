@@ -6,7 +6,7 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
-Board.crate({:name = 'CardBoard'}) if Board.count.eql?(0)
+Board.crate({:name => 'CardBoard'}) if Board.count.eql?(0)
 
 Deck.create([
   {:name => 'Backlog', :color => 'lightgrey', :board => Board.first},
