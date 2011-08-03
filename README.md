@@ -1,9 +1,10 @@
 # CardBoard
 
-A Kanban Board Application based on Rails 3.1.0.rc5
+A simple card grouping application with a little bit of
+collaboration, based on Rails 3.1.0.rc5
 
-It's designed to be flexible! Use it for card sorting, and tracking
-anything.
+It's designed to be flexible! Use it for organizing tasks,
+Kanban, card sorting, or tracking anything.
 
 ## Demo
 
