@@ -49,6 +49,30 @@
         window.open(@href)
 
 
+  lockScrollbars = ->
+    $doc = $(document)
+
+    # Find old values
+    prev =
+      x: $doc.scrollLeft()
+      y: $doc.scrollTop()
+
+    # Nudge to see if scrollbars are in place
+    scroll =
+      x: if $doc.scrollLeft(1).scrollLeft() then 'scrollX' else 'noScrollX'
+      y: if $doc.scrollTop(1).scrollTop()   then 'scrollY' else 'noScrollY'
+
+    # Reset doc to previous location
+    $doc.scrollLeft(prev.x).scrollTop(prev.y)
+
+    # Apply scrollbar locking classes
+    $('body').addClass("#{scroll.x} #{scroll.y}")
+
+
+  unlockScrollbars = ->
+    $('html,body').removeClass('scrollX scrollY noScrollX noScrollY')
+
+
   watchMouse = ->
     $(document).mousemove ->
       resetPolling()
@@ -252,8 +276,11 @@
       revert: 100
       tolerance: "pointer"
       start: (e, drag) ->
+        lockScrollbars()
         drag.placeholder.height drag.item.height()
-      stop: updateCardDeck
+      stop: (e, drag) ->
+        unlockScrollbars()
+        updateCardDeck e, drag
 
     $(".column", $table)
       .disableSelection()
@@ -284,6 +311,8 @@
 
 
   # Public functions:
+
+  lockScrollbars: lockScrollbars
 
   init: ->
     initDecks()
