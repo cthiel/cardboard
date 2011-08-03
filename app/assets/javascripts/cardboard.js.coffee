@@ -318,7 +318,7 @@
     startPolling()
 
 
-  ### Export selected functions as public ###
+  # ## Export selected functions as public ## #
   {init}
 
 
