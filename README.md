@@ -12,7 +12,7 @@ Visit http://card-board.herokuapp.com/ to try it out right away!
 
 ## Installation instructions
 
-    git clone https://github.com/cthiel/cardboard.git
+    git clone git://github.com/cthiel/cardboard.git
     cd cardboard
     sudo gem install bundler
     bundle install --without production
