@@ -6,10 +6,12 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
+Board.crate({:name = 'CardBoard'}) if Board.count.eql?(0)
+
 Deck.create([
-  {:name => 'Backlog', :color => 'lightgrey'},
-  {:name => 'Work in progress', :color => 'yellow'},
-  {:name => 'Completed', :color => 'lightgreen'},
+  {:name => 'Backlog', :color => 'lightgrey', :board => Board.first},
+  {:name => 'Work in progress', :color => 'yellow', :board => Board.first},
+  {:name => 'Completed', :color => 'lightgreen', :board => Board.first},
 ])
 
 welcome = <<EOS
@@ -25,5 +27,5 @@ For more info about how cardboard works, check out the [project](https://github.
 EOS
 
 Card.create(
- {:name => welcome, :deck_id => Deck.first.id}
+ {:name => welcome, :deck => Deck.first}
 )

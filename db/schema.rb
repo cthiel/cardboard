@@ -10,7 +10,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110802232307) do
+ActiveRecord::Schema.define(:version => 20110803104420) do
+
+  create_table "boards", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "cards", :force => true do |t|
     t.text     "name"
@@ -25,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20110802232307) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "position"
+    t.integer  "board_id"
   end
 
   add_index "decks", ["position"], :name => "index_decks_on_position"
