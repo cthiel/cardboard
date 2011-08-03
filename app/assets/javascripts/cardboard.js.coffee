@@ -310,15 +310,15 @@
         clearStatus()
 
 
-  # Public functions:
-
-  lockScrollbars: lockScrollbars
-
-  init: ->
+  init = ->
     initDecks()
     watchMouse()
     fixLinks()
     startPolling()
+
+
+  ### Export selected functions as public ###
+  {init}
 
 
 )(jQuery)
