@@ -109,7 +109,7 @@
           <li>
             <div class='box box_#{deck}' data-card-id='#{card.id}'>
               #{card.markdown}
-              #{if tags then '<br>' else ''}#{tags}
+              #{if tags then '<p>' else ''}#{tags}
             </div>
           </li>
           """
