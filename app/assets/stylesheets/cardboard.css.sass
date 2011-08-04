@@ -120,18 +120,26 @@ nav
   clear: both
 
 #board
-  display: table
   width: 100%
 
   &.drag
     ul:hover
       background-color: #ffc
 
+.new_deck_control
+  width: 5%
+  float: right
+  text-align: center
+  font-size: 200%
+  cursor: pointer
+  &:active, &:hover
+    color: orange  
+  
 .column
   +box-sizing
   cursor: default
-  border: 0 solid #eee
-  display: table-cell !important
+  border-right: 1px solid #eeeeec
+  float: left
   width: 10%
   height: 300px
 
@@ -170,8 +178,6 @@ nav
     >li
       cursor: move
 
-  & + .column
-    border-width: 0 0 0 1px
 
   &:hover
 

@@ -18,7 +18,10 @@
 
       reloadDecksCSS()
       initCards()
-
+    
+    $('.new_deck_control').click () ->
+      showNewDeckDialog()
+    
 
   initCards = (cards) ->
     board = appData.board = {}
@@ -204,6 +207,7 @@
 
   createBoard = (appData) ->
     $table = $("#board")
+    $table.find(".column").remove()
 
     for deck in appData.decksOrder
       deckColumn = createColumn(appData.board, deck, appData.decks[deck])
@@ -226,7 +230,7 @@
 
     $(".column", $table)
       .disableSelection()
-      .width(100 / appData.decksOrder.length + "%")
+      .width(95 / appData.decksOrder.length + "%")
 
 
   updateCardDeck = (e, drag) ->
