@@ -3,6 +3,7 @@
   %head
     %title CardBoard
     %link{:href => "http://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700&v2", :rel => "stylesheet", :type => "text/css"}/
+    %link(href='http://fonts.googleapis.com/css?family=Permanent+Marker' rel='stylesheet' type='text/css')
     = stylesheet_link_tag 'application'
     = javascript_include_tag 'application'
     = csrf_meta_tags
@@ -10,7 +11,7 @@
   %body
     %nav{:role => "banner"}
       %h1.title
-        / FIXME: Make this user-customizable later
+        =image_tag 'tomboy.png'
         CardBoard
       .actions
         / Add management (place for cusomization, import/export, etc.)
