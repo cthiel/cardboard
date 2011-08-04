@@ -203,7 +203,7 @@
 
 
   createBoard = (appData) ->
-    $table = $("<div id='board'></div>")
+    $table = $("#board")
 
     for deck in appData.decksOrder
       deckColumn = createColumn(appData.board, deck, appData.decks[deck])
@@ -227,8 +227,6 @@
     $(".column", $table)
       .disableSelection()
       .width(100 / appData.decksOrder.length + "%")
-
-    $("#output").html $table
 
 
   updateCardDeck = (e, drag) ->
