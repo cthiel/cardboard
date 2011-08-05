@@ -21,6 +21,8 @@ Visit http://card-board.herokuapp.com/ to try it out right away!
 
 Visit http://localhost:3000/ and you should see your cardboard!
 
+Run your own instance of CardBoard on Heroku: https://github.com/cthiel/cardboard/wiki/Setting-up-CardBoard-on-Heroku
+
 ## Updating
 
 Updating is similar to installation. If `rake db:migrate`
