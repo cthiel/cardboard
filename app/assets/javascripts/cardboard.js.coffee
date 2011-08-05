@@ -262,12 +262,10 @@
   removeDeck = (event) ->
     $deck = $(event.target).closest(".column")
     deck_id = $deck.attr("id").replace("deck_","")
-    deck_title = $deck.find("h2").text()
-    if confirm "Remove the '#{deck_title}' deck?"
-      $.ajax
-        type: "DELETE"
-        url: "/decks/#{deck_id}"
-        complete: $deck.effect("drop", 2000, initDecks)
+    $.ajax
+      type: "DELETE"
+      url: "/decks/#{deck_id}"
+      complete: $deck.effect("drop", 1000, initDecks)
           
 
 
