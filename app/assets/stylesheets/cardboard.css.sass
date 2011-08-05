@@ -126,14 +126,18 @@ nav
     ul:hover
       background-color: #ffc
 
-.new_deck_control
-  width: 5%
+.control
   float: right
+  color: #babdb6
   text-align: center
   font-size: 200%
   cursor: pointer
   &:active, &:hover
     color: orange  
+  &.new_deck
+    width: 5%
+  &.delete_deck
+    padding: 0 0.5em
   
 .column
   +box-sizing
@@ -142,9 +146,12 @@ nav
   float: left
   width: 10%
   height: 300px
-
+  &.in_use
+    .control.delete_deck
+      visibility: hidden
+      
   h2
-    font-size: 12px
+    font-size: 100%
     font-weight: normal
     color: #000
     margin: 6px

@@ -19,9 +19,10 @@
       reloadDecksCSS()
       initCards()
     
-    $('.new_deck_control').click () ->
+    $('.control.new_deck').click () ->
       showNewDeckDialog()
     
+    $('.control.delete_deck').live "click", removeDeck
 
   initCards = (cards) ->
     board = appData.board = {}
@@ -34,6 +35,7 @@
         board[deck].push datum.card
 
       createBoard appData
+      
 
 
   reloadDecksCSS = ->
@@ -144,7 +146,6 @@
           """
 
         $cardElement.data "card", card
-
         $list.append $cardElement
 
     $list
@@ -186,10 +187,16 @@
 
 
   createColumn = (board, deck, headline) ->
-    $("<div class='column' id='deck_#{deck}'></div>")
+    if board[deck]?.length > 0
+      used = " in_use"
+    else
+      used = " empty"
+  
+    $("<div class='column#{used}' id='deck_#{deck}'></div>")
+      .append("<div class='control delete_deck' title='Remove this deck'>&#215;</div>")
       .append("<h2 class='name'>#{headline}</h2>")
       .append(createList board, deck)
-
+        
       .data("deck", deck)
 
       .delegate '.box', 'dblclick', (e) ->
@@ -236,6 +243,7 @@
   updateCardDeck = (e, drag) ->
     $item = drag.item
     $box = $item.find '.box'
+    $from_column = drag.placeholder.closest(".column")
     cardId = $item.data("card").id
     deckId = $item.parent()[0].id.replace('deck_','')
 
@@ -248,6 +256,19 @@
       complete: ->
         $box.removeClass "unsaved"
         clearStatus()
+        initDecks()
+
+
+  removeDeck = (event) ->
+    $deck = $(event.target).closest(".column")
+    deck_id = $deck.attr("id").replace("deck_","")
+    deck_title = $deck.find("h2").text()
+    if confirm "Remove the '#{deck_title}' deck?"
+      $.ajax
+        type: "DELETE"
+        url: "/decks/#{deck_id}"
+        complete: $deck.effect("drop", 2000, initDecks)
+          
 
 
   init = ->

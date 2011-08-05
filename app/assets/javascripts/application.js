@@ -13,5 +13,7 @@
 //= require 'ui/jquery.ui.draggable'
 //= require 'ui/jquery.ui.sortable'
 //= require 'ui/jquery.ui.dialog'
+//= require 'ui/jquery.effects.core'
+//= require 'ui/jquery.effects.drop'
 //= require 'showdown'
 //= require 'jquery.editable'

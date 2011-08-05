@@ -66,10 +66,16 @@ class CardsController < ApplicationController
   # DELETE /cards/1
   def destroy
     @card = Card.find(params[:id])
-    @card.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(cards_url) }
+    if @card.destroy
+      respond_to do |format|
+        format.html { redirect_to(cards_url, :notice => 'Card was deleted.') }
+        format.json { head :ok }
+      end
+    else
+      respond_to do |format|
+        format.html { render :action => "edit" }
+        format.json { render :json => @card.errors, :deck => :unprocessable_entity }
+      end
     end
   end
 end
