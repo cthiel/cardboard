@@ -186,13 +186,14 @@
       func:  initDecks
 
 
-  createColumn = (board, deck, headline) ->
+  createColumn = (board, deck, headline, width, index) ->
     if board[deck]?.length > 0
       used = " in_use"
     else
       used = " empty"
+    
   
-    $("<div class='column#{used}' id='deck_#{deck}'></div>")
+    $("<div class='column#{used}' id='deck_#{deck}' style='left: #{index * width}%;width: #{width}%;'></div>")
       .append("<div class='control delete_deck' title='Remove this deck'>&#215;</div>")
       .append("<h2 class='name'>#{headline}</h2>")
       .append(createList board, deck)
@@ -217,7 +218,7 @@
     $table.find(".column").remove()
 
     for deck in appData.decksOrder
-      deckColumn = createColumn(appData.board, deck, appData.decks[deck])
+      deckColumn = createColumn(appData.board, deck, appData.decks[deck], (95 / appData.decksOrder.length), _i)
       $table.append(deckColumn)
 
     $(".column>ul", $table).sortable
@@ -237,7 +238,6 @@
 
     $(".column", $table)
       .disableSelection()
-      .width(95 / appData.decksOrder.length + "%")
 
 
   updateCardDeck = (e, drag) ->
@@ -262,10 +262,22 @@
   removeDeck = (event) ->
     $deck = $(event.target).closest(".column")
     deck_id = $deck.attr("id").replace("deck_","")
+
+    $deck.addClass("deleted")
+    $remainingColumns = $(".column").not(".deleted")
+    colWidth = (95 / $remainingColumns.length)
+
     $.ajax
       type: "DELETE"
       url: "/decks/#{deck_id}"
-      complete: $deck.effect("drop", 1000, initDecks)
+      complete: () ->
+        $deck.fadeOut 200, () -> 
+          left = 0
+          for column in $remainingColumns
+            $(column).animate({left: "#{left}%", width: "#{colWidth}%"}, 600)
+            left += colWidth
+  
+    
           
 
 
