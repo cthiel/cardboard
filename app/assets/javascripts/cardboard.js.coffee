@@ -1,10 +1,13 @@
 @cardboard = (($)->
   appData = {}
 
+
+  # import external functions
   converter = new Attacklab.showdown.converter()
   createDialog = @CardBoard.dialog.create
 
-  initDecks = ->
+
+  loadDecks = ->
     appData =
       decks     : {}
       decksOrder: []
@@ -17,14 +20,14 @@
         appData.decksOrder.push deck.id
 
       reloadDecksCSS()
-      initCards()
+      loadCards()
 
     $('#board')
       .delegate('.control.new_deck',    'click', showNewDeckDialog)
       .delegate('.control.delete_deck', 'click', removeDeck)
 
 
-  initCards = (cards) ->
+  loadCards = (cards) ->
     board = appData.board = {}
 
     $.getJSON "/cards.json", (cardsData) ->
@@ -115,8 +118,8 @@
           appData[deck.obj] = mod
 
     # check both decks & cards for updates
-    _head {} = url: "decks", obj: "deckMod", func: initDecks
-    _head {} = url: "cards", obj: "cardMod", func: initCards
+    _head {} = url: "decks", obj: "deckMod", func: loadDecks
+    _head {} = url: "cards", obj: "cardMod", func: loadCards
 
     return
 
@@ -156,7 +159,7 @@
       title: "Editing card: #{card.title}"
       url:   "/cards/#{card.id}/edit"
       id:    "#edit-form"
-      func:  initCards
+      func:  loadCards
 
   showNewCardDialog = (deck) ->
     createDialog
@@ -165,7 +168,7 @@
       url:   "/cards/new"
       id:    "#new-form"
       deck:  deck
-      func:  initCards
+      func:  loadCards
 
 
   showEditDeckDialog = (deck_id, deck_name) ->
@@ -174,7 +177,7 @@
       title: "Editing deck: #{deck_name}"
       url:   "/decks/#{deck_id}/edit"
       id:    "#edit-form"
-      func:  initDecks
+      func:  loadDecks
 
   showNewDeckDialog = () ->
     createDialog
@@ -182,7 +185,7 @@
       title: "Add a new deck"
       url:   "/decks/new"
       id:    "#new-form"
-      func:  initDecks
+      func:  loadDecks
 
 
   createColumn = (board, deck, headline) ->
@@ -260,11 +263,11 @@
     $.ajax
       type: "DELETE"
       url: "/decks/#{deck_id}"
-      complete: $deck.effect("drop", 1000, initDecks)
+      complete: $deck.effect("drop", 1000, loadDecks)
 
 
   init = ->
-    initDecks()
+    loadDecks()
     watchMouse()
     fixLinks()
     startPolling()
