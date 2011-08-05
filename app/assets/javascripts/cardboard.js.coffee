@@ -19,10 +19,10 @@
       reloadDecksCSS()
       initCards()
 
-    $('.control.new_deck').click () ->
-      showNewDeckDialog()
+    $('#board')
+      .delegate('.control.new_deck',    'click', showNewDeckDialog)
+      .delegate('.control.delete_deck', 'click', removeDeck)
 
-    $('.control.delete_deck').live "click", removeDeck
 
   initCards = (cards) ->
     board = appData.board = {}
