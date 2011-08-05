@@ -18,10 +18,10 @@
 
       reloadDecksCSS()
       initCards()
-    
+
     $('.control.new_deck').click () ->
       showNewDeckDialog()
-    
+
     $('.control.delete_deck').live "click", removeDeck
 
   initCards = (cards) ->
@@ -35,7 +35,6 @@
         board[deck].push datum.card
 
       createBoard appData
-      
 
 
   reloadDecksCSS = ->
@@ -191,13 +190,13 @@
       used = " in_use"
     else
       used = " empty"
-    
-  
+
+
     $("<div class='column#{used}' id='deck_#{deck}' style='left: #{index * width}%;width: #{width}%;'></div>")
       .append("<div class='control delete_deck' title='Remove this deck'>&#215;</div>")
       .append("<h2 class='name'>#{headline}</h2>")
       .append(createList board, deck)
-        
+
       .data("deck", deck)
 
       .delegate '.box', 'dblclick', (e) ->
@@ -276,9 +275,6 @@
           for column in $remainingColumns
             $(column).animate({left: "#{left}%", width: "#{colWidth}%"}, 600)
             left += colWidth
-  
-    
-          
 
 
   init = ->
@@ -297,4 +293,3 @@
 
 jQuery ->
   cardboard.init()
-
