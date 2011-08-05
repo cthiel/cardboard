@@ -228,7 +228,7 @@
         drag.placeholder.height drag.item.height()
       stop: (e, drag) ->
         unlockScrollbars()
-        updateCardDeck e, drag
+        saveCards e, drag
 
     $(".column", $columns)
       .disableSelection()
@@ -237,10 +237,9 @@
     $('#columns').replaceWith($columns)
 
 
-  updateCardDeck = (e, drag) ->
+  saveCards = (e, drag) ->
     $item = drag.item
     $box = $item.find '.box'
-    $from_column = drag.placeholder.closest(".column")
     cardId = $item.data("card").id
     deckId = $item.parent()[0].id.replace('deck_','')
 
@@ -253,7 +252,6 @@
       complete: ->
         $box.removeClass "unsaved"
         clearStatus()
-        initDecks()
 
 
   removeDeck = (event) ->
