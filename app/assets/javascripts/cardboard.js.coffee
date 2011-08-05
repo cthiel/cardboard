@@ -186,13 +186,9 @@
 
 
   createColumn = (board, deck, headline) ->
-    if board[deck]?.length > 0
-      used = " in_use"
-    else
-      used = " empty"
+    used = if board[deck]?.length then "in_use" else "empty"
 
-
-    $("<div class='column#{used}' id='deck_#{deck}'></div>")
+    $("<div class='column #{used}' id='deck_#{deck}'></div>")
       .append("<div class='control delete_deck' title='Remove this deck'>&#215;</div>")
       .append("<h2 class='name'>#{headline}</h2>")
       .append(createList board, deck)
