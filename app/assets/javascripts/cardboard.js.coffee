@@ -213,14 +213,13 @@
 
 
   createBoard = (appData) ->
-    $table = $("#board")
-    $table.find(".column").remove()
+    $columns = $("<div id='columns'/>")
 
     for deck in appData.decksOrder
       deckColumn = createColumn(appData.board, deck, appData.decks[deck])
-      $table.append(deckColumn)
+      $columns.append(deckColumn)
 
-    $(".column>ul", $table).sortable
+    $(".column>ul", $columns).sortable
       connectWith: "ul"
       scroll: false
       placeholder: "box-placeholder"
@@ -235,9 +234,11 @@
         unlockScrollbars()
         updateCardDeck e, drag
 
-    $(".column", $table)
+    $(".column", $columns)
       .disableSelection()
       .width(95 / appData.decksOrder.length + "%")
+
+    $('#columns').replaceWith($columns)
 
 
   updateCardDeck = (e, drag) ->
