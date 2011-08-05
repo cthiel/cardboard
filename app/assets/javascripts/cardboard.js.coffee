@@ -13,7 +13,6 @@
       decksOrder: []
 
     $.getJSON "/decks.json", (deckData) ->
-
       for datum in deckData
         deck = datum.deck
         appData.decks[deck.id] = deck.name
@@ -23,8 +22,9 @@
       loadCards()
 
     $('#board')
-      .delegate('.control.new_deck',    'click', showNewDeckDialog)
-      .delegate('.control.delete_deck', 'click', removeDeck)
+      .undelegate('.control') # in case loadDecks is called > 1 times
+      .delegate('.new_deck',    'click.control', showNewDeckDialog)
+      .delegate('.delete_deck', 'click.control', removeDeck)
 
 
   loadCards = (cards) ->
@@ -212,6 +212,7 @@
 
 
   createBoard = (appData) ->
+    # Create a storage fragment
     $columns = $("<div id='columns'/>")
 
     for deck in appData.decksOrder
