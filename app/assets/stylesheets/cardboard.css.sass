@@ -151,7 +151,7 @@ nav
       background-color: #ffd
   &.delete_deck
     padding: 0 0.5em
-  
+
 .column
   +box-sizing
   cursor: default
@@ -171,34 +171,52 @@ nav
     vertical-align: bottom
     padding: 0 3px
 
-  >ul
-    list-style: none
-    margin: 0
-    padding: 0 6px 2em
-    min-height: 25%
-    height: 100%
+
+.deck
+  list-style: none
+  margin: 0
+  padding: 0 6px 2em
+  min-height: 25%
+  height: 100%
+
+  &>li
+    // container for .box
+    position: relative
+
+    &:hover .close
+      opacity: 0.8
+
+      &:hover
+        opacity: 1
+
+    .close
+      +transition(opacity 100ms)
+      background: url(/assets/close.png)
+      opacity: 0
+      width: 32px
+      height: 32px
+      position: absolute
+      right: -12px
+      top: -12px
+
+.box
+  cursor: move
+
+  ul
+    padding-left: 1ex
+    list-style-position: inside
 
     ul
-      padding-left: 1ex
-      list-style-position: inside
+      padding-left: 2ex
 
-      ul
-        padding-left: 2ex
+    li
+      list-style-type: disc
 
       li
-        list-style-type: disc
+        list-style-type: circle
 
         li
-          list-style-type: circle
-
-          li
-            list-style-type: square
-
-    >li
-      cursor: move
-
-
-  &:hover
+          list-style-type: square
 
 .queue_column
   h2

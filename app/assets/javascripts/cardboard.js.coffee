@@ -198,6 +198,27 @@
       submit:  loadDecks
 
 
+  showCardCloseButton = (e) ->
+    $container = $(this)
+    $button = $("<b class='close'/>")
+
+    if e.type is 'mouseenter'
+      $button.appendTo($container).hide().fadeIn 200
+    else
+      $('.close', $container).fadeOut 200, ->
+        $(this).remove()
+
+
+  removeCard = (e) ->
+    $container = $(this).parent('li')
+    cardId = $(this).siblings('.box').data()?['cardId']
+
+    $container.fadeTo(300, 0).delay(300).slideUp 300, ->
+      $.ajax
+        type: "DELETE"
+        url: "/cards/#{cardId}"
+
+
   createColumn = (board, deck, headline) ->
     used = if board[deck]?.length then "in_use" else "empty"
 
@@ -208,10 +229,6 @@
 
       .data("deck", deck)
 
-      .delegate '.box', 'dblclick', (e) ->
-        e.stopPropagation()
-        showEditCardDialog $(this).parent().data 'card'
-
       .delegate '.deck', 'dblclick', (e) ->
         e.stopPropagation()
         showNewCardDialog headline if $(e.target)
@@ -219,6 +236,15 @@
       .delegate 'h2.name', 'dblclick', (e) ->
         e.stopPropagation()
         showEditDeckDialog $(this).parent().data('deck'), $(this).text()
+
+      .delegate '.box', 'dblclick', (e) ->
+        e.stopPropagation()
+        showEditCardDialog $(this).parent().data 'card'
+
+      .delegate('.deck>li', 'hover', showCardCloseButton)
+
+      .delegate('.close', 'click', removeCard)
+
 
 
   createBoard = (appData) ->
