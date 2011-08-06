@@ -135,12 +135,13 @@
     if board[deck]
       for card in board[deck]
         tags = card.tag_list.sort().join(', ')
-        card.markdown = converter.makeHtml(card.name)
-        card.title = card.name.split("\n", 1)
+        [card.title, body...] = card.name.split("\n")
+        card.markdown = converter.makeHtml(body.join '')
 
         $cardElement = $ """
           <li>
             <div class='box box_#{deck}' data-card-id='#{card.id}'>
+              <h3 role="title">#{card.title}</h3>
               #{card.markdown}
               #{if tags then '<p>' else ''}#{tags}
             </div>
