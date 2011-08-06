@@ -32,6 +32,8 @@ nav[role="banner"]
   color: #888a8f
   overflow: hidden
   padding: 3px 9px
+  position: relative
+  z-index: 99
 
   h1.title
     img
@@ -138,9 +140,15 @@ nav
   font-size: 200%
   cursor: pointer
   &:active, &:hover
-    color: orange  
+    color: #fc0
   &.new_deck
     width: 5%
+    position: absolute
+    top: 1em
+    bottom: 0
+    right: 0
+    &:hover
+      background-color: #ffd
   &.delete_deck
     padding: 0 0.5em
   
