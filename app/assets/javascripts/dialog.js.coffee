@@ -12,7 +12,7 @@
       $.post($form.attr('action'), $form.serialize())
         .complete ->
           _closeDialog()
-          opt.func?()
+          opt.submit?()
 
       e.preventDefault() # Don't do the default HTML submit action
 
@@ -42,10 +42,7 @@
             $('button:last', $buttons).text(buttonText) if buttonText
 
             # If the deck is passed in (new card), select it
-            if opt.deck
-              $("option", $form).map (i, el) ->
-                el if el.text.match "^#{opt.deck}$"
-              .attr "selected", true
+            opt.appear?(opt, $form)
 
             $buttons.slideDown 200
 

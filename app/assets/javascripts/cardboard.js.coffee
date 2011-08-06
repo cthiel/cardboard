@@ -18,6 +18,9 @@
         appData.decks[deck.id] = deck.name
         appData.decksOrder.push deck.id
 
+      # FIXME: There should be a better way to set the board id
+      appData.boardId = deckData[0].deck.board_id
+
       reloadDecksCSS()
       loadCards()
 
@@ -36,6 +39,8 @@
         deck = datum.card.deck_id
         board[deck] ?= []
         board[deck].push datum.card
+
+      console.log 'ad', appData
 
       createBoard appData
 
@@ -160,7 +165,7 @@
       title: "Editing card: #{card.title}"
       url:   "/cards/#{card.id}/edit"
       id:    "#edit-form"
-      func:  loadCards
+      submit:  loadCards
 
   showNewCardDialog = (deck) ->
     createDialog
@@ -169,7 +174,11 @@
       url:   "/cards/new"
       id:    "#new-form"
       deck:  deck
-      func:  loadCards
+      appear: (opt, form) ->
+        $("option", form).map (i, el) ->
+          el if el.text.match "^#{opt.deck}$"
+        .attr "selected", true
+      submit:  loadCards
 
 
   showEditDeckDialog = (deck_id, deck_name) ->
@@ -178,7 +187,7 @@
       title: "Editing deck: #{deck_name}"
       url:   "/decks/#{deck_id}/edit"
       id:    "#edit-form"
-      func:  loadDecks
+      submit:  loadDecks
 
   showNewDeckDialog = () ->
     createDialog
@@ -186,7 +195,9 @@
       title: "Add a new deck"
       url:   "/decks/new"
       id:    "#new-form"
-      func:  loadDecks
+      appear: (opt, form) ->
+        $("select", form).val opt.appData.boardId
+      submit:  loadDecks
 
 
   createColumn = (board, deck, headline) ->
