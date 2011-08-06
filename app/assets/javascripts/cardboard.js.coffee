@@ -40,8 +40,6 @@
         board[deck] ?= []
         board[deck].push datum.card
 
-      console.log 'ad', appData
-
       createBoard appData
 
 
