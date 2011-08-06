@@ -139,7 +139,7 @@
       for card in board[deck]
         tags = card.tag_list.sort().join(', ')
         [card.title, body...] = card.name.split("\n")
-        card.markdown = converter.makeHtml(body.join '')
+        card.markdown = converter.makeHtml(body.join "\n")
 
         $cardElement = $ """
           <li>
