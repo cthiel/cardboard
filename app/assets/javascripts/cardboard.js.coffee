@@ -125,6 +125,16 @@
       @isNotifyVisible = false
 
 
+  offline = ->
+    console.warn 'offline'
+    notify('Your network connection is offline.', 'error')
+
+
+  online = ->
+    console.info 'online'
+    notify(false)
+
+
   checkStatus = ->
     # jQuery doesn't have $.head(), but we can use $.ajax()
     _head = (deck) ->
@@ -136,6 +146,8 @@
           deck.func?() if appData[deck.obj]? and appData[deck.obj] != mod
           # save the last modified date
           appData[deck.obj] = mod
+        error:   offline
+        success: online
 
     # check both decks & cards for updates
     _head {} = url: "decks", obj: "deckMod", func: loadDecks
