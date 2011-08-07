@@ -127,7 +127,7 @@
 
   offline = ->
     console.warn 'offline'
-    notify('Your network connection is offline.', 'error')
+    notify('Cannot contact the CardBoard server', 'error')
 
 
   online = ->
