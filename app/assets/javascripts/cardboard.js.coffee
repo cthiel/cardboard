@@ -108,6 +108,23 @@
     return
 
 
+  notify = (msg, type = '') ->
+    $tray = $('#notify')
+
+    return if msg is $tray.text()
+
+    $tray.find('.notification').remove()
+
+    if (msg)
+      @isNotifyVisible = true
+      html = "<span class='notification #{type}'>#{msg}</span>"
+
+      $(html).appendTo($tray).hide().slideDown(300)
+
+    else
+      @isNotifyVisible = false
+
+
   checkStatus = ->
     # jQuery doesn't have $.head(), but we can use $.ajax()
     _head = (deck) ->
