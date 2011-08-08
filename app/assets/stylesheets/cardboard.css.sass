@@ -107,14 +107,14 @@ nav
       color: orange
       text-decoration: underline
 
-.box,
-.box-placeholder
+.card,
+.card-placeholder
   +box-sizing
   padding: 1ex 1.25ex
   margin: 3px 0
   border-radius: 3px
 
-.box
+.card
   +box-shadow(inset 0 0 0 1px rgba(255,255,255,0.3), 1px 1px 2px 0 rgba(0,0,0,0.1))
   +transition(opacity 0.2s)
   background-color: #eee
@@ -137,7 +137,7 @@ nav
   &.unsaved
     opacity: 0.6
 
-.box-placeholder
+.card-placeholder
   background-color: #fffff7
   border: 1px dashed #eed
   margin: 6px 3px
@@ -197,7 +197,7 @@ nav
   height: 100%
 
   &>li
-    // container for .box
+    // container for .card
     position: relative
 
     &:hover .close
@@ -216,7 +216,7 @@ nav
       right: -12px
       top: -12px
 
-.box
+.card
   cursor: move
 
   ul

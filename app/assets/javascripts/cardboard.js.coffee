@@ -184,7 +184,7 @@
 
         $cardElement = $ """
           <li>
-            <div class='box box_#{deck}' data-card-id='#{card.id}'>
+            <div class='card card_#{deck}' data-card-id='#{card.id}'>
               <h3 role="title">#{card.title}</h3>
               #{card.markdown}
               #{if tags then '<p>' else ''}#{tags}
@@ -252,7 +252,7 @@
 
   removeCard = (e) ->
     $container = $(this).parent('li')
-    cardId = $(this).siblings('.box').data()?['cardId']
+    cardId = $(this).siblings('.card').data()?['cardId']
 
     $container.fadeTo(300, 0).delay(300).slideUp 300, ->
       $.ajax
@@ -278,7 +278,7 @@
         e.stopPropagation()
         showEditDeckDialog $(this).parent().data('deck'), $(this).text()
 
-      .delegate '.box', 'dblclick', (e) ->
+      .delegate '.card', 'dblclick', (e) ->
         e.stopPropagation()
         showEditCardDialog $(this).parent().data 'card'
 
@@ -299,7 +299,7 @@
     $(".cardHolder", $decks).sortable
       connectWith: "ul"
       scroll: false
-      placeholder: "box-placeholder"
+      placeholder: "card-placeholder"
       distance: 6
       opacity: 0.7
       revert: 100
@@ -321,18 +321,18 @@
 
   saveCards = (e, drag) ->
     $item = drag.item
-    $box = $item.find '.box'
+    $card = $item.find '.card'
     cardId = $item.data("card").id
     deckId = $item.parent()[0].id.replace('deck_','')
 
-    $box.addClass "unsaved"
+    $card.addClass "unsaved"
 
     $.ajax
       type: "PUT"
       url: "cards/#{cardId}"
       data: "card[deck_id]=#{deckId}"
       complete: ->
-        $box.removeClass "unsaved"
+        $card.removeClass "unsaved"
         clearStatus()
 
 
