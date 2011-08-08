@@ -63,12 +63,12 @@
 
   adjustDeckHeight = (delay) ->
     delay = 300 if typeof delay is not 'number'
-    top = $('.deck').offset().top
+    top = $('.cardHolder').offset().top
 
     clearTimeout(@timer)
 
     @timer = setTimeout ->
-      $('.deck').css {minHeight: $(window).height() - top}
+      $('.cardHolder').css {minHeight: $(window).height() - top}
     , delay
 
 
@@ -174,7 +174,7 @@
 
   createList = (board, deck) ->
 
-    $list = $ "<ul class='deck' id='deck_#{deck}_cards'></ul>"
+    $list = $ "<ul class='cardHolder' id='deck_#{deck}_cards'></ul>"
 
     if board[deck]
       for card in board[deck]
@@ -260,17 +260,17 @@
         url: "/cards/#{cardId}"
 
 
-  createColumn = (board, deck, headline) ->
+  createDeck = (board, deck, headline) ->
     used = if board[deck]?.length then "in_use" else "empty"
 
-    $("<div class='column #{used}' id='deck_#{deck}'></div>")
+    $("<div class='deck #{used}' id='deck_#{deck}'></div>")
       .append("<div class='control delete_deck' title='Remove this deck'>&#215;</div>")
       .append("<h2 class='name'>#{headline}</h2>")
       .append(createList board, deck)
 
       .data("deck", deck)
 
-      .delegate '.deck', 'dblclick', (e) ->
+      .delegate '.cardHolder', 'dblclick', (e) ->
         e.stopPropagation()
         showNewCardDialog headline if $(e.target)
 
@@ -282,7 +282,7 @@
         e.stopPropagation()
         showEditCardDialog $(this).parent().data 'card'
 
-      .delegate('.deck>li', 'hover', showCardCloseButton)
+      .delegate('.cardHolder>li', 'hover', showCardCloseButton)
 
       .delegate('.close', 'click', removeCard)
 
@@ -290,13 +290,13 @@
 
   createBoard = (appData) ->
     # Create a storage fragment
-    $columns = $("<div id='columns'/>")
+    $decks = $("<div id='decks'/>")
 
     for deck in appData.decksOrder
-      deckColumn = createColumn(appData.board, deck, appData.decks[deck])
-      $columns.append(deckColumn)
+      $deck = createDeck(appData.board, deck, appData.decks[deck])
+      $decks.append($deck)
 
-    $(".column>ul", $columns).sortable
+    $(".cardHolder", $decks).sortable
       connectWith: "ul"
       scroll: false
       placeholder: "box-placeholder"
@@ -311,11 +311,11 @@
         unlockScrollbars()
         saveCards e, drag
 
-    $(".column", $columns)
+    $(".deck", $decks)
       .disableSelection()
       .width(95 / appData.decksOrder.length + "%")
 
-    $('#columns').replaceWith($columns)
+    $('#decks').replaceWith($decks)
     adjustDeckHeight(0)
 
 
@@ -337,7 +337,7 @@
 
 
   removeDeck = (event) ->
-    $deck = $(event.target).closest(".column")
+    $deck = $(event.target).closest(".deck")
     deck_id = $deck.attr("id").replace("deck_","")
     $.ajax
       type: "DELETE"
