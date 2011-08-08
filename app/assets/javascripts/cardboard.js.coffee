@@ -61,6 +61,17 @@
         window.open(@href)
 
 
+  adjustDeckHeight = (delay) ->
+    delay = 300 if typeof delay is not 'number'
+    top = $('.deck').offset().top
+
+    clearTimeout(@timer)
+
+    @timer = setTimeout ->
+      $('.deck').css {minHeight: $(window).height() - top}
+    , delay
+
+
   lockScrollbars = ->
     $doc = $(document)
 
@@ -85,9 +96,10 @@
     $('html,body').removeClass('scrollX scrollY noScrollX noScrollY')
 
 
-  watchMouse = ->
-    $(document).mousemove ->
-      resetPolling()
+  bindWindowEvents = ->
+    $(window).bind
+      mousemove: resetPolling
+      resize: adjustDeckHeight
 
 
   startPolling = ->
@@ -304,6 +316,7 @@
       .width(95 / appData.decksOrder.length + "%")
 
     $('#columns').replaceWith($columns)
+    adjustDeckHeight(0)
 
 
   saveCards = (e, drag) ->
@@ -333,9 +346,9 @@
 
 
   init = ->
-    loadDecks()
-    watchMouse()
+    bindWindowEvents()
     fixLinks()
+    loadDecks()
     startPolling()
 
 
