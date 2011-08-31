@@ -29,7 +29,7 @@ gem 'haml'
 gem 'jquery-rails'
 gem 'formtastic'
 gem 'acts-as-taggable-on', :git => 'git://github.com/mbleigh/acts-as-taggable-on.git'
-gem 'paper_trail', :git => 'git://github.com/airblade/paper_trail.git'
+gem 'paper_trail'
 gem 'acts_as_list'
 
 # Use unicorn as the web server
