@@ -1,9 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0'
-
-# Bundle edge Rails instead:
-# gem 'rails',     :git => 'git://github.com/rails/rails.git'
+gem 'rails', :git => 'git://github.com/rails/rails.git', :branch => '3-1-stable'
 
 # http://devcenter.heroku.com/articles/how-do-i-use-sqlite3-for-development
 group :production do
@@ -27,7 +24,7 @@ end
 
 gem 'haml'
 gem 'jquery-rails'
-gem 'formtastic'
+gem 'formtastic', :git => 'git://github.com/cthiel/formtastic.git'
 gem 'acts-as-taggable-on', :git => 'git://github.com/mbleigh/acts-as-taggable-on.git'
 gem 'paper_trail'
 gem 'acts_as_list'
