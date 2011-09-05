@@ -5,15 +5,7 @@
 // the compiled file.
 //
 //= require jquery
+//= require jquery-ui
 //= require jquery_ujs
-//= require 'ui/jquery.ui.core'
-//= require 'ui/jquery.ui.widget'
-//= require 'ui/jquery.ui.mouse'
-//= require 'ui/jquery.ui.position'
-//= require 'ui/jquery.ui.draggable'
-//= require 'ui/jquery.ui.sortable'
-//= require 'ui/jquery.ui.dialog'
-//= require 'ui/jquery.effects.core'
-//= require 'ui/jquery.effects.drop'
 //= require 'showdown'
 //= require 'jquery.editable'
