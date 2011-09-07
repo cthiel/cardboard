@@ -1,5 +1,9 @@
-@CardBoard.lib.namespace 'CardBoard.dialog', (exports) ->
-  exports.create = (opt) ->
+root = @
+
+@cardboard ?= {}
+
+@cardboard.dialog = do ->
+  create = (opt) ->
     $form = null
     opt.appData.dialog = true
 

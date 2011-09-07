@@ -1,10 +1,15 @@
-@cardboard = (($)->
+root = @
+$ = root.jQuery
+
+@cardboard ?= {}
+
+@cardboard.app = do ->
   appData = {}
 
 
   # import external functions
   converter = new Attacklab.showdown.converter()
-  createDialog = @CardBoard.dialog.create
+  createDialog = root.cardboard.dialog.create
 
 
   loadDecks = ->
@@ -138,12 +143,10 @@
 
 
   offline = ->
-    console.warn 'offline'
     notify('Cannot contact the CardBoard server', 'error')
 
 
   online = ->
-    console.info 'online'
     notify(false)
 
 
@@ -356,8 +359,5 @@
   {init}
 
 
-)(jQuery)
-
-
 jQuery ->
-  cardboard.init()
+  cardboard.app.init()
