@@ -65,3 +65,5 @@ root = @
                 .delegate 'input', 'keydown', (e) ->
                   if e.keyCode == 13
                     _submit(e)
+
+  {create} # Public exports

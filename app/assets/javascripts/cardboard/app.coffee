@@ -7,9 +7,11 @@ $ = root.jQuery
   appData = {}
 
 
-  # import external functions
-  converter = new Attacklab.showdown.converter()
-  createDialog = root.cardboard.dialog.create
+  # import external functions to cardboard, after the document.ready
+  # (as it's called from init)
+  delayedImport = ->
+    @dialog = root.cardboard.dialog
+    @converter = new Attacklab.showdown.converter()
 
 
   loadDecks = ->
@@ -183,7 +185,7 @@ $ = root.jQuery
       for card in board[deck]
         tags = card.tag_list.sort().join(', ')
         [card.title, body...] = card.name.split("\n")
-        card.markdown = converter.makeHtml(body.join "\n")
+        card.markdown = @converter.makeHtml(body.join "\n")
 
         $cardElement = $ """
           <li>
@@ -202,7 +204,7 @@ $ = root.jQuery
 
 
   showEditCardDialog = (card) ->
-    createDialog
+    @dialog.create
       appData: appData
       title: "Editing card: #{card.title}"
       url:   "/cards/#{card.id}/edit"
@@ -210,7 +212,7 @@ $ = root.jQuery
       submit:  loadCards
 
   showNewCardDialog = (deck) ->
-    createDialog
+    @dialog.create
       appData: appData
       title: "Add a new card"
       url:   "/cards/new"
@@ -224,7 +226,7 @@ $ = root.jQuery
 
 
   showEditDeckDialog = (deck_id, deck_name) ->
-    createDialog
+    @dialog.create
       appData: appData
       title: "Editing deck: #{deck_name}"
       url:   "/decks/#{deck_id}/edit"
@@ -232,7 +234,7 @@ $ = root.jQuery
       submit:  loadDecks
 
   showNewDeckDialog = () ->
-    createDialog
+    @dialog.create
       appData: appData
       title: "Add a new deck"
       url:   "/decks/new"
@@ -349,14 +351,14 @@ $ = root.jQuery
 
 
   init = ->
+    delayedImport()
     bindWindowEvents()
     fixLinks()
     loadDecks()
     startPolling()
 
 
-  # ## Export selected functions as public ## #
-  {init}
+  {init} # Export selected functions as public
 
 
 jQuery ->
