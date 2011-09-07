@@ -9,15 +9,15 @@ $ = root.jQuery
 
   # import external functions to cardboard, after the document.ready
   # (as it's called from init)
-  delayedImport = ->
+  delayedImports = ->
     @dialog = root.cardboard.dialog
     @converter = new Attacklab.showdown.converter()
 
 
   loadDecks = ->
     appData =
-      decks     : {}
-      decksOrder: []
+      decks      : {}
+      decksOrder : []
 
     $.getJSON "/decks.json", (deckData) ->
       for datum in deckData
@@ -30,11 +30,6 @@ $ = root.jQuery
 
       reloadDecksCSS()
       loadCards()
-
-    $('#board')
-      .undelegate('.control') # in case loadDecks is called > 1 times
-      .delegate('.new_deck',    'click.control', showNewDeckDialog)
-      .delegate('.delete_deck', 'click.control', removeDeck)
 
 
   loadCards = (cards) ->
@@ -103,15 +98,20 @@ $ = root.jQuery
     $('html,body').removeClass('scrollX scrollY noScrollX noScrollY')
 
 
-  bindWindowEvents = ->
+  bindEvents = ->
     $(window).bind
       mousemove: resetPolling
       resize: adjustDeckHeight
 
+    $('#board')
+      .delegate('.new_deck',    'click.control', showNewDeckDialog)
+      .delegate('.delete_deck', 'click.control', removeDeck)
+
 
   startPolling = ->
     appData.poll = setInterval ->
-      checkStatus() if !appData.dialog
+      checkStatus() unless appData.dialog
+      console.log 'polling started'
       return
     , 5000
 
@@ -167,8 +167,15 @@ $ = root.jQuery
         success: online
 
     # check both decks & cards for updates
-    _head {} = url: "decks", obj: "deckMod", func: loadDecks
-    _head {} = url: "cards", obj: "cardMod", func: loadCards
+    _head
+      func : loadDecks
+      url  : "decks"
+      obj  : "deckMod"
+
+    _head
+      func : loadCards
+      url  : "cards"
+      obj  : "cardMod"
 
     return
 
@@ -203,72 +210,76 @@ $ = root.jQuery
     $list
 
 
-  showEditCardDialog = (card) ->
+  showEditCardDialog = (card) =>
     @dialog.create
-      appData: appData
-      title: "Editing card: #{card.title}"
-      url:   "/cards/#{card.id}/edit"
-      id:    "#edit-form"
-      submit:  loadCards
+      appData : appData
+      title   : "Editing card: #{card.title}"
+      url     : "/cards/#{card.id}/edit"
+      id      : "#edit-form"
+      submit  : loadCards
 
-  showNewCardDialog = (deck) ->
+  showNewCardDialog = (deck) =>
     @dialog.create
-      appData: appData
-      title: "Add a new card"
-      url:   "/cards/new"
-      id:    "#new-form"
-      deck:  deck
+      appData : appData
+      title   : "Add a new card"
+      url     : "/cards/new"
+      id      : "#new-form"
+      deck    : deck
+
       appear: (opt, form) ->
         $("option", form).map (i, el) ->
           el if el.text.match "^#{opt.deck}$"
         .attr "selected", true
+
       submit:  loadCards
 
 
-  showEditDeckDialog = (deck_id, deck_name) ->
+  showEditDeckDialog = (deck_id, deck_name) =>
     @dialog.create
-      appData: appData
-      title: "Editing deck: #{deck_name}"
-      url:   "/decks/#{deck_id}/edit"
-      id:    "#edit-form"
-      submit:  loadDecks
+      appData : appData
+      title   : "Editing deck: #{deck_name}"
+      url     : "/decks/#{deck_id}/edit"
+      id      : "#edit-form"
+      submit  : loadDecks
 
-  showNewDeckDialog = () ->
+  showNewDeckDialog = () =>
     @dialog.create
-      appData: appData
-      title: "Add a new deck"
-      url:   "/decks/new"
-      id:    "#new-form"
+      appData : appData
+      title   : "Add a new deck"
+      url     : "/decks/new"
+      id      : "#new-form"
+
       appear: (opt, form) ->
         $("select", form).val opt.appData.boardId
+
       submit:  loadDecks
 
 
   showCardCloseButton = (e) ->
-    $container = $(this)
-    $button = $("<b class='close'/>")
+    $container = $(@)
+    $button    = $("<b class = 'close'/>")
 
     if e.type is 'mouseenter'
       $button.appendTo($container).hide().fadeIn 200
     else
       $('.close', $container).fadeOut 200, ->
-        $(this).remove()
+        $(@).remove()
 
 
   removeCard = (e) ->
-    $container = $(this).parent('li')
-    cardId = $(this).siblings('.card').data()?['cardId']
+    $container = $(@).parent('li')
+    cardId     = $(@).siblings('.card').data()?['cardId']
 
     $container.fadeTo(300, 0).delay(300).slideUp 300, ->
       $.ajax
-        type: "DELETE"
-        url: "/cards/#{cardId}"
+        type : "DELETE"
+        url  : "/cards/#{cardId}"
 
 
   createDeck = (board, deck, headline) ->
     used = if board[deck]?.length then "in_use" else "empty"
 
-    $("<div class='deck #{used}' id='deck_#{deck}'></div>")
+    $("<div class='deck #{used}' id='deck_#{deck}'/>")
       .append("<div class='control delete_deck' title='Remove this deck'>&#215;</div>")
       .append("<h2 class='name'>#{headline}</h2>")
       .append(createList board, deck)
@@ -281,16 +292,15 @@ $ = root.jQuery
 
       .delegate 'h2.name', 'dblclick', (e) ->
         e.stopPropagation()
-        showEditDeckDialog $(this).parent().data('deck'), $(this).text()
+        showEditDeckDialog $(@).parent().data('deck'), $(@).text()
 
       .delegate '.card', 'dblclick', (e) ->
         e.stopPropagation()
-        showEditCardDialog $(this).parent().data 'card'
+        showEditCardDialog $(@).parent().data 'card'
 
       .delegate('.cardHolder>li', 'hover', showCardCloseButton)
 
       .delegate('.close', 'click', removeCard)
-
 
 
   createBoard = (appData) ->
@@ -302,16 +312,18 @@ $ = root.jQuery
       $decks.append($deck)
 
     $(".cardHolder", $decks).sortable
-      connectWith: "ul"
-      scroll: false
-      placeholder: "card-placeholder"
-      distance: 6
-      opacity: 0.7
-      revert: 100
-      tolerance: "pointer"
+      connectWith : "ul"
+      scroll      : false
+      placeholder : "card-placeholder"
+      distance    : 6
+      opacity     : 0.7
+      revert      : 100
+      tolerance   : "pointer"
+
       start: (e, drag) ->
         lockScrollbars()
         drag.placeholder.height drag.item.height()
+
       stop: (e, drag) ->
         unlockScrollbars()
         saveCards e, drag
@@ -321,6 +333,7 @@ $ = root.jQuery
       .width(95 / appData.decksOrder.length + "%")
 
     $('#decks').replaceWith($decks)
+
     adjustDeckHeight(0)
 
 
@@ -333,26 +346,27 @@ $ = root.jQuery
     $card.addClass "unsaved"
 
     $.ajax
-      type: "PUT"
-      url: "cards/#{cardId}"
-      data: "card[deck_id]=#{deckId}"
+      type : "PUT"
+      url  : "cards/#{cardId}"
+      data : "card[deck_id]=#{deckId}"
       complete: ->
         $card.removeClass "unsaved"
         clearStatus()
 
 
   removeDeck = (event) ->
-    $deck = $(event.target).closest(".deck")
+    $deck   = $(event.target).closest(".deck")
     deck_id = $deck.attr("id").replace("deck_","")
+
     $.ajax
-      type: "DELETE"
-      url: "/decks/#{deck_id}"
-      complete: $deck.effect("drop", 1000, loadDecks)
+      type     : "DELETE"
+      url      : "/decks/#{deck_id}"
+      complete : $deck.effect("drop", 1000, loadDecks)
 
 
   init = ->
-    delayedImport()
-    bindWindowEvents()
+    delayedImports()
+    bindEvents()
     fixLinks()
     loadDecks()
     startPolling()
