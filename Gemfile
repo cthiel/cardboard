@@ -24,7 +24,7 @@ end
 
 gem 'haml'
 gem 'jquery-rails'
-gem 'formtastic', :git => 'git://github.com/cthiel/formtastic.git'
+gem 'formtastic', :git => 'git://github.com/justinfrench/formtastic.git'
 gem 'acts-as-taggable-on', :git => 'git://github.com/mbleigh/acts-as-taggable-on.git'
 gem 'paper_trail'
 gem 'acts_as_list'
