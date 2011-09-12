@@ -8,6 +8,8 @@ group :production do
 end
 group :development, :test do
   gem 'sqlite3'
+  gem 'rspec-rails'
+  gem "jasminerice"
 end
 
 gem 'json'
@@ -29,17 +31,3 @@ gem 'acts-as-taggable-on', :git => 'git://github.com/mbleigh/acts-as-taggable-on
 gem 'paper_trail'
 gem 'acts_as_list'
 
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'ruby-debug'
-
-gem "rspec-rails", :group => [:test, :development]
-#group :test do
-#  gem "factory_girl_rails"
-#  gem "capybara"
-#end
