@@ -341,7 +341,7 @@ $ = root.jQuery
     $item = drag.item
     $card = $item.find '.card'
     cardId = $item.data("card").id
-    deckId = $item.parent()[0].id.replace('deck_','')
+    deckId = $item.parent()[0].id.replace('deck_','').replace('_cards','')
 
     $card.addClass "unsaved"
 
@@ -352,7 +352,6 @@ $ = root.jQuery
       complete: ->
         $card.removeClass "unsaved"
         clearStatus()
-
 
   removeDeck = (event) ->
     $deck   = $(event.target).closest(".deck")
