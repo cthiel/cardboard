@@ -1,13 +1,17 @@
 CardBoard::Application.routes.draw do
-  resources :cards
-  resources :decks do
-    put :sort
+
+  resources :boards do
+    resources :decks do
+      put :sort
+    end
+    resources :cards
   end
-  resources :boards
 
   if ["development", "test"].include? Rails.env
     mount Jasminerice::Engine => "/jasmine" 
   end
 
-  root :to => 'boards#index'
+  match '/:id' => 'boards#show'
+
+  root :to => 'boards#show'
 end

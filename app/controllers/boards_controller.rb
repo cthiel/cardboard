@@ -1,12 +1,11 @@
 class BoardsController < ApplicationController
-  # GET /projects
-  def index
-    render :show
-  end
-  
-  # GET /projects/id
+  # GET /board-slug or /
   def show
-    @board = Board.find(params[:id], :include => :decks) || Board.first
+    if params[:id]
+      @board = Board.find(params[:id])
+    else
+      @board = Board.first
+    end
 
     respond_to do |format|
       format.html # show.html.haml

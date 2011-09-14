@@ -1,4 +1,6 @@
 class CardsController < ApplicationController
+  before_filter :find_board
+
   # GET /cards
   # GET /cards.json
   def index
@@ -77,5 +79,11 @@ class CardsController < ApplicationController
         format.json { render :json => @card.errors, :deck => :unprocessable_entity }
       end
     end
+  end
+
+private
+
+  def find_board
+    @board = Board.find(params[:board_id])
   end
 end

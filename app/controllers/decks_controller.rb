@@ -1,4 +1,6 @@
 class DecksController < ApplicationController
+  before_filter :find_board
+
   # GET /decks
   # GET /decks.json
   # GET /decks.css
@@ -79,5 +81,11 @@ class DecksController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(decks_url) }
     end
+  end
+
+private
+
+  def find_board
+    @board = Board.find(params[:board_id])
   end
 end

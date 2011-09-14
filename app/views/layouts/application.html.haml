@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title CardBoard
+    %title= (@board ? @board.name : 'CardBoard')
     = stylesheet_link_tag 'application'
     = javascript_include_tag 'lib'
     = javascript_include_tag 'application'
@@ -11,7 +11,7 @@
     %nav{:role => "banner"}
       %h1.title
         =image_tag 'tomboy.png'
-        CardBoard
+        = @board ? @board.name : 'CardBoard'
       %span#notify
       %ul.actions
         / Add management (place for cusomization, import/export, etc.)
