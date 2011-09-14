@@ -353,6 +353,11 @@ $ = root.jQuery
         $card.removeClass "unsaved"
         clearStatus()
 
+    $.ajax
+      type : "PUT"
+      url  : "decks/#{deckId}/sort"
+      data : "order=FIXME"
+
   removeDeck = (event) ->
     $deck   = $(event.target).closest(".deck")
     deck_id = $deck.attr("id").replace("deck_","")

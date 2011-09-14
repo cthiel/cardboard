@@ -1,6 +1,8 @@
 CardBoard::Application.routes.draw do
   resources :cards
-  resources :decks
+  resources :decks do
+    put :sort
+  end
   resources :boards
 
   if ["development", "test"].include? Rails.env
