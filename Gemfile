@@ -30,4 +30,4 @@ gem 'formtastic', :git => 'git://github.com/justinfrench/formtastic.git'
 gem 'acts-as-taggable-on', :git => 'git://github.com/mbleigh/acts-as-taggable-on.git'
 gem 'paper_trail'
 gem 'acts_as_list'
-
+gem 'friendly_id', "~> 4.0.0.beta8"
