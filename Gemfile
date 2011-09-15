@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', :git => 'git://github.com/rails/rails.git', :branch => '3-1-stable'
+gem 'rails', '~> 3.1.1.rc1'
 
 # http://devcenter.heroku.com/articles/how-do-i-use-sqlite3-for-development
 group :production do
