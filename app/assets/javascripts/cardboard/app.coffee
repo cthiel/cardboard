@@ -10,7 +10,7 @@ $ = root.jQuery
   dialog = converter = {}
 
 
-  # import external functions to cardboard, after the document.ready
+  # Import external functions to cardboard, after the document.ready
   # (as it's called from init)
   delayedImports = ->
     dialog = root.cardboard.dialog
@@ -18,12 +18,15 @@ $ = root.jQuery
     return
 
 
+  # Load deck data from the server, and arrange it into an object
   loadDecks = ->
+    # Initialize/reinitialize appData
     appData =
       decks      : {}
       decksOrder : []
 
     $.getJSON "/decks.json", (deckData) ->
+
       for datum in deckData
         deck = datum.deck
         appData.decks[deck.id] = deck.name
@@ -32,11 +35,10 @@ $ = root.jQuery
       # FIXME: There should be a better way to set the board id
       appData.boardId = deckData[0].deck.board_id
 
-      reloadDecksCSS()
-      loadCards()
 
-
+  # Load card data from the server, and arrange it into an object
   loadCards = (cards) ->
+    # Initialize / reinitialize appData.board and shorthand it to board
     board = appData.board = {}
 
     $.getJSON "/cards.json", (cardsData) ->
@@ -46,9 +48,21 @@ $ = root.jQuery
         board[deck] ?= []
         board[deck].push datum.card
 
+
+  # Load and make the decks
+  makeDecks = ->
+    loadDecks().then ->
+      reloadDecksCSS()
+      makeCards()
+
+
+  # Load and make the cards
+  makeCards = (cards) ->
+    loadCards(cards).then ->
       createBoard appData
 
 
+  # Reload the generated deck CSS when it may have changed
   reloadDecksCSS = ->
     # Grab and cache original href
     href = @href ?= $('#decks_css').attr 'href'
@@ -172,12 +186,12 @@ $ = root.jQuery
 
     # check both decks & cards for updates
     _head
-      func : loadDecks
+      func : makeDecks
       url  : "decks"
       obj  : "deckMod"
 
     _head
-      func : loadCards
+      func : makeCards
       url  : "cards"
       obj  : "cardMod"
 
@@ -220,7 +234,7 @@ $ = root.jQuery
       title   : "Editing card: #{card.title}"
       url     : "/cards/#{card.id}/edit"
       id      : "#edit-form"
-      submit  : loadCards
+      submit  : makeCards
 
   showNewCardDialog = (deck) =>
     dialog.create
@@ -235,7 +249,7 @@ $ = root.jQuery
           el if el.text.match "^#{opt.deck}$"
         .attr "selected", true
 
-      submit:  loadCards
+      submit:  makeCards
 
 
   showEditDeckDialog = (deck_id, deck_name) =>
@@ -244,7 +258,7 @@ $ = root.jQuery
       title   : "Editing deck: #{deck_name}"
       url     : "/decks/#{deck_id}/edit"
       id      : "#edit-form"
-      submit  : loadDecks
+      submit  : makeDecks
 
   showNewDeckDialog = () =>
     dialog.create
@@ -256,7 +270,7 @@ $ = root.jQuery
       appear: (opt, form) ->
         $("select", form).val opt.appData.boardId
 
-      submit:  loadDecks
+      submit:  makeDecks
 
 
   showCardCloseButton = (e) ->
@@ -362,6 +376,7 @@ $ = root.jQuery
       url  : "decks/#{deckId}/sort"
       data : "order=FIXME"
 
+
   removeDeck = (event) ->
     $deck   = $(event.target).closest(".deck")
     deck_id = $deck.attr("id").replace("deck_","")
@@ -369,14 +384,14 @@ $ = root.jQuery
     $.ajax
       type     : "DELETE"
       url      : "/decks/#{deck_id}"
-      complete : $deck.effect("drop", 1000, loadDecks)
+      complete : $deck.effect("drop", 1000, makeDecks)
 
 
   init = ->
     delayedImports()
     bindEvents()
     fixLinks()
-    loadDecks()
+    makeDecks()
     startPolling()
 
 
