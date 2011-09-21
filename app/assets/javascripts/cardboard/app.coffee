@@ -4,6 +4,10 @@ $ = root.jQuery
 @cardboard ?= {}
 
 @cardboard.app = do ->
+  # Board data, which holds the board, decks, & cards
+  boardData = {}
+
+  # Misc. data storage
   appData = {}
 
   # Prepare the imports
@@ -20,8 +24,8 @@ $ = root.jQuery
 
   # Load deck data from the server, and arrange it into an object
   loadDecks = ->
-    # Initialize/reinitialize appData
-    appData =
+    # Initialize/reinitialize boardData
+    boardData =
       decks      : {}
       decksOrder : []
 
@@ -29,17 +33,17 @@ $ = root.jQuery
 
       for datum in deckData
         deck = datum.deck
-        appData.decks[deck.id] = deck.name
-        appData.decksOrder.push deck.id
+        boardData.decks[deck.id] = deck.name
+        boardData.decksOrder.push deck.id
 
       # FIXME: There should be a better way to set the board id
-      appData.boardId = deckData[0].deck.board_id
+      boardData.boardId = deckData[0].deck.board_id
 
 
   # Load card data from the server, and arrange it into an object
   loadCards = (cards) ->
-    # Initialize / reinitialize appData.board and shorthand it to board
-    board = appData.board = {}
+    # Initialize / reinitialize boardData.board and shorthand it to board
+    board = boardData.board = {}
 
     $.getJSON "/cards.json", (cardsData) ->
 
@@ -52,29 +56,32 @@ $ = root.jQuery
   # Load and make the decks
   makeDecks = ->
     loadDecks().then ->
-      reloadDecksCSS()
+      reloadDeckStyle()
       makeCards()
 
 
   # Load and make the cards
   makeCards = (cards) ->
     loadCards(cards).then ->
-      createBoard appData
+      createAllDecks()
 
 
   # Reload the generated deck CSS when it may have changed
-  reloadDecksCSS = ->
+  reloadDeckStyle = ->
     # Grab and cache original href
-    href = @href ?= $('#decks_css').attr 'href'
+    href = appData.deckStyle ?= $('#decks_css').attr 'href'
 
+    # Modify style URI to bust cache
     href += if href.match /\?/ then '&' else '?'
     href += 'forceReload=' + new Date().valueOf()
 
+    # Set to the new location
     $('#decks_css').attr 'href', href
 
 
   fixLinks = ->
     $('#output').delegate 'a', 'click', (e) ->
+      # Handle the clicked element's href, if it has one
       if @href
         e.preventDefault()
         e.stopPropagation()
@@ -85,13 +92,14 @@ $ = root.jQuery
     delay = 300 if typeof delay is not 'number'
     top = $('.cardHolder').offset().top
 
-    clearTimeout(@timer)
+    clearTimeout(appData.timer)
 
-    @timer = setTimeout ->
+    appData.timer = setTimeout ->
       $('.cardHolder').css {minHeight: $(window).height() - top}
     , delay
 
 
+  # Work around the browser wanting to modify scrollbars during a move
   lockScrollbars = ->
     $doc = $(document)
 
@@ -112,6 +120,7 @@ $ = root.jQuery
     $('body').addClass("#{scroll.x} #{scroll.y}")
 
 
+  # Allow the browser to do its thing with scrollbars
   unlockScrollbars = ->
     $('html,body').removeClass('scrollX scrollY noScrollX noScrollY')
 
@@ -127,15 +136,14 @@ $ = root.jQuery
 
 
   startPolling = ->
-    appData.poll = setInterval ->
-      checkStatus() unless appData.dialog
-      console.log 'polling started'
+    boardData.poll = setInterval ->
+      checkStatus() unless boardData.dialog
       return
     , 5000
 
 
   stopPolling = ->
-    clearInterval(appData.poll)
+    clearInterval(boardData.poll)
     return
 
 
@@ -153,13 +161,13 @@ $ = root.jQuery
     $tray.find('.notification').remove()
 
     if (msg)
-      @isNotifyVisible = true
+      appData.isNotifyVisible = true
       html = "<span class='notification #{type}'>#{msg}</span>"
 
       $(html).appendTo($tray).hide().slideDown(300)
 
     else
-      @isNotifyVisible = false
+      appData.isNotifyVisible = false
 
 
   offline = ->
@@ -178,9 +186,9 @@ $ = root.jQuery
         complete: (xhr) ->
           mod = xhr.getAllResponseHeaders().match(/Last-Modified: (.*)/)[1]
           # run the callback if data has been modified since last check
-          deck.func?() if appData[deck.obj]? and appData[deck.obj] != mod
+          deck.func?() if boardData[deck.obj]? and boardData[deck.obj] != mod
           # save the last modified date
-          appData[deck.obj] = mod
+          boardData[deck.obj] = mod
         error:   offline
         success: online
 
@@ -199,7 +207,7 @@ $ = root.jQuery
 
 
   clearStatus = ->
-    appData.cardMod = appData.statusMod = undefined
+    boardData.cardMod = boardData.statusMod = undefined
 
 
   createList = (board, deck) ->
@@ -230,47 +238,47 @@ $ = root.jQuery
 
   showEditCardDialog = (card) =>
     dialog.create
-      appData : appData
-      title   : "Editing card: #{card.title}"
-      url     : "/cards/#{card.id}/edit"
-      id      : "#edit-form"
-      submit  : makeCards
+      boardData : boardData
+      title     : "Editing card: #{card.title}"
+      url       : "/cards/#{card.id}/edit"
+      id        : "#edit-form"
+      submit    : makeCards
 
   showNewCardDialog = (deck) =>
     dialog.create
-      appData : appData
-      title   : "Add a new card"
-      url     : "/cards/new"
-      id      : "#new-form"
-      deck    : deck
+      boardData : boardData
+      title     : "Add a new card"
+      url       : "/cards/new"
+      id        : "#new-form"
+      deck      : deck
 
       appear: (opt, form) ->
         $("option", form).map (i, el) ->
           el if el.text.match "^#{opt.deck}$"
         .attr "selected", true
 
-      submit:  makeCards
+      submit: makeCards
 
 
   showEditDeckDialog = (deck_id, deck_name) =>
     dialog.create
-      appData : appData
-      title   : "Editing deck: #{deck_name}"
-      url     : "/decks/#{deck_id}/edit"
-      id      : "#edit-form"
-      submit  : makeDecks
+      boardData : boardData
+      title     : "Editing deck: #{deck_name}"
+      url       : "/decks/#{deck_id}/edit"
+      id        : "#edit-form"
+      submit    : makeDecks
 
   showNewDeckDialog = () =>
     dialog.create
-      appData : appData
-      title   : "Add a new deck"
-      url     : "/decks/new"
-      id      : "#new-form"
+      boardData : boardData
+      title     : "Add a new deck"
+      url       : "/decks/new"
+      id        : "#new-form"
 
       appear: (opt, form) ->
-        $("select", form).val opt.appData.boardId
+        $("select", form).val opt.boardData.boardId
 
-      submit:  makeDecks
+      submit: makeDecks
 
 
   showCardCloseButton = (e) ->
@@ -294,6 +302,7 @@ $ = root.jQuery
         url  : "/cards/#{cardId}"
 
 
+  # Create a single deck
   createDeck = (board, deck, headline) ->
     used = if board[deck]?.length then "in_use" else "empty"
 
@@ -321,12 +330,13 @@ $ = root.jQuery
       .delegate('.close', 'click', removeCard)
 
 
-  createBoard = (appData) ->
+  # Create all decks
+  createAllDecks = ->
     # Create a storage fragment
     $decks = $("<div id='decks'/>")
 
-    for deck in appData.decksOrder
-      $deck = createDeck(appData.board, deck, appData.decks[deck])
+    for deck in boardData.decksOrder
+      $deck = createDeck(boardData.board, deck, boardData.decks[deck])
       $decks.append($deck)
 
     $(".cardHolder", $decks).sortable
@@ -348,7 +358,7 @@ $ = root.jQuery
 
     $(".deck", $decks)
       .disableSelection()
-      .width(95 / appData.decksOrder.length + "%")
+      .width(95 / boardData.decksOrder.length + "%")
 
     $('#decks').replaceWith($decks)
 
@@ -356,8 +366,8 @@ $ = root.jQuery
 
 
   saveCards = (e, drag) ->
-    $item = drag.item
-    $card = $item.find '.card'
+    $item  = drag.item
+    $card  = $item.find '.card'
     cardId = $item.data("card").id
     deckId = $item.parent()[0].id.replace('deck_','').replace('_cards','')
 

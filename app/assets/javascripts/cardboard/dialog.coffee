@@ -5,10 +5,10 @@ root = @
 @cardboard.dialog = do ->
   create = (opt) ->
     $form = null
-    opt.appData.dialog = true
+    opt.boardData.dialog = true
 
     _closeDialog = ->
-      opt.appData.dialog = false
+      opt.boardData.dialog = false
       $dialog.remove()
 
     _submit = (e) ->
