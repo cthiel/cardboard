@@ -43,6 +43,6 @@ and https://github.com/0s30s1s/simplekanban
 
 ## Team
 
-* Christoph Thiel
-* Garrett LeSage
-* James Mason
+* Christoph Thiel (@cthiel)
+* Garrett LeSage (@garrett)
+* James Mason (@bear454)

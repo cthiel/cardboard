@@ -1,10 +1,14 @@
-@CardBoard.lib.namespace 'CardBoard.dialog', (exports) ->
-  exports.create = (opt) ->
+root = @
+
+@cardboard ?= {}
+
+@cardboard.dialog = do ->
+  create = (opt) ->
     $form = null
-    opt.appData.dialog = true
+    opt.boardData.dialog = true
 
     _closeDialog = ->
-      opt.appData.dialog = false
+      opt.boardData.dialog = false
       $dialog.remove()
 
     _submit = (e) ->
@@ -61,3 +65,5 @@
                 .delegate 'input', 'keydown', (e) ->
                   if e.keyCode == 13
                     _submit(e)
+
+  {create} # Public exports

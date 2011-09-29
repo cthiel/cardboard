@@ -1,5 +1,6 @@
 class Board < ActiveRecord::Base
-  validates :name, :presence => true, :uniqueness => true
+  extend FriendlyId
+  friendly_id :name, :use => :slugged
   
   has_many :decks
 end

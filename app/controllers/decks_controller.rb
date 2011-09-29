@@ -65,6 +65,12 @@ class DecksController < ApplicationController
     end
   end
 
+  def sort
+    @deck = Deck.find(params[:deck_id])
+    # FIXME
+    render :nothing => true
+  end
+
   # DELETE /decks/1
   def destroy
     @deck = Deck.find(params[:id])
