@@ -5,3 +5,5 @@
 //= require showdown
 //= require jquery.editable
 //= require sugar
+//= require underscore
+//= require backbone
