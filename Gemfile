@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.1.rc1'
+gem 'rails', '3.2.1'
 
 # http://devcenter.heroku.com/articles/how-do-i-use-sqlite3-for-development
 group :production do
@@ -17,11 +17,11 @@ gem 'json'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', "  ~> 3.1.0"
-  gem 'coffee-rails', "~> 3.1.0"
+  gem 'sass-rails',   "~> 3.2.3"
+  gem 'coffee-rails', "~> 3.2.1"
   gem 'execjs'
   gem 'therubyracer'
-  gem 'uglifier'
+  gem 'uglifier',     ">= 1.0.3"
 end
 
 gem 'haml'
