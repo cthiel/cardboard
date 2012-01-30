@@ -29,7 +29,7 @@ $ = root.jQuery
       decks      : {}
       decksOrder : []
 
-    $.getJSON "/decks.json", (deckData) ->
+    $.getJSON "decks.json", (deckData) ->
 
       for datum in deckData
         deck = datum.deck
@@ -45,7 +45,7 @@ $ = root.jQuery
     # Initialize / reinitialize boardData.board and shorthand it to board
     board = boardData.board = {}
 
-    $.getJSON "/cards.json", (cardsData) ->
+    $.getJSON "cards.json", (cardsData) ->
 
       for datum in cardsData
         deck = datum.card.deck_id
@@ -240,7 +240,7 @@ $ = root.jQuery
     dialog.create
       boardData : boardData
       title     : "Editing card: #{card.title}"
-      url       : "/cards/#{card.id}/edit"
+      url       : "cards/#{card.id}/edit"
       id        : "#edit-form"
       submit    : makeCards
 
@@ -248,7 +248,7 @@ $ = root.jQuery
     dialog.create
       boardData : boardData
       title     : "Add a new card"
-      url       : "/cards/new"
+      url       : "cards/new"
       id        : "#new-form"
       deck      : deck
 
@@ -264,7 +264,7 @@ $ = root.jQuery
     dialog.create
       boardData : boardData
       title     : "Editing deck: #{deck_name}"
-      url       : "/decks/#{deck_id}/edit"
+      url       : "decks/#{deck_id}/edit"
       id        : "#edit-form"
       submit    : makeDecks
 
@@ -272,7 +272,7 @@ $ = root.jQuery
     dialog.create
       boardData : boardData
       title     : "Add a new deck"
-      url       : "/decks/new"
+      url       : "decks/new"
       id        : "#new-form"
 
       appear: (opt, form) ->
@@ -299,7 +299,7 @@ $ = root.jQuery
     $container.fadeTo(300, 0).delay(300).slideUp 300, ->
       $.ajax
         type : "DELETE"
-        url  : "/cards/#{cardId}"
+        url  : "cards/#{cardId}"
 
 
   # Create a single deck
@@ -393,7 +393,7 @@ $ = root.jQuery
 
     $.ajax
       type     : "DELETE"
-      url      : "/decks/#{deck_id}"
+      url      : "decks/#{deck_id}"
       complete : $deck.effect("drop", 1000, makeDecks)
 
 
