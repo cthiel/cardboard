@@ -29,7 +29,7 @@ $ = root.jQuery
       decks      : {}
       decksOrder : []
 
-    $.getJSON "decks.json", (deckData) ->
+    $.getJSON window.location.href + "decks.json", (deckData) ->
 
       for datum in deckData
         deck = datum.deck
@@ -45,7 +45,7 @@ $ = root.jQuery
     # Initialize / reinitialize boardData.board and shorthand it to board
     board = boardData.board = {}
 
-    $.getJSON "cards.json", (cardsData) ->
+    $.getJSON window.location.href + "cards.json", (cardsData) ->
 
       for datum in cardsData
         deck = datum.card.deck_id
@@ -181,7 +181,7 @@ $ = root.jQuery
   checkStatus = ->
     # jQuery doesn't have $.head(), but we can use $.ajax()
     _head = (deck) ->
-      $.ajax "/#{deck.url}.json",
+      $.ajax window.location.href + "#{deck.url}.json",
         type: "HEAD",
         complete: (xhr) ->
           mod = xhr.getAllResponseHeaders().match(/Last-Modified: (.*)/)[1]
