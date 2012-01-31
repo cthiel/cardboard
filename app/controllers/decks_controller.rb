@@ -3,9 +3,9 @@ class DecksController < ApplicationController
   # GET /decks.json
   # GET /decks.css
   def index
-    @last_modified = Deck.unscoped.order("updated_at DESC").first
+#    @last_modified = Deck.unscoped.order("updated_at DESC").first
     
-    if stale?(:last_modified => @last_modified.try(:updated_at), :etag => @last_modified)
+#    if stale?(:last_modified => @last_modified.try(:updated_at), :etag => @last_modified)
       @decks = Deck.all
 
       respond_to do |format|
@@ -13,7 +13,7 @@ class DecksController < ApplicationController
         format.json  { render :json => @decks }
         format.css  # index.css.erb
       end
-    end
+#    end
   end
 
   # GET /decks/1

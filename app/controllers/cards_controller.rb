@@ -2,15 +2,15 @@ class CardsController < ApplicationController
   # GET /cards
   # GET /cards.json
   def index
-    @last_modified = Card.order("updated_at DESC").first
+#    @last_modified = Card.order("updated_at DESC").first
 
-    if stale?(:last_modified => @last_modified.try(:updated_at).try(:utc), :etag => @last_modified)
+#    if stale?(:last_modified => @last_modified.try(:updated_at).try(:utc), :etag => @last_modified)
       @cards = Card.all(:include => :deck, :order => 'updated_at ASC')
       respond_to do |format|
         format.html # index.html.haml
         format.json  { render :json => @cards.to_json(:methods => [:tag_list]) }
       end
-    end
+#    end
   end
 
   # GET /cards/1
