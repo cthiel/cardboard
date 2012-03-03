@@ -221,7 +221,7 @@ $ = root.jQuery
         card.markdown = converter.makeHtml(body.join "\n")
 
         $cardElement = $ """
-          <li>
+          <li id="card_#{card.id}">
             <div class='card card_#{deck}' data-card-id='#{card.id}'>
               <h3 role="title">#{card.title}</h3>
               #{card.markdown}
@@ -356,6 +356,9 @@ $ = root.jQuery
         unlockScrollbars()
         saveCards e, drag
 
+      update: ->
+        $.post(window.location.href + 'cards/sort', $(this).sortable('serialize'))
+
     $(".deck", $decks)
       .disableSelection()
       .width(95 / boardData.decksOrder.length + "%")
@@ -380,12 +383,6 @@ $ = root.jQuery
       complete: ->
         $card.removeClass "unsaved"
         clearStatus()
-
-    $.ajax
-      type : "PUT"
-      url  : "decks/#{deckId}/sort"
-      data : "order=FIXME"
-
 
   removeDeck = (event) ->
     $deck   = $(event.target).closest(".deck")

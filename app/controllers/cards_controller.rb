@@ -5,7 +5,7 @@ class CardsController < ApplicationController
 #    @last_modified = Card.order("updated_at DESC").first
 
 #    if stale?(:last_modified => @last_modified.try(:updated_at).try(:utc), :etag => @last_modified)
-      @cards = Card.all(:include => :deck, :order => 'updated_at ASC')
+      @cards = Card.all(:include => :deck)
       respond_to do |format|
         format.html # index.html.haml
         format.json  { render :json => @cards.to_json(:methods => [:tag_list]) }
@@ -77,5 +77,12 @@ class CardsController < ApplicationController
         format.json { render :json => @card.errors, :deck => :unprocessable_entity }
       end
     end
+  end
+
+  def sort
+    params[:card].each_with_index do |id, index|
+      Card.update_all({:position => index+1}, {:id => id})
+    end
+    render :nothing => true
   end
 end

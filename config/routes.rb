@@ -1,8 +1,8 @@
 CardBoard::Application.routes.draw do
-  resources :cards
-  resources :decks do
-    put :sort
+  resources :cards do
+    collection { post :sort }
   end
+  resources :decks
   resources :boards
 
   root :to => 'boards#index'
