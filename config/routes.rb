@@ -5,9 +5,5 @@ CardBoard::Application.routes.draw do
   end
   resources :boards
 
-  if ["development", "test"].include? Rails.env
-    mount Jasminerice::Engine => "/jasmine" 
-  end
-
   root :to => 'boards#index'
 end

@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.1'
+gem 'rails', '3.2.2'
 
 # http://devcenter.heroku.com/articles/how-do-i-use-sqlite3-for-development
 group :production do
@@ -9,7 +9,6 @@ end
 group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails'
-  gem "jasminerice"
 end
 
 gem 'json'
