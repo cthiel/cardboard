@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CardsController < ApplicationController
   # GET /cards
   # GET /cards.json

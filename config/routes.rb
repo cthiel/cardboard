@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 CardBoard::Application.routes.draw do
   resources :cards do
     collection { post :sort }

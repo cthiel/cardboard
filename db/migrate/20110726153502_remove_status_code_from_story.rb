@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveStatusCodeFromStory < ActiveRecord::Migration
   def self.up
     remove_column :stories, :status_code

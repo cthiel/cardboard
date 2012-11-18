@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddBoardIdToDeck < ActiveRecord::Migration
   def change
     add_column :decks, :board_id, :integer

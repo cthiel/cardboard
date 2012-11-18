@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Renaming < ActiveRecord::Migration
   def up
     rename_table :statuses, :decks

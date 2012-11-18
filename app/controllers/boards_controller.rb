@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class BoardsController < ApplicationController
   # GET /projects
   def index

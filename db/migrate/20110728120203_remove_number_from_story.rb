@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveNumberFromStory < ActiveRecord::Migration
   def up
     remove_column :stories, :number

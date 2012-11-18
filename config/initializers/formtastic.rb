@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- encoding : utf-8 -*-
 
 # --------------------------------------------------------------------------------------------------
 # Please note: If you're subclassing Formtastic::SemanticFormBuilder in a Rails 3 project, 

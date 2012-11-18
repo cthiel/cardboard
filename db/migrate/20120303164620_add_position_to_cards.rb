@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddPositionToCards < ActiveRecord::Migration
   def up
     add_column :cards, :position, :integer

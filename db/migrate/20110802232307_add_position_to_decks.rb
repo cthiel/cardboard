@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddPositionToDecks < ActiveRecord::Migration
   
   def up

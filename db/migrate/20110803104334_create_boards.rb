@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateBoards < ActiveRecord::Migration
   def change
     create_table :boards do |t|
