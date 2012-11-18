@@ -6,7 +6,7 @@ class CreateBoards < ActiveRecord::Migration
       t.timestamps
     end
 
-    Board.reset_column_information  
-    Board.create({:name => 'CardBoard'})
+    #Board.reset_column_information  
+    #Board.create({:name => 'CardBoard'})
   end
 end

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -14,8 +15,8 @@ ActiveRecord::Schema.define(:version => 20120303164620) do
 
   create_table "boards", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "slug"
   end
 
@@ -23,17 +24,19 @@ ActiveRecord::Schema.define(:version => 20120303164620) do
 
   create_table "cards", :force => true do |t|
     t.text     "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.integer  "deck_id"
     t.integer  "position"
   end
 
+  add_index "cards", ["position"], :name => "index_cards_on_position"
+
   create_table "decks", :force => true do |t|
     t.string   "name"
     t.string   "color"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.integer  "position"
     t.integer  "board_id"
   end
