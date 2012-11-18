@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.3'
+gem 'rails', '3.2.9'
 
 # http://devcenter.heroku.com/articles/how-do-i-use-sqlite3-for-development
 group :production do
@@ -29,4 +29,4 @@ gem 'formtastic'
 gem 'acts-as-taggable-on', :git => 'git://github.com/mbleigh/acts-as-taggable-on.git'
 gem 'paper_trail'
 gem 'acts_as_list'
-gem 'friendly_id', "~> 4.0.0.beta8"
+gem 'friendly_id'
