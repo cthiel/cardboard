@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.9'
+gem 'rails', '3.2.11'
 
 # http://devcenter.heroku.com/articles/how-do-i-use-sqlite3-for-development
 group :production do
@@ -19,7 +19,8 @@ group :assets do
   gem 'sass-rails',   "~> 3.2.3"
   gem 'coffee-rails', "~> 3.2.1"
   gem 'execjs'
-  gem 'therubyracer'
+  gem 'libv8', :platform => :ruby
+  gem 'therubyracer', :platform => :ruby
   gem 'uglifier',     ">= 1.0.3"
 end
 
