@@ -10,9 +10,9 @@
 Board.create({:name => 'CardBoard'}) if Board.count.eql?(0)
 
 Deck.create([
-  {:name => 'Backlog', :color => 'lightgrey', :board => Board.first},
-  {:name => 'Work in progress', :color => 'yellow', :board => Board.first},
-  {:name => 'Completed', :color => 'lightgreen', :board => Board.first},
+  {:name => 'Backlog', :color => 'lightgrey', :board => Board.first, :position => 1},
+  {:name => 'Work in progress', :color => 'yellow', :board => Board.first, :position => 2},
+  {:name => 'Completed', :color => 'lightgreen', :board => Board.first, :position => 3},
 ])
 
 welcome = <<EOS
@@ -28,5 +28,5 @@ For more info about how cardboard works, check out the [project](https://github.
 EOS
 
 Card.create(
- {:name => welcome, :deck => Deck.first}
+ {:name => welcome, :deck => Deck.first, :position => 1}
 )
