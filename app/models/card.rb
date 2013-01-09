@@ -14,7 +14,6 @@
 class Card < ActiveRecord::Base
   validates :name, :presence => true, :uniqueness => true
   validates :deck, :presence => true, :associated => true
-  validates :position, :numericality => true
     
   acts_as_taggable_on :tags
   acts_as_list

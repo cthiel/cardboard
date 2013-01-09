@@ -15,7 +15,6 @@
 class Deck < ActiveRecord::Base
   validates :name, :presence => true, :uniqueness => true
   validates :board, :presence => true, :associated => true
-  validates :position, :numericality => true
   
   belongs_to :board
   has_many :cards
