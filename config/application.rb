@@ -63,5 +63,8 @@ module CardBoard
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # fix assets:precompile on heroko
+    config.assets.initialize_on_precompile = false
   end
 end
