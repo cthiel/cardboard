@@ -10,6 +10,9 @@ end
 group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails'
+
+  gem 'libv8', :platform => :ruby
+  gem 'therubyracer', :platform => :ruby
 end
 
 gem 'json'
@@ -20,8 +23,6 @@ group :assets do
   gem 'sass-rails',   "~> 3.2.3"
   gem 'coffee-rails', "~> 3.2.1"
   gem 'execjs'
-  gem 'libv8', :platform => :ruby
-  gem 'therubyracer', :platform => :ruby
   gem 'uglifier',     ">= 1.0.3"
 end
 
