@@ -378,8 +378,10 @@ $ = root.jQuery
 
     $.ajax
       type : "PUT"
-      url  : "cards/#{cardId}"
-      data : "card[deck_id]=#{deckId}"
+      contentType : 'application/json',
+      processData : false
+      url  : "cards/#{cardId}.json"
+      data : JSON.stringify({ card: { deck_id: deckId } })
       complete: ->
         $card.removeClass "unsaved"
         clearStatus()
