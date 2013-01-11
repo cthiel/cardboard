@@ -184,7 +184,7 @@ $ = root.jQuery
       $.ajax window.location.href + "#{deck.url}.json",
         type: "HEAD",
         complete: (xhr) ->
-          mod = xhr.getAllResponseHeaders().match(/Last-Modified: (.*)/)[1]
+          mod = xhr.getResponseHeader("Last-Modified")
           # run the callback if data has been modified since last check
           deck.func?() if boardData[deck.obj]? and boardData[deck.obj] != mod
           # save the last modified date

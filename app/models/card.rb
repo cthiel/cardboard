@@ -18,7 +18,7 @@ class Card < ActiveRecord::Base
   acts_as_taggable_on :tags
   acts_as_list
 
-  belongs_to :deck
+  belongs_to :deck, :touch => true
   has_paper_trail
 
   default_scope order("position")
