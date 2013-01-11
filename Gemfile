@@ -5,6 +5,7 @@ gem 'rails', '3.2.11'
 # http://devcenter.heroku.com/articles/how-do-i-use-sqlite3-for-development
 group :production do
   gem 'pg'
+  gem 'therubyracer-heroku'
 end
 group :development, :test do
   gem 'sqlite3'
