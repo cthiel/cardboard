@@ -83,7 +83,7 @@ class CardsController < ApplicationController
   def sort
     params[:card].each_with_index do |id, index|
       Card.update_all({:position => index+1}, {:id => id})
-    end
+    end unless params[:card].nil?
     render :nothing => true
   end
 end
