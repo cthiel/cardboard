@@ -11,8 +11,8 @@ group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails'
 
-  gem 'libv8', :platform => :ruby
-  gem 'therubyracer', :platform => :ruby
+  gem 'libv8'
+  gem 'therubyracer', '~> 0.11.3'
 end
 
 gem 'json'
